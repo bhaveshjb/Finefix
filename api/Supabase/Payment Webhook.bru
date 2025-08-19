@@ -1,0 +1,98 @@
+meta {
+  name: Payment Webhook
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{SUPABASE_URL}}/functions/v1/payment-webhook?language=he
+  body: json
+  auth: inherit
+}
+
+params:query {
+  language: he
+}
+
+body:json {
+  {
+    "ResponseCode": 0,
+    "Description": "העסקה בוצעה בהצלחה",
+    "TerminalNumber": 1000,
+    "LowProfileId": "80b2f323-0d88-418c-97b9-452dc2bec1f0",
+    "TranzactionId": 209571182,
+    "ReturnValue": "eyJjYXJOdW1iZXIiOiIxMjMxMjMiLCJ0aWNrZXROdW1iZXIiOiIxMjMxMjMiLCJ2aW9sYXRpb25UeXBlIjoiaGFuZGljYXBwZWQiLCJhcHBlYWxlciI6IiIsInZpb2xhdGlvbkRhdGUiOiIyMDI1LTA1LTA4IiwidmlvbGF0aW9uVGltZSI6IjAzOjQ0IiwidmlvbGF0aW9uTG9jYXRpb24iOiJhc2Rhc2Rhc2QiLCJ0aWNrZXRBbW91bnQiOiIyMjEiLCJ3YXNEcml2ZXIiOiJubyIsImFwcGVhbFJlYXNvbiI6ImluY29ycmVjdF9kZXRhaWxzIiwiY29ycmVjdFBhcmtpbmciOiJubyIsInZpc2libGVTaWduYWdlIjoibm8iLCJvdGhlclJlYXNvbiI6IiIsImRvY3VtZW50cyI6W10sImdlbmVyYXRlZF9sZXR0ZXIiOiIifQ==",
+    "Operation": "ChargeOnly",
+    "UIValues": {
+      "CardOwnerEmail": "testsite@test.co.il",
+      "CardOwnerName": "Card Owner",
+      "CardOwnerPhone": "039436100",
+      "CardOwnerIdentityNumber": "040617649",
+      "NumOfPayments": 1,
+      "CardYear": 2027,
+      "CardMonth": 10,
+      "CustomFields": [],
+      "IsAbroadCard": false
+    },
+    "DocumentInfo": {
+      "ResponseCode": 0,
+      "Description": "העסקה בוצעה בהצלחה",
+      "DocumentType": "TaxInvoiceAndReceipt",
+      "DocumentNumber": 593320,
+      "AccountId": 0,
+      "ForeignAccountNumber": null,
+      "SiteUniqueId": null,
+      "DocumentUrl": "https://secure.cardcom.solutions/api/v11/documents/DownloadDoc/?c=1&code=xfWxrrwTLh3TmXtuAe/5bRSc/gl8bFekooCng3uT5/w2YITmoLEsi5rVTVXus85/"
+    },
+    "TokenInfo": null,
+    "SuspendedInfo": null,
+    "TranzactionInfo": {
+      "ResponseCode": 0,
+      "Description": "העסקה בוצעה בהצלחה",
+      "TranzactionId": 209571182,
+      "TerminalNumber": 1000,
+      "Amount": 20,
+      "CoinId": 1,
+      "CouponNumber": "38038827",
+      "CreateDate": "2025-05-08T03:44:57",
+      "Last4CardDigits": 0,
+      "Last4CardDigitsString": "0000",
+      "FirstCardDigits": 458000,
+      "JParameter": "0",
+      "CardMonth": 10,
+      "CardYear": 27,
+      "ApprovalNumber": "12345",
+      "FirstPaymentAmount": 0.0,
+      "ConstPaymentAmount": 0.0,
+      "NumberOfPayments": 1,
+      "CardInfo": "Israeli",
+      "CardOwnerName": "Card Owner",
+      "CardOwnerPhone": "039436100",
+      "CardOwnerEmail": "testsite@test.co.il",
+      "CardOwnerIdentityNumber": "040617649",
+      "Token": "4cf8e168-261e-4613-8d20-000332986b24",
+      "CardName": "ויזה רגיל",
+      "SapakMutav": "",
+      "Uid": "21121517002429612920744",
+      "ConcentrationNumber": null,
+      "DocumentNumber": 593320,
+      "DocumentType": "TaxInvoiceAndReceipt",
+      "Rrn": "",
+      "Brand": "Visa",
+      "Acquire": "Laumicard",
+      "Issuer": "CAL",
+      "PaymentType": "Standard",
+      "CardNumberEntryMode": "Phone",
+      "DealType": "Debit",
+      "IsRefund": false,
+      "DocumentUrl": null,
+      "CustomFields": [],
+      "IsAbroadCard": false,
+      "IssuerAuthCodeDescription": "אושר ע\"י החברה המנפיקה באמצעות בקשה לאישור ללא עסקה"
+    },
+    "ExternalPaymentVector": "NoneOrUnknown",
+    "Country": "IL",
+    "UTM": null,
+    "IssuerAuthCodeDescription": "אושר ע\"י החברה המנפיקה באמצעות בקשה לאישור ללא עסקה"
+  }
+}

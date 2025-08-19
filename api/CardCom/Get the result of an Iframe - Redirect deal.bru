@@ -1,0 +1,19 @@
+meta {
+  name: Get the result of an Iframe \ Redirect deal
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://secure.cardcom.solutions/api/v11/LowProfile/GetLpResult
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "TerminalNumber": 1000,
+    "ApiName": "test2025",
+    "LowProfileId": "7bff40e7-b96f-4f2c-923c-f2ff11b55273"
+  }
+}

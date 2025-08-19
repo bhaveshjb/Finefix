@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Finefix",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
