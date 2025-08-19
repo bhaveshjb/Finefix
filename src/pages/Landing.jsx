@@ -32,6 +32,12 @@ import StatCounter from "../components/landing/StatCounter";
 import TestimonialCard from "../components/landing/TestimonialCard";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import BlogOneImg from "../assets/images/image(1).png";
+import BlogTwoImg from "../assets/images/image(2).png";
+import BlogThreeImg from "../assets/images/image(3).png";
+import BlogFourImg from "../assets/images/image(4).png";
+import BlogFiveImg from "../assets/images/image(5).png";
+import BlogSixImg from "../assets/images/image(6).png";
 import { useLocalStorage } from "@uidotdev/usehooks";
 
 export default function Landing() {
@@ -125,8 +131,7 @@ export default function Landing() {
               author: "Adv. Rachel Lewis",
               authorImage:
                 "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1588421357574-87938a86fa28?auto=format&fit=crop&q=80&w=600",
+              image: BlogOneImg,
             },
             {
               id: 2,
@@ -140,8 +145,7 @@ export default function Landing() {
               author: "Alan Cohen",
               authorImage:
                 "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=600",
+              image: BlogTwoImg,
             },
             {
               id: 3,
@@ -155,8 +159,7 @@ export default function Landing() {
               author: "Adv. David Levinson",
               authorImage:
                 "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&q=80&w=600",
+              image: BlogThreeImg,
             },
             {
               id: 4,
@@ -170,8 +173,7 @@ export default function Landing() {
               author: "Michelle Abraham",
               authorImage:
                 "https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600",
+              image: BlogFourImg,
             },
             {
               id: 5,
@@ -184,8 +186,7 @@ export default function Landing() {
               author: "Gil Steinberg",
               authorImage:
                 "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1586791965591-15d8892f4333?auto=format&fit=crop&q=80&w=600",
+              image: BlogFiveImg,
             },
             {
               id: 6,
@@ -199,8 +200,7 @@ export default function Landing() {
               author: "Dr. Ronald Cohen",
               authorImage:
                 "https://images.unsplash.com/photo-1584999734482-0361aecad844?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1423592707957-3b212afa6733?auto=format&fit=crop&q=80&w=600",
+              image: BlogSixImg,
             },
           ];
           setBlogPosts(englishPosts);
@@ -218,8 +218,7 @@ export default function Landing() {
               author: "עו״ד רונית לוי",
               authorImage:
                 "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1588421357574-87938a86fa28?auto=format&fit=crop&q=80&w=600",
+              image: BlogOneImg,
             },
             {
               id: 2,
@@ -232,8 +231,7 @@ export default function Landing() {
               author: "אלון כהן",
               authorImage:
                 "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=600",
+              image: BlogTwoImg,
             },
             {
               id: 3,
@@ -246,8 +244,7 @@ export default function Landing() {
               author: "עו״ד דוד לוינסון",
               authorImage:
                 "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&q=80&w=600",
+              image: BlogThreeImg,
             },
             {
               id: 4,
@@ -260,8 +257,7 @@ export default function Landing() {
               author: "מיכל אברהמי",
               authorImage:
                 "https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600",
+              image: BlogFourImg,
             },
             {
               id: 5,
@@ -274,8 +270,7 @@ export default function Landing() {
               author: "גיל שטיינברג",
               authorImage:
                 "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1586791965591-15d8892f4333?auto=format&fit=crop&q=80&w=600",
+              image: BlogFiveImg,
             },
             {
               id: 6,
@@ -288,8 +283,7 @@ export default function Landing() {
               author: "ד״ר רונאל כהן",
               authorImage:
                 "https://images.unsplash.com/photo-1584999734482-0361aecad844?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1423592707957-3b212afa6733?auto=format&fit=crop&q=80&w=600",
+              image: BlogSixImg,
             },
           ];
           setBlogPosts(hebrewPosts);

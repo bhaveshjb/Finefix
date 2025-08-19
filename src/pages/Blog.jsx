@@ -20,6 +20,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import BlogOneImg from '../assets/images/image(1).png'
+import BlogTwoImg from '../assets/images/image(2).png'
+import BlogThreeImg from '../assets/images/image(3).png'
+import BlogFourImg from '../assets/images/image(4).png'
+import BlogFiveImg from '../assets/images/image(5).png'
+import BlogSixImg from '../assets/images/image(6).png'
 
 export default function Blog() {
   const [posts] = useState([
@@ -46,7 +52,7 @@ export default function Blog() {
       author: "עו״ד רונית לוי",
       authorImage: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=50",
       authorBio: "עו״ד רונית לוי היא מומחית בדיני תעבורה עם 15 שנות ניסיון בייצוג לקוחות בערעורים על דוחות וקנסות.",
-      image: "https://images.unsplash.com/photo-1588421357574-87938a86fa28?auto=format&fit=crop&q=80&w=600",
+      image: BlogOneImg,
       tags: ["ערעור דוחות", "זכויות נהגים", "חניה", "טיפים משפטיים"],
       viewCount: 1240
     },
@@ -61,7 +67,7 @@ export default function Blog() {
       author: "אלון כהן",
       authorImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=50",
       authorBio: "אלון כהן הוא יועץ משפטי בתחום דיני התעבורה ומרצה באוניברסיטת תל אביב.",
-      image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=600",
+      image: BlogTwoImg,
       tags: ["ערעור דוחות", "טיפים", "חניה אסורה"],
       viewCount: 980
     },
@@ -76,7 +82,7 @@ export default function Blog() {
       author: "עו״ד דוד לוינסון",
       authorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=50",
       authorBio: "עו״ד דוד לוינסון מתמחה בדיני תעבורה וחוקי חניה עירוניים.",
-      image: "https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&q=80&w=600",
+      image: BlogThreeImg,
       tags: ["חוק", "משפט", "תקנות חניה", "זכויות"],
       viewCount: 756
     },
@@ -91,7 +97,7 @@ export default function Blog() {
       author: "מיכל אברהמי",
       authorImage: "https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&q=80&w=50",
       authorBio: "מיכל אברהמי היא מומחית לטכנולוגיות AI ויישומן במערכות משפטיות.",
-      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600",
+      image: BlogFourImg,
       tags: ["בינה מלאכותית", "טכנולוגיה", "חדשנות", "אוטומציה"],
       viewCount: 1102
     },
@@ -106,7 +112,7 @@ export default function Blog() {
       author: "גיל שטיינברג",
       authorImage: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&q=80&w=50",
       authorBio: "גיל שטיינברג הוא מנהל מחלקת הערעורים ב-FineFix עם ניסיון של למעלה מ-1000 מקרים.",
-      image: "https://images.unsplash.com/photo-1586791965591-15d8892f4333?auto=format&fit=crop&q=80&w=600",
+      image: BlogFiveImg,
       tags: ["מקרה בוחן", "הצלחות", "אסטרטגיה משפטית"],
       viewCount: 867
     },
@@ -121,7 +127,7 @@ export default function Blog() {
       author: "ד״ר רוני כהן",
       authorImage: "https://images.unsplash.com/photo-1584999734482-0361aecad844?auto=format&fit=crop&q=80&w=50",
       authorBio: "ד״ר רוני כהן היא חוקרת במכון למדיניות ציבורית ומתמחה בניתוח נתונים בתחום המשפט.",
-      image: "https://images.unsplash.com/photo-1423592707957-3b212afa6733?auto=format&fit=crop&q=80&w=600",
+      image: BlogSixImg,
       tags: ["סטטיסטיקה", "מחקר", "נתונים", "מגמות"],
       viewCount: 1432
     }
