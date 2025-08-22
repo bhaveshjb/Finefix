@@ -95,8 +95,13 @@ interface FormData {
 
 console.log("Starting payment webhook function...")
 
-const supabaseUrl = Deno.env.get('SUPABASE_URL');
-const supabaseServiceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+// supabase secrets set SB_URL=<project_URL>
+// supabase secrets set SB_SERVICE_ROLE_KEY=<service_role_key>
+// supabase secrets set CARDCOM_TERMINAL_NUMBER=<value>
+// supabase secrets set CARDCOM_API_NAME=<api_name>
+
+const supabaseUrl = Deno.env.get('SB_URL');
+const supabaseServiceRoleKey = Deno.env.get('SB_SERVICE_ROLE_KEY');
 const supabase = createClient(
   supabaseUrl,
   supabaseServiceRoleKey,
@@ -106,6 +111,7 @@ Deno.serve(async (req: Request) => {
   const { LowProfileId } = await req.json() as TransactionResponse;
   const cardcomTerminamlNumber = Deno.env.get('CARDCOM_TERMINAL_NUMBER');
   const cardcomApiName = Deno.env.get('CARDCOM_API_NAME');
+
   const response = await fetch(
     'https://secure.cardcom.solutions/api/v11/LowProfile/GetLpResult',
     {
@@ -249,7 +255,7 @@ Deno.serve(async (req: Request) => {
       JSON.stringify({
         error: "Failed to insert data into Supabase",
         data,
-        user_email: lowProfileResult.TranzactionInfo.CardOwnerEmail,
+        user_email: lowProfileResult.TranzactionInfo?.CardOwnerEmail || null,
         text: appealText,
         form_data: formData,
         transaction_data: lowProfileResult,
