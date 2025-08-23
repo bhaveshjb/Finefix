@@ -17,6 +17,7 @@ import {
 } from "react-router-dom";
 import Success from "./Success.jsx";
 import Login from "./Login.jsx";
+import BlogDetails from "./BlogDetails.jsx";
 
 const PAGES = {
   Landing: Landing,
@@ -66,6 +67,7 @@ function PagesContent() {
           <Route path="/Appeal" element={<Appeal />} />
           <Route path="/Appeal/Success" element={<Success />} />
           <Route path="/Blog" element={<Blog />} />
+          <Route path="/Blog/:id" element={<BlogDetails />} />
           <Route path="/AppealFeedback" element={<AppealFeedback />} />
         </Routes>
       </Layout>

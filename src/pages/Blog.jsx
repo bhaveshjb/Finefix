@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { 
-  Search, 
-  Calendar, 
-  Clock, 
-  User, 
-  ChevronLeft, 
-  Filter, 
+import {
+  Search,
+  Calendar,
+  Clock,
+  User,
+  ChevronLeft,
+  Filter,
   ArrowLeft,
   Tag,
   Share2,
-  AlertCircle
+  AlertCircle,
+  ChevronRight,
+  ArrowRight,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -20,13 +22,18 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useLocalStorage } from "@uidotdev/usehooks";
+import blogsDataEn from "../utils/blogsEn";
+import blogsDataHb from "../utils/blojsHb";
 
 export default function Blog() {
+  const [language] = useLocalStorage("languagePreference", "he");
   const [posts] = useState([
     {
       id: 1,
       title: "איך להתמודד עם דוח חניה לא מוצדק - המדריך המלא",
-      summary: "דוח חניה יכול להיות מוצדק, אך במקרים רבים הרשויות טועות. במאמר זה נספק מדריך מפורט כיצד להתמודד עם דוחות חניה בלתי מוצדקים וכיצד להגיש ערעור אפקטיבי.",
+      summary:
+        "דוח חניה יכול להיות מוצדק, אך במקרים רבים הרשויות טועות. במאמר זה נספק מדריך מפורט כיצד להתמודד עם דוחות חניה בלתי מוצדקים וכיצד להגיש ערעור אפקטיבי.",
       content: `
         <h2>מבוא: הבנת הזכויות שלכם</h2>
         <p>קבלת דוח חניה יכולה להיות חוויה מתסכלת, במיוחד כאשר אתם מאמינים שהדוח ניתן שלא בצדק. חשוב לדעת שיש לכם זכות לערער על דוחות חניה, וב-FineFix אנו רואים שיעורי הצלחה גבוהים בביטול דוחות שניתנו בנסיבות שאינן מוצדקות.</p>
@@ -44,144 +51,191 @@ export default function Blog() {
       publishDate: "10.11.2023",
       readTime: "6 דקות",
       author: "עו״ד רונית לוי",
-      authorImage: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=50",
-      authorBio: "עו״ד רונית לוי היא מומחית בדיני תעבורה עם 15 שנות ניסיון בייצוג לקוחות בערעורים על דוחות וקנסות.",
-      image: "https://images.unsplash.com/photo-1588421357574-87938a86fa28?auto=format&fit=crop&q=80&w=600",
+      authorImage:
+        "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=50",
+      authorBio:
+        "עו״ד רונית לוי היא מומחית בדיני תעבורה עם 15 שנות ניסיון בייצוג לקוחות בערעורים על דוחות וקנסות.",
+      image:
+        "https://images.unsplash.com/photo-1588421357574-87938a86fa28?auto=format&fit=crop&q=80&w=600",
       tags: ["ערעור דוחות", "זכויות נהגים", "חניה", "טיפים משפטיים"],
-      viewCount: 1240
+      viewCount: 1240,
     },
     {
       id: 2,
       title: "5 סיבות מוצדקות לערעור על דוח חניה שכדאי להכיר",
-      summary: "ישנן מספר סיבות מוצדקות לערעור על דוח חניה אשר במקרים רבים מובילות לביטול מלא של הקנס. במאמר זה נסקור את 5 הסיבות הנפוצות ביותר שכדאי לכל נהג להכיר.",
+      summary:
+        "ישנן מספר סיבות מוצדקות לערעור על דוח חניה אשר במקרים רבים מובילות לביטול מלא של הקנס. במאמר זה נסקור את 5 הסיבות הנפוצות ביותר שכדאי לכל נהג להכיר.",
       content: "<p>תוכן המאמר המלא כאן...</p>",
       category: "טיפים",
       publishDate: "01.12.2023",
       readTime: "4 דקות",
       author: "אלון כהן",
-      authorImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=50",
-      authorBio: "אלון כהן הוא יועץ משפטי בתחום דיני התעבורה ומרצה באוניברסיטת תל אביב.",
-      image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=600",
+      authorImage:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=50",
+      authorBio:
+        "אלון כהן הוא יועץ משפטי בתחום דיני התעבורה ומרצה באוניברסיטת תל אביב.",
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=600",
       tags: ["ערעור דוחות", "טיפים", "חניה אסורה"],
-      viewCount: 980
+      viewCount: 980,
     },
     {
       id: 3,
       title: "מה אומר החוק על דוחות חניה וכיצד זה משפיע על הערעור שלכם",
-      summary: "הבנת המסגרת החוקית של דוחות חניה יכולה לסייע רבות בהגשת ערעור מוצלח. במאמר זה נסקור את החוקים והתקנות הרלוונטיים ואת זכויותיכם כנהגים.",
+      summary:
+        "הבנת המסגרת החוקית של דוחות חניה יכולה לסייע רבות בהגשת ערעור מוצלח. במאמר זה נסקור את החוקים והתקנות הרלוונטיים ואת זכויותיכם כנהגים.",
       content: "<p>תוכן המאמר המלא כאן...</p>",
       category: "משפטי",
       publishDate: "15.12.2023",
       readTime: "7 דקות",
       author: "עו״ד דוד לוינסון",
-      authorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=50",
+      authorImage:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=50",
       authorBio: "עו״ד דוד לוינסון מתמחה בדיני תעבורה וחוקי חניה עירוניים.",
-      image: "https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&q=80&w=600",
+      image:
+        "https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&q=80&w=600",
       tags: ["חוק", "משפט", "תקנות חניה", "זכויות"],
-      viewCount: 756
+      viewCount: 756,
     },
     {
       id: 4,
       title: "כיצד הבינה המלאכותית משנה את עולם הערעורים על דוחות",
-      summary: "טכנולוגיות מתקדמות כמו בינה מלאכותית משנות את האופן שבו מוגשים ערעורים על דוחות. גלו כיצד AI יכול לשפר משמעותית את סיכויי ההצלחה של הערעור שלכם.",
+      summary:
+        "טכנולוגיות מתקדמות כמו בינה מלאכותית משנות את האופן שבו מוגשים ערעורים על דוחות. גלו כיצד AI יכול לשפר משמעותית את סיכויי ההצלחה של הערעור שלכם.",
       content: "<p>תוכן המאמר המלא כאן...</p>",
       category: "טכנולוגיה",
       publishDate: "22.12.2023",
       readTime: "5 דקות",
       author: "מיכל אברהמי",
-      authorImage: "https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&q=80&w=50",
-      authorBio: "מיכל אברהמי היא מומחית לטכנולוגיות AI ויישומן במערכות משפטיות.",
-      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600",
+      authorImage:
+        "https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&q=80&w=50",
+      authorBio:
+        "מיכל אברהמי היא מומחית לטכנולוגיות AI ויישומן במערכות משפטיות.",
+      image:
+        "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600",
       tags: ["בינה מלאכותית", "טכנולוגיה", "חדשנות", "אוטומציה"],
-      viewCount: 1102
+      viewCount: 1102,
     },
     {
       id: 5,
       title: "מקרה בוחן: כיצד הצלחנו לבטל דוח של 1,000₪ עבור לקוח",
-      summary: "ניתוח מפורט של מקרה אמיתי בו סייענו ללקוח לבטל דוח חניה משמעותי. במאמר זה נחשוף את האסטרטגיה שהובילה להצלחה ואת הלקחים העיקריים.",
+      summary:
+        "ניתוח מפורט של מקרה אמיתי בו סייענו ללקוח לבטל דוח חניה משמעותי. במאמר זה נחשוף את האסטרטגיה שהובילה להצלחה ואת הלקחים העיקריים.",
       content: "<p>תוכן המאמר המלא כאן...</p>",
       category: "מקרי בוחן",
       publishDate: "05.01.2024",
       readTime: "8 דקות",
       author: "גיל שטיינברג",
-      authorImage: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&q=80&w=50",
-      authorBio: "גיל שטיינברג הוא מנהל מחלקת הערעורים ב-FineFix עם ניסיון של למעלה מ-1000 מקרים.",
-      image: "https://images.unsplash.com/photo-1586791965591-15d8892f4333?auto=format&fit=crop&q=80&w=600",
+      authorImage:
+        "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&q=80&w=50",
+      authorBio:
+        "גיל שטיינברג הוא מנהל מחלקת הערעורים ב-FineFix עם ניסיון של למעלה מ-1000 מקרים.",
+      image:
+        "https://images.unsplash.com/photo-1586791965591-15d8892f4333?auto=format&fit=crop&q=80&w=600",
       tags: ["מקרה בוחן", "הצלחות", "אסטרטגיה משפטית"],
-      viewCount: 867
+      viewCount: 867,
     },
     {
       id: 6,
       title: "סטטיסטיקה מפתיעה: 78% מהערעורים על דוחות חניה מתקבלים",
-      summary: "מחקר חדש חושף כי רוב הערעורים המוגשים על דוחות חניה מתקבלים, אך רוב הנהגים כלל לא מערערים. במאמר זה נציג את הנתונים המפתיעים ומה המשמעות עבורכם.",
+      summary:
+        "מחקר חדש חושף כי רוב הערעורים המוגשים על דוחות חניה מתקבלים, אך רוב הנהגים כלל לא מערערים. במאמר זה נציג את הנתונים המפתיעים ומה המשמעות עבורכם.",
       content: "<p>תוכן המאמר המלא כאן...</p>",
       category: "סטטיסטיקה",
       publishDate: "18.01.2024",
       readTime: "4 דקות",
       author: "ד״ר רוני כהן",
-      authorImage: "https://images.unsplash.com/photo-1584999734482-0361aecad844?auto=format&fit=crop&q=80&w=50",
-      authorBio: "ד״ר רוני כהן היא חוקרת במכון למדיניות ציבורית ומתמחה בניתוח נתונים בתחום המשפט.",
-      image: "https://images.unsplash.com/photo-1423592707957-3b212afa6733?auto=format&fit=crop&q=80&w=600",
+      authorImage:
+        "https://images.unsplash.com/photo-1584999734482-0361aecad844?auto=format&fit=crop&q=80&w=50",
+      authorBio:
+        "ד״ר רוני כהן היא חוקרת במכון למדיניות ציבורית ומתמחה בניתוח נתונים בתחום המשפט.",
+      image:
+        "https://images.unsplash.com/photo-1423592707957-3b212afa6733?auto=format&fit=crop&q=80&w=600",
       tags: ["סטטיסטיקה", "מחקר", "נתונים", "מגמות"],
-      viewCount: 1432
-    }
+      viewCount: 1432,
+    },
   ]);
-  
-  const [featuredPost] = useState({
-    id: 1,
-    title: "איך להתמודד עם דוח חניה לא מוצדק - המדריך המלא",
-    summary: "דוח חניה יכול להיות מוצדק, אך במקרים רבים הרשויות טועות. במאמר זה נספק מדריך מפורט כיצד להתמודד עם דוחות חניה בלתי מוצדקים וכיצד להגיש ערעור אפקטיבי.",
-    category: "מדריכים",
-    publishDate: "10.11.2023",
-    readTime: "6 דקות",
-    author: "עו״ד רונית לוי",
-    authorImage: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=50",
-    image: "https://images.unsplash.com/photo-1588421357574-87938a86fa28?auto=format&fit=crop&q=80&w=600"
-  });
-  
+
+  const [featuredPost] = useState(
+    language === "en"
+      ? {
+          id: 1,
+          title: "How to Handle an Unjust Parking Ticket – The Complete Guide",
+          summary:
+            "A parking ticket can sometimes be justified, but in many cases authorities make mistakes. This article provides a detailed guide on how to deal with unjust parking tickets and how to file an effective appeal.",
+          category: "Guides",
+          publishDate: "11/10/2023",
+          readTime: "6 minutes",
+          author: "Attorney Ronit Levi",
+          authorImage:
+            "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=50",
+          image:
+            "https://images.unsplash.com/photo-1588421357574-87938a86fa28?auto=format&fit=crop&q=80&w=600",
+        }
+      : {
+          id: 1,
+          title: "איך להתמודד עם דוח חניה לא מוצדק - המדריך המלא",
+          summary:
+            "דוח חניה יכול להיות מוצדק, אך במקרים רבים הרשויות טועות. במאמר זה נספק מדריך מפורט כיצד להתמודד עם דוחות חניה בלתי מוצדקים וכיצד להגיש ערעור אפקטיבי.",
+          category: "מדריכים",
+          publishDate: "10.11.2023",
+          readTime: "6 דקות",
+          author: "עו״ד רונית לוי",
+          authorImage:
+            "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=50",
+          image:
+            "https://images.unsplash.com/photo-1588421357574-87938a86fa28?auto=format&fit=crop&q=80&w=600",
+        }
+  );
+
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
   const navigate = useNavigate();
 
   const categories = [
-    { id: "all", name: "הכל" },
-    { id: "tips", name: "טיפים" },
-    { id: "guides", name: "מדריכים" },
-    { id: "legal", name: "משפטי" },
-    { id: "tech", name: "טכנולוגיה" },
-    { id: "case-studies", name: "מקרי בוחן" },
-    { id: "statistics", name: "סטטיסטיקה" }
+    { id: "all", name: language === "en" ? "Everything" : "הכל" },
+    { id: "tips", name: language === "en" ? "Tips" : "טיפים" },
+    { id: "guides", name: language === "en" ? "Guides" : "מדריכים" },
+    { id: "legal", name: language === "en" ? "Legal" : "משפטי" },
+    { id: "tech", name: language === "en" ? "Technology" : "טכנולוגיה" },
+    {
+      id: "case-studies",
+      name: language === "en" ? "Test cases" : "מקרי בוחן",
+    },
+    { id: "statistics", name: language === "en" ? "Statistics" : "סטטיסטיקה" },
   ];
 
-  const filteredPosts = posts.filter(post => {
+  const blogs = language === "en" ? blogsDataEn : blogsDataHb;
+
+  const filteredPosts = blogs.filter((post) => {
     // Filter by category
     if (activeCategory !== "all") {
       const categoryMap = {
-        "tips": "טיפים",
-        "guides": "מדריכים",
-        "legal": "משפטי",
-        "tech": "טכנולוגיה",
+        tips: "טיפים",
+        guides: "מדריכים",
+        legal: "משפטי",
+        tech: "טכנולוגיה",
         "case-studies": "מקרי בוחן",
-        "statistics": "סטטיסטיקה"
+        statistics: "סטטיסטיקה",
       };
-      
+
       if (post.category !== categoryMap[activeCategory]) {
         return false;
       }
     }
-    
+
     // Filter by search query
-    if (searchQuery)  {
+    if (searchQuery) {
       const query = searchQuery.toLowerCase();
       return (
         post.title.toLowerCase().includes(query) ||
         post.summary.toLowerCase().includes(query) ||
         post.author.toLowerCase().includes(query) ||
         post.category.toLowerCase().includes(query) ||
-        post.tags?.some(tag => tag.toLowerCase().includes(query))
+        post.tags?.some((tag) => tag.toLowerCase().includes(query))
       );
     }
-    
+
     return true;
   });
 
@@ -191,12 +245,16 @@ export default function Blog() {
       <section className="bg-white border-b">
         <div className="container mx-auto px-4 py-12">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold mb-4">הבלוג שלנו</h1>
+            <h1 className="text-4xl font-bold mb-4">
+              {language === "en" ? "Our Blog" : "הבלוג שלנו"}
+            </h1>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              טיפים, מדריכים ומידע שימושי על ערעורי דוחות חניה והמערכת המשפטית בישראל
+              {language === "en"
+                ? "Tips, guides and useful information about parking ticket appeals and the legal system in Israel"
+                : "טיפים, מדריכים ומידע שימושי על ערעורי דוחות חניה והמערכת המשפטית בישראל"}
             </p>
           </div>
-          
+
           {featuredPost && (
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="h-64 md:h-auto md:rounded-lg overflow-hidden relative">
@@ -210,7 +268,7 @@ export default function Blog() {
                   {featuredPost.category}
                 </Badge>
               </div>
-              
+
               <div>
                 <div className="flex items-center text-sm text-gray-500 mb-3 space-x-2 space-x-reverse rtl:space-x-reverse">
                   <div className="flex items-center">
@@ -223,10 +281,12 @@ export default function Blog() {
                     <span>{featuredPost.readTime}</span>
                   </div>
                 </div>
-                
-                <h2 className="text-3xl font-bold mb-4">{featuredPost.title}</h2>
+
+                <h2 className="text-3xl font-bold mb-4">
+                  {featuredPost.title}
+                </h2>
                 <p className="text-gray-600 mb-6">{featuredPost.summary}</p>
-                
+
                 <div className="flex items-center mb-6">
                   <img
                     src={featuredPost.authorImage}
@@ -235,33 +295,50 @@ export default function Blog() {
                   />
                   <div>
                     <p className="font-medium">{featuredPost.author}</p>
-                    <p className="text-sm text-gray-500">כותב/ת מומחה/ית</p>
+                    <p className="text-sm text-gray-500">
+                      {language === "en" ? "Expert writer" : "כותב/ת מומחה/ית"}
+                    </p>
                   </div>
                 </div>
-                
-                <Button 
+
+                <Button
                   className="bg-blue-600 hover:bg-blue-700"
-                  onClick={() => alert("המאמר המלא יהיה זמין בקרוב!")}
+                  onClick={() =>
+                    alert(
+                      language === "en"
+                        ? "The full article will be available soon!"
+                        : "המאמר המלא יהיה זמין בקרוב!"
+                    )
+                  }
                 >
-                  קראו את המאמר המלא
-                  <ChevronLeft className="mr-2 h-5 w-5" />
+                  {language === "en"
+                    ? "Read the full article"
+                    : "קראו את המאמר המלא"}
+                  {language === "en" ? (
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                  ) : (
+                    <ChevronLeft className="mr-2 h-5 w-5" />
+                  )}
                 </Button>
               </div>
             </div>
           )}
         </div>
       </section>
-      
+
       {/* Blog listing section */}
       <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap items-center justify-between mb-8">
             <div className="w-full md:w-auto mb-4 md:mb-0">
-              <Tabs defaultValue={activeCategory} onValueChange={setActiveCategory}>
+              <Tabs
+                defaultValue={activeCategory}
+                onValueChange={setActiveCategory}
+              >
                 <TabsList className="bg-white">
-                  {categories.map(category => (
-                    <TabsTrigger 
-                      key={category.id} 
+                  {categories.map((category) => (
+                    <TabsTrigger
+                      key={category.id}
                       value={category.id}
                       className="text-sm"
                     >
@@ -271,13 +348,15 @@ export default function Blog() {
                 </TabsList>
               </Tabs>
             </div>
-            
+
             <div className="w-full md:w-64">
               <div className="relative">
                 <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <Input
                   type="search"
-                  placeholder="חיפוש מאמרים..."
+                  placeholder={
+                    language === "en" ? "Search articles..." : "חיפוש מאמרים..."
+                  }
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10 bg-white"
@@ -285,96 +364,132 @@ export default function Blog() {
               </div>
             </div>
           </div>
-          
+
           {filteredPosts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredPosts.map((post, index) => (
-                <motion.div
-                  key={post.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                >
-                  <Card className="overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col">
-                    <div className="relative h-48 w-full overflow-hidden">
-                      <img
-                        src={post.image}
-                        alt={post.title}
-                        className="h-full w-full object-cover transition-transform hover:scale-105"
-                      />
-                      <Badge className="absolute top-3 right-3 bg-blue-600">{post.category}</Badge>
-                    </div>
-                    
-                    <CardContent className="py-5 flex-grow">
-                      <div className="flex items-center text-sm text-gray-500 mb-3 space-x-2 space-x-reverse rtl:space-x-reverse">
-                        <div className="flex items-center">
-                          <Calendar className="h-3.5 w-3.5 ml-1" />
-                          <span>{post.publishDate}</span>
-                        </div>
-                        <div className="mx-2">•</div>
-                        <div className="flex items-center">
-                          <Clock className="h-3.5 w-3.5 ml-1" />
-                          <span>{post.readTime}</span>
-                        </div>
-                      </div>
-                      
-                      <h3 className="font-bold text-xl mb-2 line-clamp-2">{post.title}</h3>
-                      <p className="text-gray-600 text-sm line-clamp-3 mb-3">{post.summary}</p>
-                      
-                      <div className="flex items-center mt-4">
+              {filteredPosts.map((post, index) => {
+                console.log("Post", post);
+                return (
+                  <motion.div
+                    key={post.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <Card className="overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col">
+                      <div className="relative h-48 w-full overflow-hidden">
                         <img
-                          src={post.authorImage}
-                          alt={post.author}
-                          className="h-8 w-8 rounded-full object-cover ml-2"
+                          src={post.image}
+                          alt={post.title}
+                          className="h-full w-full object-cover transition-transform hover:scale-105"
                         />
-                        <span className="text-sm font-medium">{post.author}</span>
+                        <Badge className="absolute top-3 right-3 bg-blue-600">
+                          {post.category}
+                        </Badge>
                       </div>
-                      
-                      <Button
-                        variant="ghost"
-                        className="text-blue-600 p-0 h-auto font-medium hover:bg-transparent hover:text-blue-800 mt-4"
-                        onClick={() => alert(`המאמר המלא יהיה זמין בקרוב: ${post.title}`)}
-                      >
-                        המשך קריאה
-                        <ChevronLeft className="h-4 w-4 mr-1" />
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+
+                      <CardContent className="py-5 flex-grow">
+                        <div className="flex items-center text-sm text-gray-500 mb-3 space-x-2 space-x-reverse rtl:space-x-reverse">
+                          <div className="flex items-center">
+                            <Calendar className="h-3.5 w-3.5 ml-1" />
+                            <span>{post.publishDate}</span>
+                          </div>
+                          <div className="mx-2">•</div>
+                          <div className="flex items-center">
+                            <Clock className="h-3.5 w-3.5 ml-1" />
+                            <span>{post.readTime}</span>
+                          </div>
+                        </div>
+
+                        <h3 className="font-bold text-xl mb-2 line-clamp-2">
+                          {post.title}
+                        </h3>
+                        <p className="text-gray-600 text-sm line-clamp-3 mb-3">
+                          {post.description}
+                        </p>
+
+                        <div className="flex items-center mt-4">
+                          <img
+                            src={post.authorImage}
+                            alt={post.author}
+                            className="h-8 w-8 rounded-full object-cover ml-2"
+                          />
+                          <span className="text-sm font-medium">
+                            {post.author}
+                          </span>
+                        </div>
+
+                        <Link to={`/Blog/${post.id}`}>
+                          <Button
+                            variant="ghost"
+                            className="text-blue-600 p-0 h-auto font-medium hover:bg-transparent hover:text-blue-800 mt-4 flex items-center"
+                          >
+                            {language === "en"
+                              ? "Continue Reading"
+                              : "המשך קריאה"}
+                            {language === "en" ? (
+                              <ChevronRight className="h-4 w-4 ml-1" />
+                            ) : (
+                              <ChevronLeft className="h-4 w-4 mr-1" />
+                            )}
+                          </Button>
+                        </Link>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                );
+              })}
             </div>
           ) : (
             <div className="text-center py-16 bg-white rounded-lg shadow">
               <div className="text-4xl mb-4">🔍</div>
-              <h3 className="text-xl font-medium mb-2">לא נמצאו תוצאות</h3>
-              <p className="text-gray-600 mb-4">נסו לחפש מונחים אחרים או לבחור קטגוריה אחרת</p>
-              <Button 
-                variant="outline" 
+              <h3 className="text-xl font-medium mb-2">
+                {language === "en" ? "No results found" : "לא נמצאו תוצאות"}
+              </h3>
+              <p className="text-gray-600 mb-4">
+                {language === "en"
+                  ? "Try searching for other terms or choosing a different category."
+                  : "נסו לחפש מונחים אחרים או לבחור קטגוריה אחרת"}
+              </p>
+              <Button
+                variant="outline"
                 onClick={() => {
-                  setSearchQuery('');
-                  setActiveCategory('all');
+                  setSearchQuery("");
+                  setActiveCategory("all");
                 }}
               >
-                הציגו את כל המאמרים
+                {language === "en"
+                  ? "Show all articles"
+                  : "הציגו את כל המאמרים"}
               </Button>
             </div>
           )}
         </div>
       </section>
-      
+
       {/* Call to action section */}
       <section className="bg-blue-600 text-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">רוצים לבטל את הדוח שלכם?</h2>
+          <h2 className="text-3xl font-bold mb-4">
+            {language === "en"
+              ? "Want to cancel your report?"
+              : "רוצים לבטל את הדוח שלכם?"}
+          </h2>
           <p className="max-w-2xl mx-auto mb-8 text-blue-100">
-            אל תשלמו על דוחות לא מוצדקים. מערכת FineFix מספקת פתרון מהיר, יעיל וזול לערעור על דוחות חניה.
+            {language === "en"
+              ? "Don't pay for unjustified tickets. The FineFix system provides a fast, efficient and inexpensive solution for appealing parking tickets."
+              : "אל תשלמו על דוחות לא מוצדקים. מערכת FineFix מספקת פתרון מהיר, יעיל וזול לערעור על דוחות חניה."}
           </p>
-          <Button 
+          <Button
             onClick={() => navigate(createPageUrl("Appeal"))}
             className="bg-white text-blue-600 hover:bg-blue-50"
           >
-            התחילו עכשיו
-            <ArrowLeft className="h-5 w-5 mr-2" />
+            {language === "en" ? "Get Started" : "התחילו עכשיו"}
+            {language === "en" ? (
+              <ArrowRight className="h-5 w-5 ml-2" />
+            ) : (
+              <ArrowLeft className="h-5 w-5 mr-2" />
+            )}
           </Button>
         </div>
       </section>
