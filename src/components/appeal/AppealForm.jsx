@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import {
   Car,
@@ -38,6 +38,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import supabase from "@/integrations/supabase";
 import { toast } from "sonner";
+import { Checkbox } from "../ui/checkbox";
 
 export default function AppealForm({ onSubmit }) {
   const [language] = useLocalStorage("languagePreference", "he"); // Default to Hebrew
@@ -65,6 +66,7 @@ export default function AppealForm({ onSubmit }) {
   const [generatingLetter, setGeneratingLetter] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
   const [fileErrors, setFileErrors] = useState("");
+  const [consent, setConsent] = useState(false);
   const navigate = useNavigate();
 
   // Get translated content based on the current language
@@ -103,7 +105,7 @@ export default function AppealForm({ onSubmit }) {
           removeFile: "Remove",
           updateLetter: "Update Letter",
           generatingLetter: "Generating...",
-          finish: "Finish and Submit",
+          continuePayment: "Continue to Payment",
           uploadFileHint:
             "Upload photos of the location, signage, or any relevant documents",
           maxFilesError: "You can upload a maximum of 5 files",
@@ -120,6 +122,8 @@ export default function AppealForm({ onSubmit }) {
           generateBtn: "Generate Appeal Letter",
           requiredError: "This field is required",
           minLengthError: "Please enter at least {0} characters",
+          consentError:
+            "You must accept the Terms of Use and Privacy Policy before continuing.",
           invalidCarNumberError:
             "Please enter a valid vehicle license plate number",
           invalidTicketNumberError: "Please enter a valid ticket number",
@@ -219,7 +223,7 @@ export default function AppealForm({ onSubmit }) {
           removeFile: "הסר",
           updateLetter: "עדכן מכתב",
           generatingLetter: "מייצר...",
-          finish: "סיים והגש",
+          continuePayment: "המשך לתשלום",
           uploadFileHint: "העלה תמונות של המיקום, השילוט, או כל מסמך רלוונטי",
           maxFilesError: "ניתן להעלות מקסימום 5 קבצים",
           fileSizeError: "גודל הקובץ חייב להיות פחות מ-5MB",
@@ -235,6 +239,8 @@ export default function AppealForm({ onSubmit }) {
           requiredError: "שדה זה הוא חובה",
           minLengthError: "אנא הזן לפחות {0} תווים",
           invalidCarNumberError: "אנא הזן מספר רישוי תקין",
+          consentError:
+            "עליך לקבל את תנאי השימוש ומדיניות הפרטיות לפני שתמשיך.",
           invalidTicketNumberError: "אנא הזן מספר דו״ח תקין",
           documents: "מסמכים",
         },
@@ -394,7 +400,6 @@ export default function AppealForm({ onSubmit }) {
         }
       });
     }
-
     setErrors(newErrors);
     return isValid;
   };
@@ -563,10 +568,24 @@ export default function AppealForm({ onSubmit }) {
     setStep((prev) => prev - 1);
   };
 
+  const handleChecked = (e) => {
+    const checkedValue = e.target.checked;
+    if (!checkedValue) {
+      setErrors({ consentError: t.labels.consentError });
+      setConsent(false);
+    } else {
+      setErrors({});
+      setConsent(true);
+    }
+  };
+
   // Submit the form
   const handleSubmit = async () => {
     if (!validateStep()) return;
-
+    if (!consent) {
+      setErrors({ consentError: t.labels.consentError });
+      return;
+    }
     setLoading(true);
 
     try {
@@ -1278,6 +1297,38 @@ export default function AppealForm({ onSubmit }) {
                   </div>
                 )}
 
+                {/* Consent checkbox */}
+                <div className="flex items-start gap-2">
+                  <input
+                    type="checkbox"
+                    id="consent"
+                    checked={consent}
+                    onChange={handleChecked}
+                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <label
+                    htmlFor="consent"
+                    className="text-sm text-gray-700 leading-snug cursor-pointer"
+                  >
+                    I have read and agree to the{" "}
+                    <Link
+                      to="/TermsOfUses"
+                      className="underline hover:text-blue-800 hover:underline"
+                    >
+                      Terms of Use
+                    </Link>{" "}
+                    and{" "}
+                    <Link
+                      to="/PrivacyPolicy"
+                      className="underline hover:text-blue-800 hover:underline"
+                    >
+                      Privacy Policy
+                    </Link>
+                  </label>
+                </div>
+                {errors.consentError && (
+                  <p className="text-red-500 text-sm">{errors.consentError}</p>
+                )}
                 {errors.generated_letter && (
                   <p className="text-red-500 text-sm">
                     {errors.generated_letter}
@@ -1343,7 +1394,7 @@ export default function AppealForm({ onSubmit }) {
             ) : (
               <>
                 {step === 6 ? (
-                  t.labels.finish
+                  t.labels.continuePayment
                 ) : (
                   <>
                     {language === "en" ? (
