@@ -71,7 +71,7 @@ const BlogDetails = () => {
                   {blog.readTime && (
                     <div className="flex items-center gap-1">
                       <Clock className="h-4 w-4" />
-                      <span>{blog.readTime} min read</span>
+                      <span>{blog.readTime} read</span>
                     </div>
                   )}
                 </div>
