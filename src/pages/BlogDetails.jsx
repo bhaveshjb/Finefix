@@ -41,12 +41,19 @@ const BlogDetails = () => {
             {/* Blog Title */}
             <span className="text-3xl font-bold">{blog.title}</span>
 
+            {/* Excerpt */}
+            {blog.excerpt && (
+              <p className="text-gray-700 text-lg mt-3 italic">
+                {blog.excerpt}
+              </p>
+            )}
+
             {/* Author Info */}
             <div className="flex items-center gap-3 mt-4 text-gray-600">
               {blog.authorImg && (
                 <img
                   src={blog.authorImg}
-                  alt={blog.author || "Author"}
+                  alt={blog.heroAlt}
                   className="w-10 h-10 rounded-full object-cover"
                 />
               )}
@@ -97,7 +104,9 @@ const BlogDetails = () => {
               <p className="text-gray-600 text-lg">{blog.description}</p>
             </div>
 
-            {blog?.subtext && <p className="text-gray-600 text-base">{blog.subtext}</p>}
+            {blog?.subtext && (
+              <p className="text-gray-600 text-base">{blog.subtext}</p>
+            )}
 
             {/* Blog Image */}
             {blog.image && (
