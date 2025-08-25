@@ -38,15 +38,22 @@ const BlogDetails = () => {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="p-4 md:p-6"
           >
-            {/* Blog Title & Description */}
+            {/* Blog Title */}
             <span className="text-3xl font-bold">{blog.title}</span>
+
+            {/* Excerpt */}
+            {blog.excerpt && (
+              <p className="text-gray-700 text-lg mt-3 italic">
+                {blog.excerpt}
+              </p>
+            )}
 
             {/* Author Info */}
             <div className="flex items-center gap-3 mt-4 text-gray-600">
               {blog.authorImg && (
                 <img
                   src={blog.authorImg}
-                  alt={blog.author || "Author"}
+                  alt={blog.heroAlt}
                   className="w-10 h-10 rounded-full object-cover"
                 />
               )}
@@ -93,8 +100,13 @@ const BlogDetails = () => {
             )}
 
             {/* Blog Description */}
-            <p className="mt-2">{blog.description}</p>
-            {blog?.subtext && <p className="text-gray-600">{blog.subtext}</p>}
+            <div className="mt-6">
+              <p className="text-gray-600 text-lg">{blog.description}</p>
+            </div>
+
+            {blog?.subtext && (
+              <p className="text-gray-600 text-base">{blog.subtext}</p>
+            )}
 
             {/* Blog Image */}
             {blog.image && (
@@ -111,9 +123,11 @@ const BlogDetails = () => {
             <div className="space-y-8 mt-6">
               {blog.sections?.map((item, index) => (
                 <div key={"sec" + index} className="flex flex-col">
-                  <span className="text-xl font-semibold">{item.heading}</span>
+                  <span className="text-xl text-black font-semibold">
+                    {item.heading}
+                  </span>
                   {item?.subtext && (
-                    <span className="font-medium my-2 text-gray-700">
+                    <span className="my-2 text-gray-600 text-lg">
                       {item?.subtext}
                     </span>
                   )}
@@ -123,10 +137,13 @@ const BlogDetails = () => {
                       {item.content.map((text, i) => {
                         const [label, value] = text.split(":");
                         return (
-                          <li key={i}>
+                          <li key={i} className="text-gray-600 text-lg">
                             {value?.trim() ? (
                               <>
-                                <strong>{label.trim()}:</strong> {value.trim()}
+                                <strong className="text-gray-600 text-lg">
+                                  {label.trim()}:
+                                </strong>{" "}
+                                {value.trim()}
                               </>
                             ) : (
                               text
@@ -138,7 +155,7 @@ const BlogDetails = () => {
                   )}
 
                   {item?.note && (
-                    <span className="italic text-sm text-gray-500 mt-2">
+                    <span className="italic text-base text-gray-500 mt-2">
                       {item.note}
                     </span>
                   )}
@@ -151,10 +168,10 @@ const BlogDetails = () => {
               <div className="space-y-6 mt-8">
                 {blog.points.map((point, index) => (
                   <div key={"point" + index}>
-                    <span className="font-semibold block mb-2">
+                    <span className="font-semibold text-lg block mb-2">
                       {point.title}
                     </span>
-                    <ul className="list-disc pl-10 space-y-2">
+                    <ul className="list-disc pl-10 text-gray-600 text-lg space-y-2">
                       {point.descriptions?.map((des, i) => (
                         <li key={"des" + i}>{des}</li>
                       ))}
@@ -175,8 +192,8 @@ const BlogDetails = () => {
                 <div className="space-y-4">
                   {blog.faq.map((item, i) => (
                     <div key={"faq" + i}>
-                      <strong className="block">{item.ques}</strong>
-                      <p className="text-gray-700">{item.ans}</p>
+                      <strong className="block text-lg">{item.ques}</strong>
+                      <p className="text-gray-600 text-lg">{item.ans}</p>
                     </div>
                   ))}
                 </div>
@@ -194,7 +211,7 @@ const BlogDetails = () => {
                 <div className="space-y-4">
                   {blog.moreQues.map((item, i) => (
                     <div key={i + "mq"}>
-                      <strong className="block">{item.ques}</strong>
+                      <strong className="block text-lg">{item.ques}</strong>
                       <p className="text-gray-700">{item.ans}</p>
                     </div>
                   ))}

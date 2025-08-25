@@ -29,8 +29,8 @@ const blogsDataEn = [
     authorImg: AuthorAvatar,
     publishDate: "10.11.2023",
     readTime: "6 min",
-    Excerpt:
-      "Why “false” tickets happen after valid payment and how FineFix auto-builds and files a tailored appeal.",
+    excerpt:
+      "What to check before paying, the strongest grounds to cancel, and how to submit—clearly and without bureaucracy.",
     heroAlt: "Israeli urban signage and curb – parking appeal guide",
     sections: [
       {
@@ -132,7 +132,7 @@ const blogsDataEn = [
     authorImg: AuthorAvatar,
     publishDate: "01.12.2023",
     readTime: "4 min",
-    Excerpt:
+    excerpt:
       "Why “false” tickets happen after valid payment and how FineFix auto-builds and files a tailored appeal.",
     heroAlt:
       "Payment screenshot + local signage — payment recognized yet ticket issued",
@@ -214,8 +214,26 @@ const blogsDataEn = [
     description:
       "If you manage a vehicle fleet, a delivery company, a leasing firm, or any organization with company cars—parking tickets add up fast. FineFix lets you:",
     image: Picture10,
-    slug: "slug-3",
+    slug: "finefix-for-business-drivers-and-fleets",
     publishDate: "15.12.2023",
+    category: "Business",
+    tags: [
+      "B2B",
+      "Fleet",
+      "Batch appeals",
+      "CSV",
+      "API",
+      "Dashboard",
+      "Alerts",
+      "Automation",
+    ],
+    author: "FineFix Editorial Team",
+    authorImg: AuthorAvatar,
+    role: "FineFix Content Team",
+    excerpt:
+      "Our B2B solution centralizes fleet tickets, generates batch appeals, and provides dashboards and reminders—saving time and money.",
+    heroAlt:
+      "Business vehicle fleet in a parking lot — centralized ticket management",
     readTime: "7 min",
     sections: [
       {
@@ -283,8 +301,23 @@ const blogsDataEn = [
     description:
       "Managing a vehicle fleet in Israel means coping with dense cities, heavy enforcement, and different parking rules across municipalities. The result: an accumulation of parking tickets—sometimes dozens or hundreds per month. Any ticket left unmanaged can turn into late fees, collections, or accounting headaches. Beyond the money, there’s time, driver frustration, and reputational damage.",
     image: Picture13,
-    slug: "slug-4",
+    slug: "parking-tickets-for-fleets-save-thousands",
     publishDate: "22.12.2023",
+    author: "FineFix Editorial Team",
+    authorImg: AuthorAvatar,
+    role: "FineFix Content Team",
+    category: "Business",
+    tags: [
+      "Fleet",
+      "ROI",
+      "Automation",
+      "Company policy",
+      "Ticket cancellations",
+      "Savings",
+    ],
+    excerpt:
+      "How organizations save tens of thousands annually with automated appeals, smart pay-or-appeal policies, and status tracking.",
+    heroAlt: "Fleet savings dashboard — parking tickets",
     readTime: "5 min",
     subtext:
       "FineFix for Business was built for exactly this: an AI-powered SaaS that centralizes all fleet tickets, identifies appeal grounds, automatically decides (per your company policy) what to appeal vs. pay immediately, generates professional appeals, and tracks everything end-to-end—no scattered spreadsheets or endless email threads.",
@@ -395,7 +428,7 @@ const blogsDataEn = [
     authorImg: AuthorAvatar,
     publishDate: "05.01.2024",
     readTime: "8 min",
-    Excerpt:
+    excerpt:
       "Why timing is critical, the typical windows, and how FineFix tracks them so you never miss a deadline.",
     heroAlt: "Timeline/calendar for parking-ticket appeals in Israel",
     sections: [
@@ -502,7 +535,7 @@ const blogsDataEn = [
     authorImg: AuthorAvatar,
     publishDate: "18.01.2024",
     readTime: "4 min",
-    Excerpt:
+    excerpt:
       "Cancellation patterns across municipalities and how we use them to strengthen future appeals.",
     heroAlt: "City map with cancellation/precedent markers – real case studies",
     sections: [
@@ -611,7 +644,7 @@ const blogsDataEn = [
     authorImg: AuthorAvatar,
     publishDate: "18.01.2024",
     readTime: "4 min",
-    Excerpt:
+    excerpt:
       "A clean breakdown of the three paths, when each makes sense, and FineFix’s data-driven recommendation.",
     heroAlt: "Direction sign: Pay / Appeal / Trial — decision making",
     description:
@@ -734,7 +767,7 @@ const blogsDataEn = [
     authorImg: AuthorAvatar,
     publishDate: "18.01.2024",
     readTime: "4 min",
-    Excerpt:
+    excerpt:
       "Why work zones create ambiguous tickets and how to argue unclear/transition status.",
     heroAlt: "Work zone: cones, covered sign, faded paint — parking context",
     sections: [
