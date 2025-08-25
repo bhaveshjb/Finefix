@@ -28,133 +28,6 @@ import blogsDataHb from "../utils/blojsHb";
 
 export default function Blog() {
   const [language] = useLocalStorage("languagePreference", "he");
-  const [posts] = useState([
-    {
-      id: 1,
-      title: "איך להתמודד עם דוח חניה לא מוצדק - המדריך המלא",
-      summary:
-        "דוח חניה יכול להיות מוצדק, אך במקרים רבים הרשויות טועות. במאמר זה נספק מדריך מפורט כיצד להתמודד עם דוחות חניה בלתי מוצדקים וכיצד להגיש ערעור אפקטיבי.",
-      content: `
-        <h2>מבוא: הבנת הזכויות שלכם</h2>
-        <p>קבלת דוח חניה יכולה להיות חוויה מתסכלת, במיוחד כאשר אתם מאמינים שהדוח ניתן שלא בצדק. חשוב לדעת שיש לכם זכות לערער על דוחות חניה, וב-FineFix אנו רואים שיעורי הצלחה גבוהים בביטול דוחות שניתנו בנסיבות שאינן מוצדקות.</p>
-        
-        <h2>חלק א: סיבות נפוצות לערעור מוצלח</h2>
-        <p>ישנן מספר סיבות נפוצות שיכולות להוביל לביטול דוח חניה:</p>
-        <ul>
-          <li><strong>שילוט לא ברור או חסר:</strong> אם התמרורים לא היו נראים בבירור או היו חסרים, זו סיבה טובה לערעור.</li>
-          <li><strong>נסיבות חירום:</strong> במקרים של חירום רפואי או בטיחותי, ניתן להצדיק חניה במקום אסור.</li>
-          <li><strong>תקלה טכנית:</strong> במקרה של תקלה במכשיר התשלום או באפליקציה, שמנעה מכם לשלם עבור החניה.</li>
-          <li><strong>טעות בפרטי הדוח:</strong> אם ישנה טעות בפרטי הרכב, המיקום או הזמן בדוח, ניתן לערער על בסיס זה.</li>
-        </ul>
-      `,
-      category: "מדריכים",
-      publishDate: "10.11.2023",
-      readTime: "6 דקות",
-      author: "עו״ד רונית לוי",
-      authorImage:
-        "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=50",
-      authorBio:
-        "עו״ד רונית לוי היא מומחית בדיני תעבורה עם 15 שנות ניסיון בייצוג לקוחות בערעורים על דוחות וקנסות.",
-      image:
-        "https://images.unsplash.com/photo-1588421357574-87938a86fa28?auto=format&fit=crop&q=80&w=600",
-      tags: ["ערעור דוחות", "זכויות נהגים", "חניה", "טיפים משפטיים"],
-      viewCount: 1240,
-    },
-    {
-      id: 2,
-      title: "5 סיבות מוצדקות לערעור על דוח חניה שכדאי להכיר",
-      summary:
-        "ישנן מספר סיבות מוצדקות לערעור על דוח חניה אשר במקרים רבים מובילות לביטול מלא של הקנס. במאמר זה נסקור את 5 הסיבות הנפוצות ביותר שכדאי לכל נהג להכיר.",
-      content: "<p>תוכן המאמר המלא כאן...</p>",
-      category: "טיפים",
-      publishDate: "01.12.2023",
-      readTime: "4 דקות",
-      author: "אלון כהן",
-      authorImage:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=50",
-      authorBio:
-        "אלון כהן הוא יועץ משפטי בתחום דיני התעבורה ומרצה באוניברסיטת תל אביב.",
-      image:
-        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=600",
-      tags: ["ערעור דוחות", "טיפים", "חניה אסורה"],
-      viewCount: 980,
-    },
-    {
-      id: 3,
-      title: "מה אומר החוק על דוחות חניה וכיצד זה משפיע על הערעור שלכם",
-      summary:
-        "הבנת המסגרת החוקית של דוחות חניה יכולה לסייע רבות בהגשת ערעור מוצלח. במאמר זה נסקור את החוקים והתקנות הרלוונטיים ואת זכויותיכם כנהגים.",
-      content: "<p>תוכן המאמר המלא כאן...</p>",
-      category: "משפטי",
-      publishDate: "15.12.2023",
-      readTime: "7 דקות",
-      author: "עו״ד דוד לוינסון",
-      authorImage:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=50",
-      authorBio: "עו״ד דוד לוינסון מתמחה בדיני תעבורה וחוקי חניה עירוניים.",
-      image:
-        "https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&q=80&w=600",
-      tags: ["חוק", "משפט", "תקנות חניה", "זכויות"],
-      viewCount: 756,
-    },
-    {
-      id: 4,
-      title: "כיצד הבינה המלאכותית משנה את עולם הערעורים על דוחות",
-      summary:
-        "טכנולוגיות מתקדמות כמו בינה מלאכותית משנות את האופן שבו מוגשים ערעורים על דוחות. גלו כיצד AI יכול לשפר משמעותית את סיכויי ההצלחה של הערעור שלכם.",
-      content: "<p>תוכן המאמר המלא כאן...</p>",
-      category: "טכנולוגיה",
-      publishDate: "22.12.2023",
-      readTime: "5 דקות",
-      author: "מיכל אברהמי",
-      authorImage:
-        "https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&q=80&w=50",
-      authorBio:
-        "מיכל אברהמי היא מומחית לטכנולוגיות AI ויישומן במערכות משפטיות.",
-      image:
-        "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600",
-      tags: ["בינה מלאכותית", "טכנולוגיה", "חדשנות", "אוטומציה"],
-      viewCount: 1102,
-    },
-    {
-      id: 5,
-      title: "מקרה בוחן: כיצד הצלחנו לבטל דוח של 1,000₪ עבור לקוח",
-      summary:
-        "ניתוח מפורט של מקרה אמיתי בו סייענו ללקוח לבטל דוח חניה משמעותי. במאמר זה נחשוף את האסטרטגיה שהובילה להצלחה ואת הלקחים העיקריים.",
-      content: "<p>תוכן המאמר המלא כאן...</p>",
-      category: "מקרי בוחן",
-      publishDate: "05.01.2024",
-      readTime: "8 דקות",
-      author: "גיל שטיינברג",
-      authorImage:
-        "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&q=80&w=50",
-      authorBio:
-        "גיל שטיינברג הוא מנהל מחלקת הערעורים ב-FineFix עם ניסיון של למעלה מ-1000 מקרים.",
-      image:
-        "https://images.unsplash.com/photo-1586791965591-15d8892f4333?auto=format&fit=crop&q=80&w=600",
-      tags: ["מקרה בוחן", "הצלחות", "אסטרטגיה משפטית"],
-      viewCount: 867,
-    },
-    {
-      id: 6,
-      title: "סטטיסטיקה מפתיעה: 78% מהערעורים על דוחות חניה מתקבלים",
-      summary:
-        "מחקר חדש חושף כי רוב הערעורים המוגשים על דוחות חניה מתקבלים, אך רוב הנהגים כלל לא מערערים. במאמר זה נציג את הנתונים המפתיעים ומה המשמעות עבורכם.",
-      content: "<p>תוכן המאמר המלא כאן...</p>",
-      category: "סטטיסטיקה",
-      publishDate: "18.01.2024",
-      readTime: "4 דקות",
-      author: "ד״ר רוני כהן",
-      authorImage:
-        "https://images.unsplash.com/photo-1584999734482-0361aecad844?auto=format&fit=crop&q=80&w=50",
-      authorBio:
-        "ד״ר רוני כהן היא חוקרת במכון למדיניות ציבורית ומתמחה בניתוח נתונים בתחום המשפט.",
-      image:
-        "https://images.unsplash.com/photo-1423592707957-3b212afa6733?auto=format&fit=crop&q=80&w=600",
-      tags: ["סטטיסטיקה", "מחקר", "נתונים", "מגמות"],
-      viewCount: 1432,
-    },
-  ]);
 
   const [featuredPost] = useState(
     language === "en"
@@ -193,16 +66,13 @@ export default function Blog() {
   const navigate = useNavigate();
 
   const categories = [
-    { id: "all", name: language === "en" ? "Everything" : "הכל" },
-    { id: "tips", name: language === "en" ? "Tips" : "טיפים" },
-    { id: "guides", name: language === "en" ? "Guides" : "מדריכים" },
-    { id: "legal", name: language === "en" ? "Legal" : "משפטי" },
-    { id: "tech", name: language === "en" ? "Technology" : "טכנולוגיה" },
-    {
-      id: "case-studies",
-      name: language === "en" ? "Test cases" : "מקרי בוחן",
-    },
-    { id: "statistics", name: language === "en" ? "Statistics" : "סטטיסטיקה" },
+    { id: "all", en: "Everything", he: "הכל" },
+    { id: "tips", en: "Tips", he: "טיפים" },
+    { id: "guides", en: "Guides", he: "מדריכים" },
+    { id: "legal", en: "Legal", he: "משפטי" },
+    { id: "tech", en: "Technology", he: "טכנולוגיה" },
+    { id: "case-studies", en: "Case Studies", he: "מקרי בוחן" },
+    { id: "statistics", en: "Statistics", he: "סטטיסטיקה" },
   ];
 
   const blogs = language === "en" ? blogsDataEn : blogsDataHb;
@@ -210,16 +80,16 @@ export default function Blog() {
   const filteredPosts = blogs.filter((post) => {
     // Filter by category
     if (activeCategory !== "all") {
-      const categoryMap = {
-        tips: "טיפים",
-        guides: "מדריכים",
-        legal: "משפטי",
-        tech: "טכנולוגיה",
-        "case-studies": "מקרי בוחן",
-        statistics: "סטטיסטיקה",
-      };
+      const selectedCategory = categories.find(
+        (cat) => cat.id === activeCategory
+      );
 
-      if (post.category !== categoryMap[activeCategory]) {
+      if (!selectedCategory) return false;
+
+      if (
+        post.category !== selectedCategory.en &&
+        post.category !== selectedCategory.he
+      ) {
         return false;
       }
     }
@@ -228,11 +98,11 @@ export default function Blog() {
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       return (
-        post.title.toLowerCase().includes(query) ||
-        post.summary.toLowerCase().includes(query) ||
-        post.author.toLowerCase().includes(query) ||
-        post.category.toLowerCase().includes(query) ||
-        post.tags?.some((tag) => tag.toLowerCase().includes(query))
+        (post.title || "").toLowerCase().includes(query) ||
+        (post.summary || "").toLowerCase().includes(query) ||
+        (post.author || "").toLowerCase().includes(query) ||
+        (post.category || "").toLowerCase().includes(query) ||
+        post.tags?.some((tag) => (tag || "").toLowerCase().includes(query))
       );
     }
 
@@ -337,12 +207,8 @@ export default function Blog() {
               >
                 <TabsList className="bg-white">
                   {categories.map((category) => (
-                    <TabsTrigger
-                      key={category.id}
-                      value={category.id}
-                      className="text-sm"
-                    >
-                      {category.name}
+                    <TabsTrigger key={category.id} value={category.id}>
+                      {language === "en" ? category.en : category.he}
                     </TabsTrigger>
                   ))}
                 </TabsList>
@@ -368,7 +234,6 @@ export default function Blog() {
           {filteredPosts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredPosts.map((post, index) => {
-                console.log("Post", post);
                 return (
                   <motion.div
                     key={post.id}
@@ -410,7 +275,7 @@ export default function Blog() {
 
                         <div className="flex items-center mt-4">
                           <img
-                            src={post.authorImage}
+                            src={post.authorImg}
                             alt={post.author}
                             className="h-8 w-8 rounded-full object-cover ml-2"
                           />
@@ -419,7 +284,7 @@ export default function Blog() {
                           </span>
                         </div>
 
-                        <Link to={`/Blog/${post.id}`}>
+                        <Link to={`/Blog/${post.slug}`}>
                           <Button
                             variant="ghost"
                             className="text-blue-600 p-0 h-auto font-medium hover:bg-transparent hover:text-blue-800 mt-4 flex items-center"

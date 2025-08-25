@@ -67,7 +67,7 @@ function PagesContent() {
           <Route path="/Appeal" element={<Appeal />} />
           <Route path="/Appeal/Success" element={<Success />} />
           <Route path="/Blog" element={<Blog />} />
-          <Route path="/Blog/:id" element={<BlogDetails />} />
+          <Route path="/Blog/:slug" element={<BlogDetails />} />
           <Route path="/AppealFeedback" element={<AppealFeedback />} />
         </Routes>
       </Layout>

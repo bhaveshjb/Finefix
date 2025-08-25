@@ -5,15 +5,31 @@ import Picture7 from "../assets/images/Picture7.png";
 import Picture8 from "../assets/images/Picture8.png";
 import Picture10 from "../assets/images/Picture10.png";
 import Picture13 from "../assets/images/Picture13.png";
+import AuthorAvatar from "../assets/images/profile.png";
 
 const blogsDataEn = [
   {
     id: 1,
     title:
-      "How to Appeal a Parking Ticket in Israel (and Why You Shouldn’t Leave Money on the Table)",
+      "How to Appeal a Parking Ticket in Israel – A Short, Practical Guide",
     description:
       "Got a parking ticket? You’re not alone. In Israel’s major cities (Tel Aviv, Jerusalem, Haifa, Rishon LeZion and more) hundreds of thousands of tickets are issued every year. Many are borderline: confusing signage, faded markings, payment-app glitches, wrong vehicle details, or duplicate tickets within a short time. Yet most drivers simply pay. Don’t. This guide explains how to appeal a parking ticket in Israel, what to attach, when to file, and the strongest grounds for cancellation. We’ll finish with how FineFix does it for you in minutes—using AI familiar with municipal bylaws to generate a professional appeal letter.",
     image: Picture1,
+    slug: "how-to-appeal-parking-ticket-israel",
+    category: "Guides",
+    tags: [
+      "Parking fines",
+      "Appeals",
+      "Municipal bylaws",
+      "Evidence",
+      "Israel",
+    ],
+    role: "Legal Content Lead",
+    author: "FineFix Editorial Team",
+    authorImg: AuthorAvatar,
+    Excerpt:
+      "Why “false” tickets happen after valid payment and how FineFix auto-builds and files a tailored appeal.",
+    heroAlt: "Israeli urban signage and curb – parking appeal guide",
     sections: [
       {
         heading: "Why Appeal a Parking Ticket at All?",
@@ -96,10 +112,26 @@ const blogsDataEn = [
   {
     id: 2,
     title:
-      "Paid for Parking but Still Got a Ticket? Don’t Draft the Appeal Yourself—FineFix Does It for You",
+      "Paid for Parking but Still Got a Ticket? FineFix Handles It for You",
     description:
       "You paid for parking via Pango, Cellopark, or a parking meter—and still received a ticket? It’s one of the most frustrating situations for drivers in Israel. You followed the rules. You paid. And yet… a ticket. Most drivers give up and pay out of frustration or to avoid the bureaucracy. That’s exactly where FineFix comes in: instead of drafting letters, hunting for municipal contacts, and juggling file uploads—upload the ticket and our system handles the rest.",
     image: Picture2,
+    slug: "paid-but-got-parking-ticket",
+    category: "Tips",
+    tags: [
+      "Pango",
+      "CelloPark",
+      "Unrecognized payment",
+      "Evidence",
+      "Troubleshooting",
+    ],
+    role: "Legal Content Lead",
+    author: "Adv. Noa Ben-David",
+    authorImg: AuthorAvatar,
+    Excerpt:
+      "Why “false” tickets happen after valid payment and how FineFix auto-builds and files a tailored appeal.",
+    heroAlt:
+      "Payment screenshot + local signage — payment recognized yet ticket issued",
     sections: [
       {
         heading: "Why did you get a ticket even though you paid?",
@@ -178,6 +210,7 @@ const blogsDataEn = [
     description:
       "If you manage a vehicle fleet, a delivery company, a leasing firm, or any organization with company cars—parking tickets add up fast. FineFix lets you:",
     image: Picture10,
+    slug: "slug-3",
     sections: [
       {
         heading: "",
@@ -244,6 +277,7 @@ const blogsDataEn = [
     description:
       "Managing a vehicle fleet in Israel means coping with dense cities, heavy enforcement, and different parking rules across municipalities. The result: an accumulation of parking tickets—sometimes dozens or hundreds per month. Any ticket left unmanaged can turn into late fees, collections, or accounting headaches. Beyond the money, there’s time, driver frustration, and reputational damage.",
     image: Picture13,
+    slug: "slug-4",
     subtext:
       "FineFix for Business was built for exactly this: an AI-powered SaaS that centralizes all fleet tickets, identifies appeal grounds, automatically decides (per your company policy) what to appeal vs. pay immediately, generates professional appeals, and tracks everything end-to-end—no scattered spreadsheets or endless email threads.",
     sections: [
@@ -335,10 +369,25 @@ const blogsDataEn = [
   {
     id: 5,
     title:
-      "How Long Do You Have to Appeal a Parking Ticket in Each Israeli City?You Don’t Need to Remember - FineFix Reminds and Files for You",
+      "How Long Do You Have to Appeal in Each City? FineFix Reminds & Files",
     description:
       "Most drivers in Israel don’t fail because their appeal is weak—they fail because they miss the deadline. Every municipality follows its own policy: a window for an initial cancellation request, a reduced-payment window, an option to stand trial, and sometimes a “grace” path or warning conversion. Managing this for one car is confusing; managing it for a fleet is chaos.That’s exactly why FineFix exists: upload a single ticket (or a consolidated file), and our system detects the issuing authority, the ticket type, and all relevant timelines—then makes sure you don’t miss them. No need to memorize rules or check each city manually.",
     image: Picture8,
+    slug: "parking-ticket-deadlines-israel",
+    category: "Legal",
+    tags: [
+      "Deadlines",
+      "Administrative review",
+      "Early payment",
+      "Stand trial",
+      "Municipal policy",
+    ],
+    role: "FineFix Content Team",
+    author: "FineFix Editorial Team",
+    authorImg: AuthorAvatar,
+    Excerpt:
+      "Why timing is critical, the typical windows, and how FineFix tracks them so you never miss a deadline.",
+    heroAlt: "Timeline/calendar for parking-ticket appeals in Israel",
     sections: [
       {
         heading: "Why Deadlines Matter",
@@ -425,11 +474,25 @@ const blogsDataEn = [
   },
   {
     id: 6,
-    title:
-      "Parking Justice: Real Cases Where Tickets Were Cancelled in Israel (and What FineFix Learns from Them)",
+    title: "Parking Justice: Real Cases Cancelled (and What FineFix Learns)",
     description:
       "Hundreds of thousands of parking tickets are issued every year in Israel. Some are justified. Many are cancelled—sometimes due to a technical error, sometimes confusing signage, and sometimes because the driver acted lawfully but the system didn’t recognize it. The problem? Most drivers never hear about these cases; they just pay.In this post we’ll dive into real cancellation patterns reported across municipalities, explain why they were approved, and show how FineFix learns from the field and uses those insights to strengthen your appeals—automatically, without you needing to study regulations or draft letters.For privacy, some examples are adapted and anonymized; the underlying principle remains. Where public/media coverage exists, we reflect it at a high level.",
     image: Picture7,
+    slug: "parking-ticket-cancellations-real-cases-israel",
+    category: "Case Studies",
+    tags: [
+      "Precedents",
+      "Misleading signage",
+      "Duplicates",
+      "Technical defects",
+      "Service errors",
+    ],
+    role: "Legal Content Lead",
+    author: "Adv. Noa Ben-David",
+    authorImg: AuthorAvatar,
+    Excerpt:
+      "Cancellation patterns across municipalities and how we use them to strengthen future appeals.",
+    heroAlt: "City map with cancellation/precedent markers – real case studies",
     sections: [
       {
         heading: "Why real cancellation cases matter",
@@ -528,6 +591,15 @@ const blogsDataEn = [
     id: 7,
     title: "How to Choose: Pay, Appeal, or Stand Trial — FineFix Explains",
     image: Picture5,
+    slug: "pay-appeal-or-stand-trial",
+    category: "Guides",
+    tags: ["Decision making", "Appeals", "Payment", "Legal process", "Israel"],
+    role: "FineFix Content Team",
+    author: "FineFix Editorial Team",
+    authorImg: AuthorAvatar,
+    Excerpt:
+      "A clean breakdown of the three paths, when each makes sense, and FineFix’s data-driven recommendation.",
+    heroAlt: "Direction sign: Pay / Appeal / Trial — decision making",
     description:
       "You got a parking ticket and you’re unsure: pay, appeal, or maybe stand trial? Most drivers in Israel simply pay—often due to pressure, lack of time, or the feeling that bureaucracy isn’t worth it. In reality, many tickets are issued under circumstances you can challenge: valid payment not recognized, unclear markings, duplicate tickets, errors in vehicle details, a valid resident permit that wasn’t detected, and more. That moment is exactly why FineFix exists: upload the ticket and we analyze it with AI, check cancellation grounds, cross-reference municipal policy, and recommend the best next step—pay, appeal, or (where appropriate) consider legal proceedings. No letter drafting, no hopping between municipal sites, no memorizing deadlines.",
     subTopic: {
@@ -630,11 +702,25 @@ const blogsDataEn = [
   },
   {
     id: 8,
-    title:
-      "Parking Tickets in Construction Zones: What If There’s No Marking? FineFix Checks for You",
+    title: "Parking Tickets in Construction Zones: What If There’s No Marking?",
     description:
       "It happens all the time: you arrive on a street under renovation, curb paint is smeared, a sign is wrapped in plastic, or temporary cones blur the line between “forbidden” and “temporarily allowed.” You park like everyone else around you—then a few days later a parking ticket shows up. Frustrating? Very. Justified? Not always.Work zones often create legal ambiguity: the municipality (or its contractor) is obligated to provide clear marking, yet in reality there are periods when markings are partial—or digital payment systems aren’t updated. In these cases it’s well worth checking for an appeal ground—especially with FineFix, which detects construction cues, checks signage-change history, and generates a professional appeal when there’s a basis.",
     image: Picture2,
+    slug: "parking-tickets-construction-zones",
+    category: "Tips",
+    tags: [
+      "Road works",
+      "Temporary signage",
+      "Blue-and-white",
+      "Ambiguity",
+      "Evidence photos",
+    ],
+    role: "FineFix Content Team",
+    author: "FineFix Editorial Team",
+    authorImg: AuthorAvatar,
+    Excerpt:
+      "Why work zones create ambiguous tickets and how to argue unclear/transition status.",
+    heroAlt: "Work zone: cones, covered sign, faded paint — parking context",
     sections: [
       {
         heading:
