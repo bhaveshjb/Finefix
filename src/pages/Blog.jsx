@@ -73,6 +73,7 @@ export default function Blog() {
     { id: "tech", en: "Technology", he: "טכנולוגיה" },
     { id: "case-studies", en: "Case Studies", he: "מקרי בוחן" },
     { id: "statistics", en: "Statistics", he: "סטטיסטיקה" },
+    { id: "business", en: "Business", he: "עֵסֶק" },
   ];
 
   const blogs = language === "en" ? blogsDataEn : blogsDataHb;
