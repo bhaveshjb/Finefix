@@ -399,6 +399,7 @@ export default function Landing() {
           { id: "legal", name: "Legal" },
           { id: "tech", name: "Technology" },
           { id: "cases", name: "Case Studies" },
+          { id: "business", name: "Business" },
         ]
       : [
           { id: "all", name: "הכל" },
@@ -407,6 +408,7 @@ export default function Landing() {
           { id: "legal", name: "משפטי" },
           { id: "tech", name: "טכנולוגיה" },
           { id: "cases", name: "מקרי בוחן" },
+          { id: "business", name: "עֵסֶק" },
         ];
 
   const filteredPosts = blogPosts.filter((post) => {
@@ -419,13 +421,15 @@ export default function Landing() {
           (activeCategory === "guides" && post.category === "Guides") ||
           (activeCategory === "legal" && post.category === "Legal") ||
           (activeCategory === "tech" && post.category === "Technology") ||
-          (activeCategory === "cases" && post.category === "Case Studies");
+          (activeCategory === "cases" && post.category === "Case Studies") ||
+          (activeCategory === "business" && post.category === "Business");
       } else {
         categoryMatches =
           (activeCategory === "tips" && post.category === "טיפים") ||
           (activeCategory === "guides" && post.category === "מדריכים") ||
           (activeCategory === "legal" && post.category === "משפטי") ||
           (activeCategory === "tech" && post.category === "טכנולוגיה") ||
+          (activeCategory === "business" && post.category === "עֵסֶק") ||
           (activeCategory === "cases" && post.category === "מקרי בוחן");
       }
 
