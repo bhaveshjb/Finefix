@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { motion } from "framer-motion";
@@ -31,6 +31,7 @@ import { Separator } from "@/components/ui/separator";
 import FeedbackDisplay from "../components/feedback/FeedbackDisplay";
 import supabase from "@/integrations/supabase";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import { SessionContext } from "@/context/SessionContext";
 
 const violationTypes_en = {
   red_white: "Parking in a red-white zone",
@@ -61,6 +62,7 @@ const violationTypes_he = {
 };
 
 export default function UserDashboard() {
+  const { session } = useContext(SessionContext);
   const [user, setUser] = useState(null);
   const [appeals, setAppeals] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -68,7 +70,6 @@ export default function UserDashboard() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [language] = useLocalStorage("languagePreference", "he");
   const navigate = useNavigate();
-  console.log("UserDashboard language:", language);
   const violationTypes =
     language === "he" ? violationTypes_he : violationTypes_en;
 
@@ -95,6 +96,14 @@ export default function UserDashboard() {
 
     fetchUserData();
   }, []);
+
+  useEffect(() => {
+    if (session?.user) {
+      setUser(session.user);
+    } else {
+      setUser(null);
+    }
+  }, [session]);
 
   const handleNewAppeal = () => {
     navigate(createPageUrl("Appeal"));
@@ -153,9 +162,9 @@ export default function UserDashboard() {
                 {user?.full_name ? user.full_name.charAt(0) : "U"}
               </div>
               <CardTitle className="text-center">
-                {user?.full_name || "משתמש"}
+                {user?.full_name || language === "en" ? "User" : "משתמש"}
               </CardTitle>
-              <CardDescription className="text-center">
+              <CardDescription className="text-center truncate max-w-[180px] mx-auto">
                 {user?.email}
               </CardDescription>
             </CardHeader>
@@ -171,7 +180,7 @@ export default function UserDashboard() {
                   }`}
                 >
                   <FileText className="me-2 h-5 w-5" />
-                  הערעורים שלי
+                  {language === "en" ? "My Appeals" : "הערעורים שלי"}
                 </button>
                 <button
                   onClick={() => setActiveTab("feedback")}
@@ -182,7 +191,7 @@ export default function UserDashboard() {
                   }`}
                 >
                   <MessageSquare className="me-2 h-5 w-5" />
-                  משובים
+                  {language === "en" ? "Feedback" : "משובים"}
                 </button>
                 <button
                   onClick={() => setActiveTab("stats")}
@@ -193,7 +202,7 @@ export default function UserDashboard() {
                   }`}
                 >
                   <BarChart className="me-2 h-5 w-5" />
-                  סטטיסטיקות
+                  {language === "en" ? "Statistics" : "סטטיסטיקות"}
                 </button>
               </nav>
             </CardContent>
@@ -203,7 +212,7 @@ export default function UserDashboard() {
                 className="w-full bg-blue-600 hover:bg-blue-700"
               >
                 <PlusCircle className="me-2 h-5 w-5" />
-                ערעור חדש
+                {language === "en" ? "New Appeal" : "ערעור חדש"}
               </Button>
             </CardFooter>
           </Card>
@@ -239,7 +248,7 @@ export default function UserDashboard() {
                   </div>
                   <div>
                     <CardTitle className="text-lg">
-                      {user?.full_name || "משתמש"}
+                      {user?.full_name || language === "en" ? "user" : "משתמש"}
                     </CardTitle>
                     <CardDescription className="text-xs">
                       {user?.email}
@@ -262,7 +271,7 @@ export default function UserDashboard() {
                     }`}
                   >
                     <FileText className="me-2 h-5 w-5" />
-                    הערעורים שלי
+                    {language === "en" ? "My Appeals" : "הערעורים שלי"}
                   </button>
                   <button
                     onClick={() => {
@@ -276,7 +285,7 @@ export default function UserDashboard() {
                     }`}
                   >
                     <MessageSquare className="me-2 h-5 w-5" />
-                    משובים
+                    {language === "en" ? "Feedback" : "משובים"}
                   </button>
                   <button
                     onClick={() => {
@@ -290,7 +299,7 @@ export default function UserDashboard() {
                     }`}
                   >
                     <BarChart className="me-2 h-5 w-5" />
-                    סטטיסטיקות
+                    {language === "en" ? "Statistics" : "סטטיסטיקות"}
                   </button>
                 </nav>
               </CardContent>
@@ -300,7 +309,7 @@ export default function UserDashboard() {
                   className="w-full bg-blue-600 hover:bg-blue-700"
                 >
                   <PlusCircle className="me-2 h-5 w-5" />
-                  ערעור חדש
+                  {language === "en" ? "New Appeal" : "ערעור חדש"}
                 </Button>
               </CardFooter>
             </Card>
@@ -314,20 +323,28 @@ export default function UserDashboard() {
             className="w-full"
           >
             <TabsList className="md:hidden mb-4">
-              <TabsTrigger value="appeals">הערעורים שלי</TabsTrigger>
-              <TabsTrigger value="feedback">משובים</TabsTrigger>
-              <TabsTrigger value="stats">סטטיסטיקות</TabsTrigger>
+              <TabsTrigger value="appeals">
+                {language === "en" ? "My appeals" : "הערעורים שלי"}
+              </TabsTrigger>
+              <TabsTrigger value="feedback">
+                {language === "en" ? "Feedback" : "מָשׁוֹב"}
+              </TabsTrigger>
+              <TabsTrigger value="stats">
+                {language === "en" ? "Statistics" : "סטָטִיסטִיקָה"}
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="appeals" className="mt-0">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold">הערעורים שלי</h2>
+                <h2 className="text-2xl font-bold">
+                  {language === "en" ? "My appeals" : "הערעורים שלי"}
+                </h2>
                 <Button
                   onClick={handleNewAppeal}
                   className="bg-blue-600 hover:bg-blue-700 md:hidden"
                 >
                   <PlusCircle className="me-2 h-5 w-5" />
-                  ערעור חדש
+                  {language === "en" ? "New appeal" : " ערעור חדש"}
                 </Button>
               </div>
 
@@ -336,18 +353,23 @@ export default function UserDashboard() {
                   <CardContent>
                     <FileText className="h-16 w-16 mx-auto text-gray-300 mb-4" />
                     <h3 className="text-xl font-medium mb-2">
-                      אין לך ערעורים פעילים
+                      {language === "en"
+                        ? "You have no active appeals."
+                        : "אין לך ערעורים פעילים"}
                     </h3>
                     <p className="text-gray-500 mb-6">
-                      עדיין לא הגשת ערעורים על דוחות חניה. התחל עכשיו כדי לחסוך
-                      זמן וכסף!
+                      {language === "en"
+                        ? "You haven't filed parking ticket appeals yet. Start now to save time and money!"
+                        : "יין לא הגשת ערעורים על דוחות חניה. התחל עכשיו כדי לחסוךזמן וכסף!"}
                     </p>
                     <Button
                       onClick={handleNewAppeal}
                       className="bg-blue-600 hover:bg-blue-700"
                     >
                       <PlusCircle className="me-2 h-5 w-5" />
-                      הגש ערעור חדש
+                      {language === "en"
+                        ? "Submit a new appeal"
+                        : "הגש ערעור חדש"}
                     </Button>
                   </CardContent>
                 </Card>
@@ -366,14 +388,16 @@ export default function UserDashboard() {
                             </div>
                             <div>
                               <CardTitle className="text-lg">
-                                דוח{" "}
+                                {language === "en" ? "Report" : "דוח"}{" "}
                                 {violationTypes[
                                   appeal.form_data.violationType
                                 ] || "חניה"}
                               </CardTitle>
                               <CardDescription>
-                                רכב מס׳ {appeal.form_data.carNumber || "-"}, דוח
-                                מס׳ {appeal.form_data.ticketNumber || "-"}
+                                {language === "en" ? "Vehicle No" : "רכב מס׳"}
+                                {appeal.form_data.carNumber || "-"},{" "}
+                                {language === "en" ? "Report No." : "דוח מס׳"}{" "}
+                                {appeal.form_data.ticketNumber || "-"}
                               </CardDescription>
                             </div>
                           </div>
@@ -387,14 +411,17 @@ export default function UserDashboard() {
                           <div className="flex items-center">
                             <Calendar className="h-4 w-4 mr-1 text-gray-400" />
                             <span>
-                              הוגש:{" "}
+                              {language === "en" ? "Submitted:" : "הוגש:"}{" "}
                               {new Date(appeal.created_at).toLocaleDateString()}
                             </span>
                           </div>
 
                           {appeal.ticket_amount && (
                             <div className="flex items-center">
-                              <span>סכום: ₪{appeal.ticket_amount}</span>
+                              <span>
+                                {language === "en" ? "Amount:" : "סכום: ₪"}
+                                {appeal.ticket_amount}
+                              </span>
                             </div>
                           )}
                         </div>
@@ -406,7 +433,9 @@ export default function UserDashboard() {
                             to={`${createPageUrl("Appeal")}?id=${appeal.id}`}
                             className="text-blue-600 hover:text-blue-800 font-medium text-sm"
                           >
-                            צפייה בפרטים
+                            {language === "en"
+                              ? "View details"
+                              : "צפייה בפרטים"}
                           </Link>
 
                           {(appeal.appeal_status === "approved" ||
@@ -418,7 +447,9 @@ export default function UserDashboard() {
                               className="flex items-center text-sm text-gray-600 hover:text-gray-900"
                             >
                               <Star className="h-4 w-4 mr-1" />
-                              דרג את החוויה
+                              {language === "en"
+                                ? "Rate the experience"
+                                : "דרג את החוויה"}
                             </Link>
                           )}
                         </div>
@@ -431,9 +462,15 @@ export default function UserDashboard() {
 
             <TabsContent value="feedback" className="mt-0">
               <div className="mb-6">
-                <h2 className="text-2xl font-bold">משובים ודירוגים</h2>
+                <h2 className="text-2xl font-bold">
+                  {language === "en"
+                    ? "Feedback and Ratings"
+                    : "משובים ודירוגים"}
+                </h2>
                 <p className="text-gray-600">
-                  צפה במשובים ודירוגים של משתמשים אחרים לגבי השירות שלנו
+                  {language === "en"
+                    ? "View other users' feedback and ratings about our service"
+                    : "צפה במשובים ודירוגים של משתמשים אחרים לגבי השירות שלנו"}
                 </p>
               </div>
 
@@ -442,44 +479,66 @@ export default function UserDashboard() {
 
             <TabsContent value="stats" className="mt-0">
               <div className="mb-6">
-                <h2 className="text-2xl font-bold">סטטיסטיקות</h2>
+                <h2 className="text-2xl font-bold">
+                  {language === "en" ? "Statistics" : "סטטיסטיקות"}
+                </h2>
                 <p className="text-gray-600">
-                  נתונים סטטיסטיים על אחוזי הצלחה, סכומים שנחסכו וזמני טיפול
+                  {language === "en"
+                    ? "Statistical data on success rates, amounts saved and treatment times"
+                    : "נתונים סטטיסטיים על אחוזי הצלחה, סכומים שנחסכו וזמני טיפול"}
                 </p>
               </div>
 
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">אחוזי הצלחה</CardTitle>
+                    <CardTitle className="text-lg">
+                      {language === "en" ? "Success percentage" : "אחוזי הצלחה"}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="text-4xl font-bold text-blue-600">92%</div>
                     <p className="text-gray-500">
-                      מהערעורים שלנו מובילים לביטול מלא או חלקי
+                      {language === "en"
+                        ? "Some of our appeals lead to full or partial cancellation"
+                        : "מהערעורים שלנו מובילים לביטול מלא או חלקי"}
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">זמן טיפול ממוצע</CardTitle>
+                    <CardTitle className="text-lg">
+                      {language === "en"
+                        ? "Average treatment time"
+                        : "זמן טיפול ממוצע"}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="text-4xl font-bold text-blue-600">14</div>
-                    <p className="text-gray-500">ימים לקבלת תשובה על ערעור</p>
+                    <p className="text-gray-500">
+                      {language === "en"
+                        ? "Days to receive a response to an appeal"
+                        : "ימים לקבלת תשובה על ערעור"}
+                    </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-lg">
-                      ערעורים מוצלחים היום
+                      {language === "en"
+                        ? "Successful appeals today"
+                        : "ערעורים מוצלחים היום"}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="text-4xl font-bold text-blue-600">127</div>
-                    <p className="text-gray-500">ערעורים שהתקבלו היום בלבד</p>
+                    <p className="text-gray-500">
+                      {language === "en"
+                        ? "Appeals received today only"
+                        : "ערעורים שהתקבלו היום בלבד"}
+                    </p>
                   </CardContent>
                 </Card>
               </div>

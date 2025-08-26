@@ -36,8 +36,10 @@ import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import supabase from "@/integrations/supabase";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 export default function UserProfile() {
+  const [language] = useLocalStorage("languagePreference", "he");
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userAppeals, setUserAppeals] = useState([]);
@@ -247,7 +249,7 @@ export default function UserProfile() {
                 </Avatar>
               </div>
               <CardTitle className="text-center text-xl">
-                {userData?.full_name || "משתמש"}
+                {userData?.full_name || language === "en" ? "User" : "משתמש"}
               </CardTitle>
               <CardDescription className="text-center">
                 {userData?.email}
@@ -259,10 +261,10 @@ export default function UserProfile() {
                 <Tabs defaultValue="profile" className="w-full" dir="rtl">
                   <TabsList className="w-full">
                     <TabsTrigger value="profile" className="flex-1">
-                      פרופיל
+                      {language === "en" ? "Profile" : "פרופיל"}
                     </TabsTrigger>
                     <TabsTrigger value="settings" className="flex-1">
-                      הגדרות
+                      {language === "en" ? "Settings" : "הגדרות"}
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="profile">
@@ -270,19 +272,24 @@ export default function UserProfile() {
                       <div className="flex items-center">
                         <Mail className="h-4 w-4 me-2 text-gray-400" />
                         <span className="text-gray-600">
-                          {userData?.email || "לא צוין"}
+                          {userData?.email || language === "en"
+                            ? "Not specified"
+                            : "לא צוין"}
                         </span>
                       </div>
                       <div className="flex items-center">
                         <Phone className="h-4 w-4 me-2 text-gray-400" />
                         <span className="text-gray-600">
-                          {formData.phone || "לא צוין"}
+                          {formData.phone || language === "en"
+                            ? "Not specified"
+                            : "לא צוין"}
                         </span>
                       </div>
                       <div className="flex items-center">
                         <FileText className="h-4 w-4 me-2 text-gray-400" />
                         <span className="text-gray-600">
-                          {userAppeals.length} ערעורים
+                          {userAppeals.length}{" "}
+                          {language === "en" ? "Appeals" : "ערעורים"}
                         </span>
                       </div>
                       {/* <div className="flex items-center">
@@ -298,7 +305,11 @@ export default function UserProfile() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
                           <Bell className="h-4 w-4 me-2 text-gray-400" />
-                          <span className="text-gray-600">התראות במייל</span>
+                          <span className="text-gray-600">
+                            {language === "en"
+                              ? "Email notifications"
+                              : "התראות במייל"}
+                          </span>
                         </div>
                         <Switch
                           checked={formData.notification_preferences.email}
@@ -311,7 +322,9 @@ export default function UserProfile() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
                           <Phone className="h-4 w-4 me-2 text-gray-400" />
-                          <span className="text-gray-600">התראות SMS</span>
+                          <span className="text-gray-600">
+                            {language === "en" ? "Notifications" : "התראות"}SMS
+                          </span>
                         </div>
                         <Switch
                           checked={formData.notification_preferences.sms}
@@ -331,12 +344,14 @@ export default function UserProfile() {
                           {isEditing ? (
                             <span className="flex items-center">
                               <XIcon className="h-4 w-4 me-2" />
-                              ביטול
+                              {language === "en" ? "Cancel" : "ביטול"}
                             </span>
                           ) : (
                             <span className="flex items-center">
                               <Edit className="h-4 w-4 me-2" />
-                              עריכת פרופיל
+                              {language === "en"
+                                ? "Edit profile"
+                                : "עריכת פרופיל"}
                             </span>
                           )}
                         </Button>
@@ -353,7 +368,7 @@ export default function UserProfile() {
                 onClick={() => navigate(createPageUrl("Appeal"))}
               >
                 <FileText className="h-4 w-4 me-2" />
-                ערעור חדש
+                {language === "en" ? "New Appeal" : "ערעור חדש"}
               </Button>
             </CardFooter>
           </Card>
@@ -364,7 +379,9 @@ export default function UserProfile() {
           <Card>
             <CardHeader>
               <div className="flex justify-between items-center">
-                <CardTitle>פרטים אישיים</CardTitle>
+                <CardTitle>
+                  {language === "en" ? "Personal information" : "פרטים אישיים"}
+                </CardTitle>
                 {!isEditing && (
                   <Button
                     variant="outline"
@@ -372,19 +389,30 @@ export default function UserProfile() {
                     onClick={() => setIsEditing(true)}
                   >
                     <Edit className="h-4 w-4 me-2" />
-                    עריכה
+                    {language === "en" ? "Editing" : "עריכה"}
                   </Button>
                 )}
               </div>
-              <CardDescription>עדכון פרטי הקשר שלכם</CardDescription>
+              <CardDescription>
+                {language === "en"
+                  ? "Update your contact information"
+                  : "עדכון פרטי הקשר שלכם"}
+              </CardDescription>
             </CardHeader>
             <CardContent>
               {saveSuccess && (
                 <Alert className="mb-4 bg-green-50 text-green-800 border-green-200">
                   <CheckCircle2 className="h-4 w-4" />
-                  <AlertTitle>פרטיך עודכנו בהצלחה</AlertTitle>
+                  <AlertTitle>
+                    {language === "en"
+                      ? "Your details have been updated successfully"
+                      : "פרטיך עודכנו בהצלחה"}
+                  </AlertTitle>
                   <AlertDescription>
-                    הפרטים החדשים נשמרו במערכת.
+                    {language === "en"
+                      ? "The new details have been saved in the system"
+                      : "הפרטים החדשים נשמרו במערכת"}
+                    .
                   </AlertDescription>
                 </Alert>
               )}
@@ -395,9 +423,16 @@ export default function UserProfile() {
                   variant="destructive"
                 >
                   <AlertTriangle className="h-4 w-4" />
-                  <AlertTitle>שגיאה בעדכון הפרטים</AlertTitle>
+                  <AlertTitle>
+                    {language === "en"
+                      ? "Error updating details"
+                      : "שגיאה בעדכון הפרטים"}
+                  </AlertTitle>
                   <AlertDescription>
-                    אירעה שגיאה בעת עדכון הפרטים, אנא נסו שנית מאוחר יותר.
+                    {language === "en"
+                      ? "An error occurred while updating the details, please try again later"
+                      : "אירעה שגיאה בעת עדכון הפרטים, אנא נסו שנית מאוחר יותר"}
+                    .
                   </AlertDescription>
                 </Alert>
               )}
@@ -405,18 +440,24 @@ export default function UserProfile() {
               <form className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="full_name">שם מלא</Label>
+                    <Label htmlFor="full_name">
+                      {language === "en" ? "Full name" : "שם מלא"}
+                    </Label>
                     <Input
                       id="full_name"
                       name="full_name"
                       value={formData.full_name}
                       onChange={handleInputChange}
-                      placeholder="ישראל ישראלי"
+                      placeholder={
+                        language === "en" ? "Israel is Israeli" : "ישראל ישראלי"
+                      }
                       disabled={!isEditing}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">{`דוא"ל`}</Label>
+                    <Label htmlFor="email">
+                      {language === "en" ? `Email` : `דוא"ל`}
+                    </Label>
                     <Input
                       id="email"
                       name="email"
@@ -429,7 +470,9 @@ export default function UserProfile() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="phone">טלפון</Label>
+                    <Label htmlFor="phone">
+                      {language === "en" ? "Phone" : "טלפון"}
+                    </Label>
                     <Input
                       id="phone"
                       name="phone"
@@ -440,20 +483,30 @@ export default function UserProfile() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="address">כתובת</Label>
+                    <Label htmlFor="address">
+                      {language === "en" ? "Address" : "כתובת"}
+                    </Label>
                     <Input
                       id="address"
                       name="address"
                       value={formData.address}
                       onChange={handleInputChange}
-                      placeholder="הרצל 1, תל אביב"
+                      placeholder={
+                        language === "en"
+                          ? "Herzl 1, Tel Aviv"
+                          : "הרצל 1, תל אביב"
+                      }
                       disabled={!isEditing}
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label>העדפות התראות</Label>
+                  <Label>
+                    {language === "en"
+                      ? "Notification Preferences"
+                      : "העדפות התראות"}
+                  </Label>
                   <div className="flex flex-col space-y-2">
                     <div className="flex items-center space-x-2 space-x-reverse">
                       <Switch
@@ -468,7 +521,9 @@ export default function UserProfile() {
                         htmlFor="email-notifications"
                         className="cursor-pointer"
                       >
-                        קבלת עדכונים למייל
+                        {language === "en"
+                          ? "Receive email updates"
+                          : "קבלת עדכונים למייל"}
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2 space-x-reverse">
@@ -484,7 +539,10 @@ export default function UserProfile() {
                         htmlFor="sms-notifications"
                         className="cursor-pointer"
                       >
-                        קבלת עדכונים ב-SMS
+                        {language === "en"
+                          ? "Get updates on"
+                          : "קבלת עדכונים ב-"}
+                        SMS
                       </Label>
                     </div>
                   </div>
@@ -498,7 +556,7 @@ export default function UserProfile() {
                   onClick={handleCancel}
                   disabled={isSaving}
                 >
-                  ביטול
+                  {language === "en" ? "Cancel" : "ביטול"}
                 </Button>
                 <Button
                   onClick={handleSave}
@@ -508,12 +566,12 @@ export default function UserProfile() {
                   {isSaving ? (
                     <>
                       <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin me-2"></div>
-                      שומר...
+                      {language === "en" ? "Guard..." : "שומר..."}
                     </>
                   ) : (
                     <>
                       <Save className="h-4 w-4 me-2" />
-                      שמירה
+                      {language === "en" ? "Keeping" : "שמירה"}
                     </>
                   )}
                 </Button>
@@ -523,25 +581,35 @@ export default function UserProfile() {
 
           <Card>
             <CardHeader>
-              <CardTitle>היסטוריית ערעורים</CardTitle>
-              <CardDescription>רשימת הערעורים שהגשתם</CardDescription>
+              <CardTitle>
+                {language === "en" ? "Appeal History" : "היסטוריית ערעורים"}
+              </CardTitle>
+              <CardDescription>
+                {language === "en"
+                  ? "List of appeals you have filed"
+                  : "רשימת הערעורים שהגשתם"}
+              </CardDescription>
             </CardHeader>
             <CardContent>
               {userAppeals.length === 0 ? (
                 <div className="text-center py-6">
                   <FileBox className="h-12 w-12 mx-auto text-gray-300 mb-2" />
                   <h3 className="text-lg font-medium text-gray-700">
-                    אין לכם ערעורים עדיין
+                    {language === "en"
+                      ? "You have no appeals yet."
+                      : "אין לכם ערעורים עדיין"}
                   </h3>
                   <p className="text-gray-500 mt-1">
-                    התחילו בהגשת ערעור חדש עכשיו
+                    {language === "en"
+                      ? "Start filing a new appeal now"
+                      : "התחילו בהגשת ערעור חדש עכשיו"}
                   </p>
                   <Button
                     className="mt-4 bg-blue-600 hover:bg-blue-700"
                     onClick={() => navigate(createPageUrl("Appeal"))}
                   >
                     <FileText className="h-4 w-4 me-2" />
-                    ערעור חדש
+                    {language === "en" ? "New Appeal" : "ערעור חדש"}
                   </Button>
                 </div>
               ) : (
@@ -560,21 +628,30 @@ export default function UserProfile() {
                         <div>
                           <div className="flex items-center gap-2">
                             <h3 className="font-medium">
-                              דוח מספר: {appeal.form_data.ticketNumber}
+                              {language === "en"
+                                ? "Report number:"
+                                : "דוח מספר:"}{" "}
+                              {appeal.form_data.ticketNumber}
                             </h3>
                             {getStatusBadge(appeal.appeal_status)}
                           </div>
                           <p className="text-gray-600 text-sm mt-1">
-                            רכב מספר: {appeal.form_data.carNumber}
+                            {language === "en"
+                              ? "Vehicle number:"
+                              : "רכב מספר:"}{" "}
+                            {appeal.form_data.carNumber}
                           </p>
                           <p className="text-gray-500 text-sm mt-1">
-                            הוגש בתאריך: {formatDate(appeal.created_at)}
+                            {language === "en"
+                              ? "Submitted on:"
+                              : "הוגש בתאריך:"}{" "}
+                            {formatDate(appeal.created_at)}
                           </p>
                         </div>
                         <div className="flex items-center">
                           {appeal.transaction_data?.ResponseCode === 0 ? (
                             <Badge className="bg-green-100 text-green-800">
-                              שולם
+                              {language === "en" ? "Paid" : "שולם"}
                             </Badge>
                           ) : (
                             <Badge variant="outline">ממתין לתשלום</Badge>
@@ -591,17 +668,27 @@ export default function UserProfile() {
 
           <Card>
             <CardHeader>
-              <CardTitle>מסמכים שמורים</CardTitle>
-              <CardDescription>מסמכים ששמרתם במערכת</CardDescription>
+              <CardTitle>
+                {language === "en" ? "Saved Documents" : "מסמכים שמורים"}
+              </CardTitle>
+              <CardDescription>
+                {language === "en"
+                  ? "Documents you have saved in the system"
+                  : "מסמכים ששמרתם במערכת"}
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="text-center py-6">
                 <FileBox className="h-12 w-12 mx-auto text-gray-300 mb-2" />
                 <h3 className="text-lg font-medium text-gray-700">
-                  אין מסמכים שמורים
+                  {language === "en"
+                    ? "No documents saved"
+                    : "אין מסמכים שמורים"}
                 </h3>
                 <p className="text-gray-500 mt-1">
-                  המסמכים שתעלו בעת הגשת ערעור יישמרו כאן
+                  {language === "en"
+                    ? "The documents you upload when filing an appeal will be saved here"
+                    : "המסמכים שתעלו בעת הגשת ערעור יישמרו כאן"}
                 </p>
               </div>
             </CardContent>
