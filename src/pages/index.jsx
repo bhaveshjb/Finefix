@@ -17,8 +17,9 @@ import {
 } from "react-router-dom";
 import Success from "./Success.jsx";
 import Login from "./Login.jsx";
+import BlogDetails from "./BlogDetails.jsx";
 import TermsOfUse from "./TermsOfUses.jsx";
-import PrivacyPolicy from "./privacyPolicy.jsx";
+import PrivacyPolicy from "./PrivacyPolicy.jsx";
 
 const PAGES = {
   Landing: Landing,
@@ -68,6 +69,7 @@ function PagesContent() {
           <Route path="/Appeal" element={<Appeal />} />
           <Route path="/Appeal/Success" element={<Success />} />
           <Route path="/Blog" element={<Blog />} />
+          <Route path="/Blog/:slug" element={<BlogDetails />} />
           <Route path="/AppealFeedback" element={<AppealFeedback />} />
           <Route path="/TermsOfUses" element={<TermsOfUse />} />
           <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
