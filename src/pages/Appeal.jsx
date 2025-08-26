@@ -24,21 +24,24 @@ export default function AppealPage() {
     const productDescription =
       language === "he" ? "ערעור על דוח חניה" : "Parking Ticket Appeal";
 
+    //TODO : For testing & undestanding not using ENV values, after completing changes replace with ENV valiables  
+
     const url = "https://secure.cardcom.solutions/api/v11/LowProfile/Create";
     console.log("Submitting appeal with data:", {
       formData,
-      webhookUrl: `${supabaseUrl}/functions/v1/payment-webhook?language=${language}`,
+      webhookUrl: `https://kyxflawpfapoqdqdbwha.supabase.co/functions/v1/payment-webhook?language=${language}`,
     });
     const options = {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        TerminalNumber: cardcomTerminalNumber,
-        ApiName: cardcomApiName,
+        TerminalNumber: "1000",
+        ApiName: "kzFKfohEvL6AOF8aMEJz",
+        ApiPassword: "FIDHIh4pAadw3Slbdsjg",
         Amount: 20,
+        WebHookUrl: `https://kyxflawpfapoqdqdbwha.supabase.co/functions/v1/payment-webhook?language=${language}`,
         SuccessRedirectUrl: `${window.location.href}/success`,
         FailedRedirectUrl: `${window.location.href}/failed`,
-        WebHookUrl: `${supabaseUrl}/functions/v1/payment-webhook?language=${language}`,
         ReturnValue: base64FormData,
         UIDefinition: {
           IsHideCardOwnerEmail: false,
@@ -55,12 +58,11 @@ export default function AppealPage() {
       const data = await response.json();
 
       if (data.ResponseCode !== 0) {
-        console.error("Error from Cardcom:", data); 
+        console.error("Error from Cardcom:", data);
         throw new Error(`Cardcom error: ${data.ResponseMessage}`);
       }
 
       window.location.href = data.Url;
-      console.log(data);
     } catch (error) {
       console.error(error);
       toast.error(
