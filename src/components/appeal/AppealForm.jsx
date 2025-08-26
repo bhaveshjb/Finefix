@@ -430,7 +430,6 @@ export default function AppealForm({ onSubmit }) {
   const UploadFile = async ({ file }) => {
     const { carNumber, ticketNumber } = formData;
     const fileName = file.name.replace(/[^a-zA-Z0-9\s.,!?;:'"()-]/g, "");
-    console.log("fileName ====================================", fileName);
     const { data, error } = await supabase.storage
       .from("documents")
       .upload(`public/${carNumber}-${ticketNumber}/${fileName}`, file, {

@@ -6,10 +6,15 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import { useEffect } from "react";
 
 export default function AppealPage() {
   const [language] = useLocalStorage("languagePreference", "he"); // Default to Hebrew
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
 
   const handleFormSubmit = async (formData) => {
     const formDataStr = JSON.stringify(formData);
@@ -55,7 +60,7 @@ export default function AppealPage() {
       const data = await response.json();
 
       if (data.ResponseCode !== 0) {
-        console.error("Error from Cardcom:", data); 
+        console.error("Error from Cardcom:", data);
         throw new Error(`Cardcom error: ${data.ResponseMessage}`);
       }
 
@@ -107,12 +112,10 @@ export default function AppealPage() {
 
   return (
     <div
-      className={`min-h-screen bg-gray-50 p-4 md:p-8 ${
-        language === "he" ? "rtl" : "ltr"
-      }`}
+      className={`flex-grow bg-gray-200${language === "he" ? "rtl" : "ltr"}`}
     >
-      <div className="container mx-auto max-w-5xl">
-        <div className="flex items-center justify-between mb-8">
+      <div className="container mx-auto max-w-5xl p-4 md:p-8">
+        <div className="flex items-center justify-between mb-8 ">
           <div>
             <h1 className="text-3xl font-bold">{t.pageTitle}</h1>
           </div>

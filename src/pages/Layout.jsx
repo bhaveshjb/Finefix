@@ -1,7 +1,7 @@
-
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { User, FileText, Home, LogOut, Menu } from "lucide-react";
+import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -26,14 +26,14 @@ export default function Layout({ children }) {
   const { supabase, logout } = useSessionContext();
 
   useEffect(() => {
-      const {
-        data: { subscription },
-      } = supabase.auth.onAuthStateChange((_event, session) => {
-        setUser(session?.user);
-      });
-      return () => subscription.unsubscribe();
-    }, [supabase]);
-  
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user);
+    });
+    return () => subscription.unsubscribe();
+  }, [supabase]);
+
   const handleLogout = async () => {
     try {
       await logout();
@@ -71,14 +71,14 @@ export default function Layout({ children }) {
       login: "התחברות",
       logout: "התנתקות",
       startNow: "התחילו עכשיו",
-      contactUs: "צרו קשר"
+      contactUs: "צרו קשר",
     };
   };
   
   const labels = getNavigationLabels();
 
   return (
-    <div dir={language === 'he' ? "rtl" : "ltr"} lang={language} className="min-h-screen">
+    <div dir={language === 'he' ? "rtl" : "ltr"} lang={language} className="flex flex-col min-h-screen">
       <style>{`
         :root {
           --primary: #2563eb;
@@ -156,15 +156,20 @@ export default function Layout({ children }) {
             
             <div className={`flex items-center ${language === 'he' ? 'space-x-4 space-x-reverse' : 'space-x-4'}`}>
               <LanguageSwitcher />
-              
+
               <div className="hidden md:block">
                 {user ? (
                   <DropdownMenu dir="rtl">
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                      <Button
+                        variant="ghost"
+                        className="relative h-8 w-8 rounded-full"
+                      >
                         <Avatar className="h-8 w-8">
                           <AvatarFallback className="bg-blue-100 text-blue-600">
-                            {user.full_name ? user.full_name.charAt(0) : user.email.charAt(0)}
+                            {user.full_name
+                              ? user.full_name.charAt(0)
+                              : user.email.charAt(0)}
                           </AvatarFallback>
                         </Avatar>
                       </Button>
@@ -232,7 +237,7 @@ export default function Layout({ children }) {
                     </div>
                     
                     {user && (
-                      <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+                      <div className="mb-6 p-2 bg-gray-50 rounded-lg">
                         <div className="flex items-center gap-3">
                           <Avatar className="h-10 w-10">
                             <AvatarFallback className="bg-blue-100 text-blue-600">
@@ -240,63 +245,93 @@ export default function Layout({ children }) {
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <p className="font-medium">{user.full_name || (language === 'he' ? "משתמש" : "User")}</p>
-                            <p className="text-sm text-gray-500">{user.email}</p>
+                            <p className="font-medium">
+                              {user.full_name ||
+                                (language === "he" ? "משתמש" : "User")}
+                            </p>
+                            <p className="text-center text-sm text-gray-500 truncate max-w-[180px] mx-auto">
+                              {user.email}
+                            </p>
                           </div>
                         </div>
                       </div>
                     )}
-                    
+
                     <nav className="flex-1 space-y-2">
-                      <Link 
-                        to="/"
-                        className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      >
-                        <Home className={`h-5 w-5 ${language === 'he' ? 'ml-2' : 'mr-2'}`} />
-                        {labels.home}
-                      </Link>
-                      
-                      <Link 
-                        to={createPageUrl("Appeal")}
-                        className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      >
-                        <FileText className={`h-5 w-5 ${language === 'he' ? 'ml-2' : 'mr-2'}`} />
-                        {labels.appeal}
-                      </Link>
-                      
+                      <SheetPrimitive.Close asChild>
+                        <Link
+                          to="/"
+                          className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+                        >
+                          <Home
+                            className={`h-5 w-5 ${
+                              language === "he" ? "ml-2" : "mr-2"
+                            }`}
+                          />
+                          {labels.home}
+                        </Link>
+                      </SheetPrimitive.Close>
+                      <SheetPrimitive.Close asChild>
+                        <Link
+                          to={createPageUrl("Appeal")}
+                          className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+                        >
+                          <FileText
+                            className={`h-5 w-5 ${
+                              language === "he" ? "ml-2" : "mr-2"
+                            }`}
+                          />
+                          {labels.appeal}
+                        </Link>
+                      </SheetPrimitive.Close>
                       {user && (
                         <>
-                          <Link 
-                            to={createPageUrl("UserDashboard")}
-                            className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
-                          >
-                            <FileText className={`h-5 w-5 ${language === 'he' ? 'ml-2' : 'mr-2'}`} />
-                            {labels.myAppeals}
-                          </Link>
-                          
-                          <Link 
-                            to={createPageUrl("UserProfile")}
-                            className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
-                          >
-                            <User className={`h-5 w-5 ${language === 'he' ? 'ml-2' : 'mr-2'}`} />
-                            {labels.profile}
-                          </Link>
+                          <SheetPrimitive.Close asChild>
+                            <Link
+                              to={createPageUrl("UserDashboard")}
+                              className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+                            >
+                              <FileText
+                                className={`h-5 w-5 ${
+                                  language === "he" ? "ml-2" : "mr-2"
+                                }`}
+                              />
+                              {labels.myAppeals}
+                            </Link>
+                          </SheetPrimitive.Close>
+                          <SheetPrimitive.Close asChild>
+                            <Link
+                              to={createPageUrl("UserProfile")}
+                              className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+                            >
+                              <User
+                                className={`h-5 w-5 ${
+                                  language === "he" ? "ml-2" : "mr-2"
+                                }`}
+                              />
+                              {labels.profile}
+                            </Link>
+                          </SheetPrimitive.Close>
                         </>
                       )}
                     </nav>
-                    
+
                     <div className="mt-auto pt-6 border-t">
                       {user ? (
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="outline"
                           className="w-full"
                           onClick={handleLogout}
                         >
-                          <LogOut className={`h-4 w-4 ${language === 'he' ? 'ml-2' : 'mr-2'}`} />
+                          <LogOut
+                            className={`h-4 w-4 ${
+                              language === "he" ? "ml-2" : "mr-2"
+                            }`}
+                          />
                           {labels.logout}
                         </Button>
                       ) : (
-                        <Button 
+                        <Button
                           className="w-full bg-blue-600 hover:bg-blue-700"
                           onClick={() => navigate("/login")}
                         >
@@ -312,35 +347,38 @@ export default function Layout({ children }) {
         </nav>
       </header>
 
-      <main>
-        {children}
-      </main>
+      <main className="flex-grow">{children}</main>
 
       <footer className="bg-gray-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center mb-4">
-                <div className={`w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center ${language === 'he' ? 'ml-2' : 'mr-2'}`}>
+                <div
+                  className={`w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center ${
+                    language === "he" ? "ml-2" : "mr-2"
+                  }`}
+                >
                   <span className="text-white font-bold">FF</span>
                 </div>
                 <span className="text-2xl font-bold">FineFix</span>
               </div>
               <p className="text-gray-400 mb-4">
-                {language === 'he' 
-                  ? "המערכת המתקדמת ביותר לערעור על דוחות חניה בישראל" 
-                  : "The most advanced system for appealing parking tickets in the USA"
-                }
+                {language === "he"
+                  ? "המערכת המתקדמת ביותר לערעור על דוחות חניה בישראל"
+                  : "The most advanced system for appealing parking tickets in the USA"}
               </p>
               <div className="text-gray-400">
-                © {new Date().getFullYear()} FineFix - 
-                {language === 'he' ? " כל הזכויות שמורות" : " All rights reserved"}
+                © {new Date().getFullYear()} FineFix -
+                {language === "he"
+                  ? " כל הזכויות שמורות"
+                  : " All rights reserved"}
               </div>
             </div>
-            
+
             <div>
               <h3 className="text-lg font-semibold mb-4">
-                {language === 'he' ? "ניווט מהיר" : "Quick Navigation"}
+                {language === "he" ? "ניווט מהיר" : "Quick Navigation"}
               </h3>
               <ul className="space-y-2">
                 <li>
@@ -349,18 +387,27 @@ export default function Layout({ children }) {
                   </Link>
                 </li>
                 <li>
-                  <a href="#faq-section" className="text-gray-400 hover:text-white">
+                  <a
+                    href="#faq-section"
+                    className="text-gray-400 hover:text-white"
+                  >
                     {labels.faq}
                   </a>
                 </li>
                 <li>
-                  <Link to={createPageUrl("Appeal")} className="text-gray-400 hover:text-white">
+                  <Link
+                    to={createPageUrl("Appeal")}
+                    className="text-gray-400 hover:text-white"
+                  >
                     {labels.appeal}
                   </Link>
                 </li>
                 {user && (
                   <li>
-                    <Link to={createPageUrl("UserProfile")} className="text-gray-400 hover:text-white">
+                    <Link
+                      to={createPageUrl("UserProfile")}
+                      className="text-gray-400 hover:text-white"
+                    >
                       {labels.profile}
                     </Link>
                   </li>
