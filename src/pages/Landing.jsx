@@ -33,6 +33,8 @@ import TestimonialCard from "../components/landing/TestimonialCard";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import blogsDataEn from "../utils/blogsEn";
+import blogsDataHb from "../utils/blojsHb";
 
 export default function Landing() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -110,188 +112,11 @@ export default function Landing() {
   useEffect(() => {
     const loadBlogPosts = async () => {
       try {
-        // Use hardcoded blog posts based on language
         if (language === "en") {
-          const englishPosts = [
-            {
-              id: 1,
-              title:
-                "How to Deal with an Unjustified Parking Ticket - The Complete Guide",
-              summary:
-                "A parking ticket may be justified, but in many cases, the authorities make mistakes. In this article, we provide a detailed guide on how to deal with unjustified parking tickets and how to file an effective appeal.",
-              category: "Guides",
-              publishDate: "10.11.2023",
-              readTime: "6 min",
-              author: "Adv. Rachel Lewis",
-              authorImage:
-                "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1588421357574-87938a86fa28?auto=format&fit=crop&q=80&w=600",
-            },
-            {
-              id: 2,
-              title:
-                "5 Valid Reasons to Appeal a Parking Ticket You Should Know",
-              summary:
-                "There are several valid reasons for appealing a parking ticket that often lead to a full cancellation of the fine. In this article, we'll review the 5 most common reasons every driver should know.",
-              category: "Tips",
-              publishDate: "01.12.2023",
-              readTime: "4 min",
-              author: "Alan Cohen",
-              authorImage:
-                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=600",
-            },
-            {
-              id: 3,
-              title:
-                "What the Law Says About Parking Tickets and How It Affects Your Appeal",
-              summary:
-                "Understanding the legal framework of parking tickets can greatly assist in submitting a successful appeal. In this article, we'll review the relevant laws and regulations and your rights as drivers.",
-              category: "Legal",
-              publishDate: "15.12.2023",
-              readTime: "7 min",
-              author: "Adv. David Levinson",
-              authorImage:
-                "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&q=80&w=600",
-            },
-            {
-              id: 4,
-              title:
-                "How Artificial Intelligence is Changing the World of Ticket Appeals",
-              summary:
-                "Advanced technologies like artificial intelligence are changing the way appeals are filed for tickets. Discover how AI can significantly improve the chances of success for your appeal.",
-              category: "Technology",
-              publishDate: "22.12.2023",
-              readTime: "5 min",
-              author: "Michelle Abraham",
-              authorImage:
-                "https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600",
-            },
-            {
-              id: 5,
-              title: "Case Study: How We Cancelled a ₪250 Ticket for a Client",
-              summary:
-                "A detailed analysis of a real case where we helped a client cancel a significant parking ticket. In this article, we'll reveal the strategy that led to success and the main lessons.",
-              category: "Case Studies",
-              publishDate: "05.01.2024",
-              readTime: "8 min",
-              author: "Gil Steinberg",
-              authorImage:
-                "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1586791965591-15d8892f4333?auto=format&fit=crop&q=80&w=600",
-            },
-            {
-              id: 6,
-              title:
-                "Surprising Statistics: 78% of Parking Ticket Appeals are Accepted",
-              summary:
-                "New research reveals that most appeals submitted for parking tickets are accepted, but most drivers don't appeal at all. In this article, we'll present the surprising data and what it means for you.",
-              category: "Statistics",
-              publishDate: "18.01.2024",
-              readTime: "4 min",
-              author: "Dr. Ronald Cohen",
-              authorImage:
-                "https://images.unsplash.com/photo-1584999734482-0361aecad844?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1423592707957-3b212afa6733?auto=format&fit=crop&q=80&w=600",
-            },
-          ];
+          const englishPosts = blogsDataEn;
           setBlogPosts(englishPosts);
         } else {
-          // Hebrew blog posts
-          const hebrewPosts = [
-            {
-              id: 1,
-              title: "איך להתמודד עם דוח חניה לא מוצדק - המדריך המלא",
-              summary:
-                "דוח חניה יכול להיות מוצדק, אך במקרים רבים הרשויות טועות. במאמר זה נספק מדריך מפורט כיצד להתמודד עם דוחות חניה בלתי מוצדקים וכיצד להגיש ערעור אפקטיבי.",
-              category: "מדריכים",
-              publishDate: "10.11.2023",
-              readTime: "6 דקות",
-              author: "עו״ד רונית לוי",
-              authorImage:
-                "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1588421357574-87938a86fa28?auto=format&fit=crop&q=80&w=600",
-            },
-            {
-              id: 2,
-              title: "5 סיבות מוצדקות לערעור על דוח חניה שכדאי להכיר",
-              summary:
-                "ישנן מספר סיבות מוצדקות לערעור על דוח חניה אשר במקרים רבים מובילות לביטול מלא של הקנס. במאמר זה נסקור את 5 הסיבות הנפוצות ביותר שכדאי לכל נהג להכיר.",
-              category: "טיפים",
-              publishDate: "01.12.2023",
-              readTime: "4 דקות",
-              author: "אלון כהן",
-              authorImage:
-                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=600",
-            },
-            {
-              id: 3,
-              title: "מה אומר החוק על דוחות חניה וכיצד זה משפיע על הערעור שלכם",
-              summary:
-                "הבנת המסגרת החוקית של דוחות חניה יכולה לסייע רבות בהגשת ערעור מוצלח. במאמר זה נסקור את החוקים והתקנות הרלוונטיים ואת זכויותיכם כנהגים.",
-              category: "משפטי",
-              publishDate: "15.12.2023",
-              readTime: "7 דקות",
-              author: "עו״ד דוד לוינסון",
-              authorImage:
-                "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&fit=crop&q=80&w=600",
-            },
-            {
-              id: 4,
-              title: "כיצד הבינה המלאכותית משנה את עולם הערעורים על דוחות",
-              summary:
-                "טכנולוגיות מתקדמות כמו בינה מלאכותית משנות את האופן שבו מוגשים ערעורים על דוחות. גלו כיצד AI יכול לשפר משמעותית את סיכויי ההצלחה של הערעור שלכם.",
-              category: "טכנולוגיה",
-              publishDate: "22.12.2023",
-              readTime: "5 דקות",
-              author: "מיכל אברהמי",
-              authorImage:
-                "https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600",
-            },
-            {
-              id: 5,
-              title: "מקרה בוחן: כיצד הצלחנו לבטל דוח של 1,000₪ עבור לקוח",
-              summary:
-                "ניתוח מפורט של מקרה אמיתי בו סייענו ללקוח לבטל דוח חניה משמעותי. במאמר זה נחשוף את האסטרטגיה שהובילה להצלחה ואת הלקחים העיקריים.",
-              category: "מקרי בוחן",
-              publishDate: "05.01.2024",
-              readTime: "8 דקות",
-              author: "גיל שטיינברג",
-              authorImage:
-                "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1586791965591-15d8892f4333?auto=format&fit=crop&q=80&w=600",
-            },
-            {
-              id: 6,
-              title: "סטטיסטיקה מפתיעה: 78% מהערעורים על דוחות חניה מתקבלים",
-              summary:
-                "מחקר חדש חושף כי רוב הערעורים המוגשים על דוחות חניה מתקבלים, אך רוב הנהגים כלל לא מערערים. במאמר זה נציג את הנתונים המפתיעים ומה המשמעות עבורכם.",
-              category: "סטטיסטיקה",
-              publishDate: "18.01.2024",
-              readTime: "4 דקות",
-              author: "ד״ר רונאל כהן",
-              authorImage:
-                "https://images.unsplash.com/photo-1584999734482-0361aecad844?auto=format&fit=crop&q=80&w=50",
-              image:
-                "https://images.unsplash.com/photo-1423592707957-3b212afa6733?auto=format&fit=crop&q=80&w=600",
-            },
-          ];
+          const hebrewPosts = blogsDataHb;
           setBlogPosts(hebrewPosts);
         }
       } catch (error) {
@@ -574,6 +399,7 @@ export default function Landing() {
           { id: "legal", name: "Legal" },
           { id: "tech", name: "Technology" },
           { id: "cases", name: "Case Studies" },
+          { id: "business", name: "Business" },
         ]
       : [
           { id: "all", name: "הכל" },
@@ -582,6 +408,7 @@ export default function Landing() {
           { id: "legal", name: "משפטי" },
           { id: "tech", name: "טכנולוגיה" },
           { id: "cases", name: "מקרי בוחן" },
+          { id: "business", name: "עֵסֶק" },
         ];
 
   const filteredPosts = blogPosts.filter((post) => {
@@ -594,13 +421,15 @@ export default function Landing() {
           (activeCategory === "guides" && post.category === "Guides") ||
           (activeCategory === "legal" && post.category === "Legal") ||
           (activeCategory === "tech" && post.category === "Technology") ||
-          (activeCategory === "cases" && post.category === "Case Studies");
+          (activeCategory === "cases" && post.category === "Case Studies") ||
+          (activeCategory === "business" && post.category === "Business");
       } else {
         categoryMatches =
           (activeCategory === "tips" && post.category === "טיפים") ||
           (activeCategory === "guides" && post.category === "מדריכים") ||
           (activeCategory === "legal" && post.category === "משפטי") ||
           (activeCategory === "tech" && post.category === "טכנולוגיה") ||
+          (activeCategory === "business" && post.category === "עֵסֶק") ||
           (activeCategory === "cases" && post.category === "מקרי בוחן");
       }
 
@@ -610,9 +439,11 @@ export default function Landing() {
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       return (
-        post.title.toLowerCase().includes(query) ||
-        post.summary.toLowerCase().includes(query) ||
-        post.category.toLowerCase().includes(query)
+        (post.title?.toLowerCase() ?? "").includes(query) ||
+        (post.summary?.toLowerCase() ?? "").includes(query) ||
+        (post.category?.toLowerCase() ?? "").includes(query) ||
+        (post.author?.toLowerCase() ?? "").includes(query) ||
+        post.tags?.some((tag) => tag?.toLowerCase().includes(query))
       );
     }
 
@@ -1417,9 +1248,6 @@ export default function Landing() {
           {filteredPosts.length > 0 ? (
             <>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {/* {filteredPosts.map((post, index) => (
-                  <BlogCard key={post.id} post={post} delay={index * 0.1} />
-                ))} */}
                 {filteredPosts.slice(0, visibleBlogCount).map((post, index) => (
                   <BlogCard key={post.id} post={post} delay={index * 0.1} />
                 ))}
