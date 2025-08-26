@@ -26,14 +26,14 @@ export default function Layout({ children }) {
   const { supabase, logout } = useSessionContext();
 
   useEffect(() => {
-      const {
-        data: { subscription },
-      } = supabase.auth.onAuthStateChange((_event, session) => {
-        setUser(session?.user);
-      });
-      return () => subscription.unsubscribe();
-    }, [supabase]);
-  
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user);
+    });
+    return () => subscription.unsubscribe();
+  }, [supabase]);
+
   const handleLogout = async () => {
     try {
       await logout();
@@ -42,11 +42,12 @@ export default function Layout({ children }) {
       console.error("Error logging out:", error);
     }
   };
-  
-  const isLandingPage = location.pathname === "/" || location.pathname === "/Landing";
-  
+
+  const isLandingPage =
+    location.pathname === "/" || location.pathname === "/Landing";
+
   const getNavigationLabels = () => {
-    if (language === 'en') {
+    if (language === "en") {
       return {
         home: "Home",
         faq: "FAQ",
@@ -57,10 +58,10 @@ export default function Layout({ children }) {
         login: "Login",
         logout: "Logout",
         startNow: "Start Now",
-        contactUs: "Contact Us"
+        contactUs: "Contact Us",
       };
     }
-    
+
     return {
       home: "דף הבית",
       faq: "שאלות נפוצות",
@@ -71,14 +72,18 @@ export default function Layout({ children }) {
       login: "התחברות",
       logout: "התנתקות",
       startNow: "התחילו עכשיו",
-      contactUs: "צרו קשר"
+      contactUs: "צרו קשר",
     };
   };
-  
+
   const labels = getNavigationLabels();
 
   return (
-    <div dir={language === 'he' ? "rtl" : "ltr"} lang={language} className="min-h-screen">
+    <div
+      dir={language === "he" ? "rtl" : "ltr"}
+      lang={language}
+      className="min-h-screen"
+    >
       <style>{`
         :root {
           --primary: #2563eb;
@@ -117,35 +122,43 @@ export default function Layout({ children }) {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <Link to="/" className="flex items-center">
-              <div className={`w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center ${language === 'he' ? 'ml-2' : 'mr-2'}`}>
+              <div
+                className={`w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center ${
+                  language === "he" ? "ml-2" : "mr-2"
+                }`}
+              >
                 <span className="text-white font-bold">FF</span>
               </div>
               <span className="text-2xl font-bold text-blue-600">FineFix</span>
             </Link>
-            
-            <div className={`hidden md:flex items-center ${language === 'he' ? 'space-x-4 space-x-reverse' : 'space-x-4'}`}>
-              <Link 
+
+            <div
+              className={`hidden md:flex items-center ${
+                language === "he" ? "space-x-4 space-x-reverse" : "space-x-4"
+              }`}
+            >
+              <Link
                 to="/"
                 className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
               >
                 {labels.home}
               </Link>
               {isLandingPage && (
-                <a 
-                  href="#faq-section" 
+                <a
+                  href="#faq-section"
                   className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   {labels.faq}
                 </a>
               )}
-              <Link 
+              <Link
                 to={createPageUrl("Appeal")}
                 className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
               >
                 {labels.appeal}
               </Link>
               {user && (
-                <Link 
+                <Link
                   to={createPageUrl("UserDashboard")}
                   className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
                 >
@@ -153,18 +166,27 @@ export default function Layout({ children }) {
                 </Link>
               )}
             </div>
-            
-            <div className={`flex items-center ${language === 'he' ? 'space-x-4 space-x-reverse' : 'space-x-4'}`}>
+
+            <div
+              className={`flex items-center ${
+                language === "he" ? "space-x-4 space-x-reverse" : "space-x-4"
+              }`}
+            >
               <LanguageSwitcher />
-              
+
               <div className="hidden md:block">
                 {user ? (
                   <DropdownMenu dir="rtl">
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                      <Button
+                        variant="ghost"
+                        className="relative h-8 w-8 rounded-full"
+                      >
                         <Avatar className="h-8 w-8">
                           <AvatarFallback className="bg-blue-100 text-blue-600">
-                            {user.full_name ? user.full_name.charAt(0) : user.email.charAt(0)}
+                            {user.full_name
+                              ? user.full_name.charAt(0)
+                              : user.email.charAt(0)}
                           </AvatarFallback>
                         </Avatar>
                       </Button>
@@ -173,29 +195,42 @@ export default function Layout({ children }) {
                       <DropdownMenuLabel>{labels.myAccount}</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem
-                      className="cursor-pointer"
+                        className="cursor-pointer"
                         onClick={() => navigate(createPageUrl("UserProfile"))}
                       >
-                        <User className={`h-4 w-4 ${language === 'he' ? 'ml-2' : 'mr-2'}`} />
+                        <User
+                          className={`h-4 w-4 ${
+                            language === "he" ? "ml-2" : "mr-2"
+                          }`}
+                        />
                         <span>{labels.profile}</span>
                       </DropdownMenuItem>
                       <DropdownMenuItem
-                        onClick={() => window.location.href = createPageUrl("UserDashboard")}
+                        onClick={() =>
+                          (window.location.href =
+                            createPageUrl("UserDashboard"))
+                        }
                       >
-                        <FileText className={`h-4 w-4 ${language === 'he' ? 'ml-2' : 'mr-2'}`} />
+                        <FileText
+                          className={`h-4 w-4 ${
+                            language === "he" ? "ml-2" : "mr-2"
+                          }`}
+                        />
                         <span>{labels.myAppeals}</span>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        onClick={handleLogout}
-                      >
-                        <LogOut className={`h-4 w-4 ${language === 'he' ? 'ml-2' : 'mr-2'}`} />
+                      <DropdownMenuItem onClick={handleLogout}>
+                        <LogOut
+                          className={`h-4 w-4 ${
+                            language === "he" ? "ml-2" : "mr-2"
+                          }`}
+                        />
                         <span>{labels.logout}</span>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 ) : (
-                  <Button 
+                  <Button
                     onClick={() => navigate("/login")}
                     className="bg-blue-600 hover:bg-blue-700"
                   >
@@ -203,16 +238,18 @@ export default function Layout({ children }) {
                   </Button>
                 )}
               </div>
-              
+
               {!isLandingPage && !user && (
                 <Button
                   className="hidden md:flex bg-blue-600 hover:bg-blue-700"
-                  onClick={() => window.location.href = createPageUrl("Appeal")}
+                  onClick={() =>
+                    (window.location.href = createPageUrl("Appeal"))
+                  }
                 >
                   {labels.startNow}
                 </Button>
               )}
-              
+
               {/* Mobile menu button */}
               <Sheet>
                 <SheetTrigger asChild>
@@ -220,17 +257,26 @@ export default function Layout({ children }) {
                     <Menu className="h-6 w-6" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side={language === 'he' ? "right" : "left"} className="sm:max-w-xs">
+                <SheetContent
+                  side={language === "he" ? "right" : "left"}
+                  className="sm:max-w-xs"
+                >
                   <div className="flex flex-col h-full">
                     <div className="flex items-center justify-between mb-6">
                       <div className="flex items-center">
-                        <div className={`w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center ${language === 'he' ? 'ml-2' : 'mr-2'}`}>
+                        <div
+                          className={`w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center ${
+                            language === "he" ? "ml-2" : "mr-2"
+                          }`}
+                        >
                           <span className="text-white font-bold">FF</span>
                         </div>
-                        <span className="text-xl font-bold text-blue-600">FineFix</span>
+                        <span className="text-xl font-bold text-blue-600">
+                          FineFix
+                        </span>
                       </div>
                     </div>
-                    
+
                     {user && (
                       <div className="mb-6 p-4 bg-gray-50 rounded-lg">
                         <div className="flex items-center gap-3">
@@ -240,63 +286,88 @@ export default function Layout({ children }) {
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <p className="font-medium">{user.full_name || (language === 'he' ? "משתמש" : "User")}</p>
-                            <p className="text-sm text-gray-500">{user.email}</p>
+                            <p className="font-medium">
+                              {user.full_name ||
+                                (language === "he" ? "משתמש" : "User")}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              {user.email}
+                            </p>
                           </div>
                         </div>
                       </div>
                     )}
-                    
+
                     <nav className="flex-1 space-y-2">
-                      <Link 
+                      <Link
                         to="/"
                         className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
                       >
-                        <Home className={`h-5 w-5 ${language === 'he' ? 'ml-2' : 'mr-2'}`} />
+                        <Home
+                          className={`h-5 w-5 ${
+                            language === "he" ? "ml-2" : "mr-2"
+                          }`}
+                        />
                         {labels.home}
                       </Link>
-                      
-                      <Link 
+
+                      <Link
                         to={createPageUrl("Appeal")}
                         className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
                       >
-                        <FileText className={`h-5 w-5 ${language === 'he' ? 'ml-2' : 'mr-2'}`} />
+                        <FileText
+                          className={`h-5 w-5 ${
+                            language === "he" ? "ml-2" : "mr-2"
+                          }`}
+                        />
                         {labels.appeal}
                       </Link>
-                      
+
                       {user && (
                         <>
-                          <Link 
+                          <Link
                             to={createPageUrl("UserDashboard")}
                             className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
                           >
-                            <FileText className={`h-5 w-5 ${language === 'he' ? 'ml-2' : 'mr-2'}`} />
+                            <FileText
+                              className={`h-5 w-5 ${
+                                language === "he" ? "ml-2" : "mr-2"
+                              }`}
+                            />
                             {labels.myAppeals}
                           </Link>
-                          
-                          <Link 
+
+                          <Link
                             to={createPageUrl("UserProfile")}
                             className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
                           >
-                            <User className={`h-5 w-5 ${language === 'he' ? 'ml-2' : 'mr-2'}`} />
+                            <User
+                              className={`h-5 w-5 ${
+                                language === "he" ? "ml-2" : "mr-2"
+                              }`}
+                            />
                             {labels.profile}
                           </Link>
                         </>
                       )}
                     </nav>
-                    
+
                     <div className="mt-auto pt-6 border-t">
                       {user ? (
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="outline"
                           className="w-full"
                           onClick={handleLogout}
                         >
-                          <LogOut className={`h-4 w-4 ${language === 'he' ? 'ml-2' : 'mr-2'}`} />
+                          <LogOut
+                            className={`h-4 w-4 ${
+                              language === "he" ? "ml-2" : "mr-2"
+                            }`}
+                          />
                           {labels.logout}
                         </Button>
                       ) : (
-                        <Button 
+                        <Button
                           className="w-full bg-blue-600 hover:bg-blue-700"
                           onClick={() => navigate("/login")}
                         >
@@ -312,35 +383,38 @@ export default function Layout({ children }) {
         </nav>
       </header>
 
-      <main>
-        {children}
-      </main>
+      <main>{children}</main>
 
       <footer className="bg-gray-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center mb-4">
-                <div className={`w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center ${language === 'he' ? 'ml-2' : 'mr-2'}`}>
+                <div
+                  className={`w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center ${
+                    language === "he" ? "ml-2" : "mr-2"
+                  }`}
+                >
                   <span className="text-white font-bold">FF</span>
                 </div>
                 <span className="text-2xl font-bold">FineFix</span>
               </div>
               <p className="text-gray-400 mb-4">
-                {language === 'he' 
-                  ? "המערכת המתקדמת ביותר לערעור על דוחות חניה בישראל" 
-                  : "The most advanced system for appealing parking tickets in the USA"
-                }
+                {language === "he"
+                  ? "המערכת המתקדמת ביותר לערעור על דוחות חניה בישראל"
+                  : "The most advanced system for appealing parking tickets in the USA"}
               </p>
               <div className="text-gray-400">
-                © {new Date().getFullYear()} FineFix - 
-                {language === 'he' ? " כל הזכויות שמורות" : " All rights reserved"}
+                © {new Date().getFullYear()} FineFix -
+                {language === "he"
+                  ? " כל הזכויות שמורות"
+                  : " All rights reserved"}
               </div>
             </div>
-            
+
             <div>
               <h3 className="text-lg font-semibold mb-4">
-                {language === 'he' ? "ניווט מהיר" : "Quick Navigation"}
+                {language === "he" ? "ניווט מהיר" : "Quick Navigation"}
               </h3>
               <ul className="space-y-2">
                 <li>
@@ -349,60 +423,82 @@ export default function Layout({ children }) {
                   </Link>
                 </li>
                 <li>
-                  <a href="#faq-section" className="text-gray-400 hover:text-white">
+                  <a
+                    href="#faq-section"
+                    className="text-gray-400 hover:text-white"
+                  >
                     {labels.faq}
                   </a>
                 </li>
                 <li>
-                  <Link to={createPageUrl("Appeal")} className="text-gray-400 hover:text-white">
+                  <Link
+                    to={createPageUrl("Appeal")}
+                    className="text-gray-400 hover:text-white"
+                  >
                     {labels.appeal}
                   </Link>
                 </li>
                 {user && (
                   <li>
-                    <Link to={createPageUrl("UserProfile")} className="text-gray-400 hover:text-white">
+                    <Link
+                      to={createPageUrl("UserProfile")}
+                      className="text-gray-400 hover:text-white"
+                    >
                       {labels.profile}
                     </Link>
                   </li>
                 )}
               </ul>
             </div>
-            
+
             <div>
               <h3 className="text-lg font-semibold mb-4">
-                {language === 'he' ? "קישורים שימושיים" : "Useful Links"}
+                {language === "he" ? "קישורים שימושיים" : "Useful Links"}
               </h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    {language === 'he' ? "תנאי שימוש" : "Terms of Use"}
-                  </a>
+                  <Link
+                    to={"/TermsOfUses"}
+                    className="text-gray-400 hover:text-white"
+                  >
+                    {language === "he" ? "תנאי שימוש" : "Terms of Use"}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={"/PrivacyPolicy"}
+                    className="text-gray-400 hover:text-white"
+                  >
+                    {language === "he" ? "מדיניות פרטיות" : "Privacy Policy"}
+                  </Link>
                 </li>
                 <li>
                   <a href="#" className="text-gray-400 hover:text-white">
-                    {language === 'he' ? "מדיניות פרטיות" : "Privacy Policy"}
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    {language === 'he' ? "צרו קשר" : "Contact Us"}
+                    {language === "he" ? "צרו קשר" : "Contact Us"}
                   </a>
                 </li>
               </ul>
             </div>
-            
+
             <div>
               <h3 className="text-lg font-semibold mb-4">
-                {language === 'he' ? "צרו קשר" : "Contact Us"}
+                {language === "he" ? "צרו קשר" : "Contact Us"}
               </h3>
               <ul className="space-y-2 text-gray-400">
-                <li>{language === 'he' ? "דוא\"ל: finefix.help@gmail.com" : "Email: finefix.help@gmail.com"}</li>
-                <li>{language === 'he' ? "טלפון: 03-1234567" : "Phone: 1-800-123-4567"}</li>
                 <li>
-                  {language === 'he' 
-                    ? "כתובת: רחוב הטכנולוגיה 1, תל אביב" 
-                    : "Address: 123 Tech Street, San Francisco"
-                  }
+                  {language === "he"
+                    ? 'דוא"ל: finefix.help@gmail.com'
+                    : "Email: finefix.help@gmail.com"}
+                </li>
+                <li>
+                  {language === "he"
+                    ? "טלפון: 03-1234567"
+                    : "Phone: 1-800-123-4567"}
+                </li>
+                <li>
+                  {language === "he"
+                    ? "כתובת: רחוב הטכנולוגיה 1, תל אביב"
+                    : "Address: 123 Tech Street, San Francisco"}
                 </li>
               </ul>
             </div>
