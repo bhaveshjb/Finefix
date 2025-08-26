@@ -8,8 +8,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 export default function FeedbackForm({ appealId, onSuccess, onCancel }) {
+  const [language] = useLocalStorage("languagePreference", "he");
   const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
@@ -88,14 +90,14 @@ export default function FeedbackForm({ appealId, onSuccess, onCancel }) {
     >
       <Card>
         <CardHeader>
-          <CardTitle>המשוב שלך על השירות</CardTitle>
+          <CardTitle>{language === "en" ? "Your feedback on the service" : "המשוב שלך על השירות"}</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <div className="space-y-8">
               {/* Rating Stars */}
               <div className="space-y-2">
-                <Label>איך היית מדרג את השירות שלנו?</Label>
+                <Label>{language === "en" ? "How would you rate our service?" : "איך היית מדרג את השירות שלנו?"}</Label>
                 <div className="flex items-center justify-center md:justify-start space-x-2 space-x-reverse">
                   {[1, 2, 3, 4, 5].map((value) => (
                     <button
@@ -120,7 +122,7 @@ export default function FeedbackForm({ appealId, onSuccess, onCancel }) {
 
               {/* Satisfaction Level */}
               <div className="space-y-2">
-                <Label>מה רמת שביעות הרצון שלך מהשירות?</Label>
+                <Label>{language === "en" ? "What is your level of satisfaction with the service?" : "מה רמת שביעות הרצון שלך מהשירות?"}</Label>
                 <RadioGroup
                   value={feedbackData.satisfaction_level}
                   onValueChange={handleSatisfactionChange}
@@ -128,30 +130,30 @@ export default function FeedbackForm({ appealId, onSuccess, onCancel }) {
                 >
                   <div className="flex items-center space-x-2 space-x-reverse">
                     <RadioGroupItem value="מרוצה מאוד" id="satisfaction-5" />
-                    <Label htmlFor="satisfaction-5">מרוצה מאוד</Label>
+                    <Label htmlFor="satisfaction-5">{language === "en" ?"Very satisfied" : "מרוצה מאוד"}</Label>
                   </div>
                   <div className="flex items-center space-x-2 space-x-reverse">
                     <RadioGroupItem value="מרוצה" id="satisfaction-4" />
-                    <Label htmlFor="satisfaction-4">מרוצה</Label>
+                    <Label htmlFor="satisfaction-4">{language === "en" ?"satisfied" : "מרוצה"}</Label>
                   </div>
                   <div className="flex items-center space-x-2 space-x-reverse">
                     <RadioGroupItem value="ניטרלי" id="satisfaction-3" />
-                    <Label htmlFor="satisfaction-3">ניטרלי</Label>
+                    <Label htmlFor="satisfaction-3">{language === "en" ?"Neutral" : "ניטרלי"}</Label>
                   </div>
                   <div className="flex items-center space-x-2 space-x-reverse">
                     <RadioGroupItem value="לא מרוצה" id="satisfaction-2" />
-                    <Label htmlFor="satisfaction-2">לא מרוצה</Label>
+                    <Label htmlFor="satisfaction-2">{language === "en" ?"Not satisfied" : "לא מרוצה"}</Label>
                   </div>
                   <div className="flex items-center space-x-2 space-x-reverse">
                     <RadioGroupItem value="לא מרוצה בכלל" id="satisfaction-1" />
-                    <Label htmlFor="satisfaction-1">לא מרוצה בכלל</Label>
+                    <Label htmlFor="satisfaction-1">{language === "en" ?"Not satisfied at all" : "לא מרוצה בכלל"}</Label>
                   </div>
                 </RadioGroup>
               </div>
 
               {/* Appeal Result */}
               <div className="space-y-2">
-                <Label>מה הייתה תוצאת הערעור?</Label>
+                <Label>{language === "en" ? "What was the outcome of the appeal?" : "מה הייתה תוצאת הערעור?"}</Label>
                 <RadioGroup
                   value={feedbackData.appeal_result}
                   onValueChange={(value) => setFeedbackData({ ...feedbackData, appeal_result: value })}
@@ -159,19 +161,19 @@ export default function FeedbackForm({ appealId, onSuccess, onCancel }) {
                 >
                   <div className="flex items-center space-x-2 space-x-reverse">
                     <RadioGroupItem value="בוטל לחלוטין" id="result-4" />
-                    <Label htmlFor="result-4">בוטל לחלוטין</Label>
+                    <Label htmlFor="result-4">{language === "en" ?"Completely canceled" : "בוטל לחלוטין"}</Label>
                   </div>
                   <div className="flex items-center space-x-2 space-x-reverse">
                     <RadioGroupItem value="הופחת" id="result-3" />
-                    <Label htmlFor="result-3">הופחת</Label>
+                    <Label htmlFor="result-3">{language === "en" ? "Reduced" : "הופחת"}</Label>
                   </div>
                   <div className="flex items-center space-x-2 space-x-reverse">
                     <RadioGroupItem value="נדחה" id="result-2" />
-                    <Label htmlFor="result-2">נדחה</Label>
+                    <Label htmlFor="result-2">{language === "en" ? "rejected" : "נדחה"}</Label>
                   </div>
                   <div className="flex items-center space-x-2 space-x-reverse">
                     <RadioGroupItem value="ממתין להחלטה" id="result-1" />
-                    <Label htmlFor="result-1">ממתין להחלטה</Label>
+                    <Label htmlFor="result-1">{language === "en" ? "Awaiting decision" : "ממתין להחלטה"}</Label>
                   </div>
                 </RadioGroup>
               </div>
@@ -179,7 +181,7 @@ export default function FeedbackForm({ appealId, onSuccess, onCancel }) {
               {/* Fine Amount */}
               <div className="grid gap-4 sm:grid-cols-3">
                 <div className="space-y-2">
-                  <Label htmlFor="fine_amount">סכום הקנס המקורי (₪)</Label>
+                  <Label htmlFor="fine_amount">{language === "en" ? "Original fine amount (NIS)" : "סכום הקנס המקורי (₪)"}</Label>
                   <Input
                     id="fine_amount"
                     name="fine_amount"
@@ -191,7 +193,7 @@ export default function FeedbackForm({ appealId, onSuccess, onCancel }) {
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="time_to_process">זמן הטיפול בימים</Label>
+                  <Label htmlFor="time_to_process">{language === "en" ? "Time of treatment in days" : "זמן הטיפול בימים"}</Label>
                   <Input
                     id="time_to_process"
                     name="time_to_process"
@@ -203,7 +205,7 @@ export default function FeedbackForm({ appealId, onSuccess, onCancel }) {
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="ease_of_use">קלות השימוש במערכת</Label>
+                  <Label htmlFor="ease_of_use">{language === "en" ? "Ease of use of the system" : "קלות השימוש במערכת"}</Label>
                   <select
                     id="ease_of_use"
                     name="ease_of_use"
@@ -211,22 +213,22 @@ export default function FeedbackForm({ appealId, onSuccess, onCancel }) {
                     onChange={handleInputChange}
                     className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    <option value="קל מאוד">קל מאוד</option>
-                    <option value="קל">קל</option>
-                    <option value="סביר">סביר</option>
-                    <option value="מורכב">מורכב</option>
-                    <option value="מורכב מאוד">מורכב מאוד</option>
+                    <option value="קל מאוד">{language === "en" ? "Very easy": "קל מאד"}</option>
+                    <option value="קל">{language === "en" ? "easy" : "קל"}</option>
+                    <option value="סביר">{language === "en" ? "reasonable" : "סביר"}</option>
+                    <option value="מורכב">{language === "en" ? "complex" : "מורכב"}</option>
+                    <option value="מורכב מאוד">{language === "en" ? "Very complex" : "מורכב מאוד"}</option>
                   </select>
                 </div>
               </div>
 
               {/* Feedback Text */}
               <div className="space-y-2">
-                <Label htmlFor="feedback_text">משוב מילולי (אופציונלי)</Label>
+                <Label htmlFor="feedback_text">{language === "en" ?"Verbal feedback (optional)" : "משוב מילולי (אופציונלי)"}</Label>
                 <Textarea
                   id="feedback_text"
                   name="feedback_text"
-                  placeholder="ספרו לנו על החוויה שלכם עם השירות..."
+                  placeholder={language === "en" ? "Tell us about your experience with the service...": "ספרו לנו על החוויה שלכם עם השירות..."}
                   value={feedbackData.feedback_text}
                   onChange={handleInputChange}
                   rows={3}
@@ -235,11 +237,11 @@ export default function FeedbackForm({ appealId, onSuccess, onCancel }) {
 
               {/* Improvement Suggestions */}
               <div className="space-y-2">
-                <Label htmlFor="improvement_suggestions">הצעות לשיפור (אופציונלי)</Label>
+                <Label htmlFor="improvement_suggestions">{language === "en" ?"Suggestions for improvement (optional)": "הצעות לשיפור (אופציונלי)"}</Label>
                 <Textarea
                   id="improvement_suggestions"
                   name="improvement_suggestions"
-                  placeholder="יש לכם רעיונות כיצד לשפר את השירות שלנו?"
+                  placeholder={language === "en" ? "Do you have any ideas on how to improve our service?" : "יש לכם רעיונות כיצד לשפר את השירות שלנו?"}
                   value={feedbackData.improvement_suggestions}
                   onChange={handleInputChange}
                   rows={2}
@@ -254,7 +256,7 @@ export default function FeedbackForm({ appealId, onSuccess, onCancel }) {
                   onCheckedChange={handleCheckboxChange}
                 />
                 <Label htmlFor="would_recommend">
-                  אני ממליץ על השירות לחברים ומשפחה
+                  {language === "en" ? "I recommend the service to friends and family" : "אני ממליץ על השירות לחברים ומשפחה"}
                 </Label>
               </div>
             </div>
@@ -262,7 +264,7 @@ export default function FeedbackForm({ appealId, onSuccess, onCancel }) {
         </CardContent>
         <CardFooter className="flex flex-col sm:flex-row gap-3 justify-end">
           <Button variant="outline" onClick={onCancel}>
-            ביטול
+           {language === "en" ? "Cancel" : "ביטול"}
           </Button>
           <Button
             onClick={handleSubmit}
@@ -272,11 +274,11 @@ export default function FeedbackForm({ appealId, onSuccess, onCancel }) {
             {loading ? (
               <div className="flex items-center">
                 <div className="h-4 w-4 border-2 border-white border-opacity-50 border-t-transparent rounded-full animate-spin mr-2"></div>
-                שולח משוב...
+                {language === "en" ? "Sending feedback..." : "שולח משוב..."}
               </div>
             ) : (
               <>
-                שלח משוב
+                {language === "en" ? "Send Feedback" : "שלח משוב"}
                 <Send className="mr-2 h-4 w-4" />
               </>
             )}
