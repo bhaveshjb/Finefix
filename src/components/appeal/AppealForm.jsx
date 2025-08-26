@@ -67,35 +67,6 @@ export default function AppealForm({ onSubmit }) {
   const [fileErrors, setFileErrors] = useState("");
   const navigate = useNavigate();
 
-  const allowedTypes = [
-    "application/pdf",
-    "image/jpeg",
-    "image/png",
-    "image/tiff",
-    "image/heic",
-    "image/heif",
-    "image/webp",
-  ];
-
-  const blockedExtensions = [
-    ".exe",
-    ".msi",
-    ".bat",
-    ".cmd",
-    ".ps1",
-    ".sh",
-    ".js",
-    ".jar",
-    ".vbs",
-    ".scr",
-    ".zip",
-    ".rar",
-    ".7z",
-    ".gz",
-    ".docm",
-    ".xlsm",
-  ];
-
   // Get translated content based on the current language
   const getTranslations = () => {
     if (language === "en") {
@@ -459,6 +430,7 @@ export default function AppealForm({ onSubmit }) {
   const UploadFile = async ({ file }) => {
     const { carNumber, ticketNumber } = formData;
     const fileName = file.name.replace(/[^a-zA-Z0-9\s.,!?;:'"()-]/g, "");
+    console.log("fileName ====================================", fileName);
     const { data, error } = await supabase.storage
       .from("documents")
       .upload(`public/${carNumber}-${ticketNumber}/${fileName}`, file, {
@@ -478,48 +450,21 @@ export default function AppealForm({ onSubmit }) {
 
   // Handle file upload
   const handleFileUpload = async (e) => {
-    setFileErrors(false);
+    console.log("FileUpload =", e.target.files);
     const file = e.target.files[0];
     if (!file) return;
 
-    // Max files
+    // Validate file
     if (formData.documents.length >= 5) {
-      setFileErrors("You can upload a maximum of 5 files.");
+      setFileErrors(t.labels.maxFilesError);
       return;
     }
 
-    // Blocked extensions
-    const fileExt = "." + file.name.split(".").pop().toLowerCase();
-    if (blockedExtensions.includes(fileExt)) {
-      setFileErrors("This file type is not allowed.");
+    if (file.size > 5 * 1024 * 1024) {
+      // 5MB limit
+      setFileErrors(t.labels.fileSizeError);
       return;
     }
-
-    // Allowed types
-    if (!allowedTypes.includes(file.type)) {
-      setFileErrors(
-        "Invalid file type. Please upload a PDF or supported image."
-      );
-      return;
-    }
-
-    //File size (10MB limit)
-    if (file.size > 10 * 1024 * 1024) {
-      setFileErrors("Each file must be smaller than 10MB.");
-      return;
-    }
-
-    // Total size across all files (30MB limit)
-    const totalSize =
-      formData.documents.reduce((acc, doc) => acc + (doc.size || 0), 0) +
-      file.size;
-    if (totalSize > 30 * 1024 * 1024) {
-      setFileErrors("Total size of all files must be less than 30MB.");
-      return;
-    }
-
-    setFileErrors("");
-    setUploadingFile(true);
 
     setFileErrors("");
     setUploadingFile(true);
@@ -532,7 +477,7 @@ export default function AppealForm({ onSubmit }) {
           ...prev,
           documents: [
             ...prev.documents,
-            { name: file.name, url: result.file_url, size: file.size },
+            { name: file.name, url: result.file_url },
           ],
         }));
       }
@@ -556,6 +501,7 @@ export default function AppealForm({ onSubmit }) {
     if (error) {
       toast.error("Error while removing file.");
     } else {
+      console.log("File deleted:", data);
       setFormData((prev) => ({
         ...prev,
         documents: prev.documents.filter((_, i) => i !== index),

@@ -6,15 +6,10 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { useLocalStorage } from "@uidotdev/usehooks";
-import { useEffect } from "react";
 
 export default function AppealPage() {
   const [language] = useLocalStorage("languagePreference", "he"); // Default to Hebrew
   const navigate = useNavigate();
-
-  useEffect(() => {
-    window.scroll(0, 0);
-  }, []);
 
   const handleFormSubmit = async (formData) => {
     const formDataStr = JSON.stringify(formData);
@@ -29,21 +24,24 @@ export default function AppealPage() {
     const productDescription =
       language === "he" ? "ערעור על דוח חניה" : "Parking Ticket Appeal";
 
+    //TODO : For testing & undestanding not using ENV values, after completing changes replace with ENV valiables  
+
     const url = "https://secure.cardcom.solutions/api/v11/LowProfile/Create";
     console.log("Submitting appeal with data:", {
       formData,
-      webhookUrl: `${supabaseUrl}/functions/v1/payment-webhook?language=${language}`,
+      webhookUrl: `https://kyxflawpfapoqdqdbwha.supabase.co/functions/v1/payment-webhook?language=${language}`,
     });
     const options = {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        TerminalNumber: cardcomTerminalNumber,
-        ApiName: cardcomApiName,
+        TerminalNumber: "1000",
+        ApiName: "kzFKfohEvL6AOF8aMEJz",
+        ApiPassword: "FIDHIh4pAadw3Slbdsjg",
         Amount: 20,
+        WebHookUrl: `https://kyxflawpfapoqdqdbwha.supabase.co/functions/v1/payment-webhook?language=${language}`,
         SuccessRedirectUrl: `${window.location.href}/success`,
         FailedRedirectUrl: `${window.location.href}/failed`,
-        WebHookUrl: `${supabaseUrl}/functions/v1/payment-webhook?language=${language}`,
         ReturnValue: base64FormData,
         UIDefinition: {
           IsHideCardOwnerEmail: false,
@@ -65,7 +63,6 @@ export default function AppealPage() {
       }
 
       window.location.href = data.Url;
-      console.log(data);
     } catch (error) {
       console.error(error);
       toast.error(
@@ -112,10 +109,12 @@ export default function AppealPage() {
 
   return (
     <div
-      className={`flex-grow bg-gray-200${language === "he" ? "rtl" : "ltr"}`}
+      className={`min-h-screen bg-gray-50 p-4 md:p-8 ${
+        language === "he" ? "rtl" : "ltr"
+      }`}
     >
-      <div className="container mx-auto max-w-5xl p-4 md:p-8">
-        <div className="flex items-center justify-between mb-8 ">
+      <div className="container mx-auto max-w-5xl">
+        <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold">{t.pageTitle}</h1>
           </div>
