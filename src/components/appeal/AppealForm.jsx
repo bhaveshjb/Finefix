@@ -127,6 +127,7 @@ export default function AppealForm({ onSubmit }) {
           invalidCarNumberError:
             "Please enter a valid vehicle license plate number",
           invalidTicketNumberError: "Please enter a valid ticket number",
+          futureTimeError: "Future time is not allowed.",
           documents: "Documents",
         },
         appealReasons: [
@@ -242,6 +243,7 @@ export default function AppealForm({ onSubmit }) {
           consentError:
             "עליך לקבל את תנאי השימוש ומדיניות הפרטיות לפני שתמשיך.",
           invalidTicketNumberError: "אנא הזן מספר דו״ח תקין",
+          futureTimeError: "זמן עתידי אינו מותר.",
           documents: "מסמכים",
         },
         appealReasons: [
@@ -331,6 +333,24 @@ export default function AppealForm({ onSubmit }) {
             errorMessage = t.labels.minLengthError.replace("{0}", "10");
           }
           break;
+        case "violationTime":
+          if (formData.violationDate) {
+            const today = new Date();
+            const selectedDate = new Date(formData.violationDate);
+
+            // Only validate time if date is today
+            if (selectedDate.toDateString() === today.toDateString()) {
+              const [hours, minutes] = value.split(":").map(Number);
+              const selected = new Date(selectedDate);
+              selected.setHours(hours, minutes, 0, 0);
+
+              if (selected > today) {
+                errorMessage =
+                  t.labels.futureTimeError || "Future time is not allowed.";
+              }
+            }
+          }
+          break;
       }
     }
 
@@ -367,13 +387,15 @@ export default function AppealForm({ onSubmit }) {
         }
       }
     } else if (step === 2) {
-      ["violationDate", "violationLocation"].forEach((field) => {
-        const fieldValid = validateField(field, formData[field]);
-        isValid = isValid && fieldValid;
-        if (!fieldValid) {
-          newErrors[field] = t.labels.requiredError;
+      ["violationDate", "violationTime", "violationLocation"].forEach(
+        (field) => {
+          const fieldValid = validateField(field, formData[field]);
+          isValid = isValid && fieldValid;
+          if (!fieldValid) {
+            newErrors[field] = t.labels.requiredError;
+          }
         }
-      });
+      );
     } else if (step === 3) {
       const fieldValid = validateField("appealReason", formData.appealReason);
       isValid = isValid && fieldValid;
@@ -761,6 +783,7 @@ export default function AppealForm({ onSubmit }) {
                   value={formData.violationDate}
                   onChange={handleChange}
                   className={errors.violationDate ? "border-red-500" : ""}
+                  max={new Date().toISOString().split("T")[0]}
                   dir={language === "he" ? "rtl" : "ltr"}
                 />
                 {errors.violationDate && (
@@ -785,6 +808,9 @@ export default function AppealForm({ onSubmit }) {
                   value={formData.violationTime}
                   onChange={handleChange}
                 />
+                {errors.violationTime && (
+                  <p className="text-red-500 text-sm">{errors.violationTime}</p>
+                )}
               </div>
 
               <div className="space-y-4">
