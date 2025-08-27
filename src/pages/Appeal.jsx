@@ -20,26 +20,25 @@ export default function AppealPage() {
       import.meta.env.VITE_CARDCOM_TERMINAL_NUMBER
     );
     const cardcomApiName = import.meta.env.VITE_CARDCOM_API_NAME;
+    const cardcomApiPassword = import.meta.env.VITE_CARDCOM_API_PASSOWRD;
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
     const productDescription =
       language === "he" ? "ערעור על דוח חניה" : "Parking Ticket Appeal";
 
-    //TODO : For testing & undestanding not using ENV values, after completing changes replace with ENV valiables  
-
     const url = "https://secure.cardcom.solutions/api/v11/LowProfile/Create";
     console.log("Submitting appeal with data:", {
       formData,
-      webhookUrl: `https://kyxflawpfapoqdqdbwha.supabase.co/functions/v1/payment-webhook?language=${language}`,
+      webhookUrl: `${supabaseUrl}/functions/v1/payment-webhook?language=${language}`,
     });
     const options = {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        TerminalNumber: "1000",
-        ApiName: "kzFKfohEvL6AOF8aMEJz",
-        ApiPassword: "FIDHIh4pAadw3Slbdsjg",
+        TerminalNumber: cardcomTerminalNumber,
+        ApiName: cardcomApiName,
+        ApiPassword: cardcomApiPassword,
         Amount: 20,
-        WebHookUrl: `https://kyxflawpfapoqdqdbwha.supabase.co/functions/v1/payment-webhook?language=${language}`,
+        WebHookUrl: `${supabaseUrl}/functions/v1/payment-webhook?language=${language}`,
         SuccessRedirectUrl: `${window.location.href}/success`,
         FailedRedirectUrl: `${window.location.href}/failed`,
         ReturnValue: base64FormData,
@@ -59,6 +58,11 @@ export default function AppealPage() {
 
       if (data.ResponseCode !== 0) {
         console.error("Error from Cardcom:", data);
+        toast.error(
+          language === "en"
+            ? "Error submitting appeal, contact support."
+            : "שגיאה בהגשת הערעור, פנה לתמיכה."
+        );
         throw new Error(`Cardcom error: ${data.ResponseMessage}`);
       }
 
