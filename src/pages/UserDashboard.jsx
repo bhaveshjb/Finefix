@@ -375,86 +375,103 @@ export default function UserDashboard() {
                 </Card>
               ) : (
                 <div className="grid gap-4" dir="rtl">
-                  {appeals.map((appeal) => (
-                    <Card
+                  {appeals.map((appeal, index) => (
+                    <motion.div
                       key={appeal.id}
                       className="hover:border-blue-300 transition-colors"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.4,
+                        ease: "easeOut",
+                        delay: index * 0.05,
+                      }}
+                      whileHover={{ scale: 1.01 }}
                     >
-                      <CardHeader className="pb-2">
-                        <div className="flex justify-between items-start">
-                          <div className="flex items-center gap-2">
-                            <div className="bg-blue-100 p-2 rounded-lg">
-                              <CarFront className="h-5 w-5 text-blue-600" />
+                      <Card
+                        key={appeal.id}
+                        className="hover:border-blue-300 transition-colors"
+                      >
+                        <CardHeader className="pb-2">
+                          <div className="flex justify-between items-start">
+                            <div className="flex items-center gap-2">
+                              <div className="bg-blue-100 p-2 rounded-lg">
+                                <CarFront className="h-5 w-5 text-blue-600" />
+                              </div>
+                              <div>
+                                <CardTitle className="text-lg">
+                                  {language === "en" ? "Report" : "דוח"}{" "}
+                                  {violationTypes[
+                                    appeal.form_data.violationType
+                                  ] || "חניה"}
+                                </CardTitle>
+                                <CardDescription>
+                                  {language === "en" ? "Vehicle No" : "רכב מס׳"}
+                                  {appeal.form_data.carNumber || "-"},{" "}
+                                  {language === "en" ? "Report No." : "דוח מס׳"}{" "}
+                                  {appeal.form_data.ticketNumber || "-"}
+                                </CardDescription>
+                              </div>
                             </div>
-                            <div>
-                              <CardTitle className="text-lg">
-                                {language === "en" ? "Report" : "דוח"}{" "}
-                                {violationTypes[
-                                  appeal.form_data.violationType
-                                ] || "חניה"}
-                              </CardTitle>
-                              <CardDescription>
-                                {language === "en" ? "Vehicle No" : "רכב מס׳"}
-                                {appeal.form_data.carNumber || "-"},{" "}
-                                {language === "en" ? "Report No." : "דוח מס׳"}{" "}
-                                {appeal.form_data.ticketNumber || "-"}
-                              </CardDescription>
-                            </div>
+
+                            {getStatusBadge(
+                              appeal.transaction_data.ResponseCode
+                            )}
                           </div>
+                        </CardHeader>
 
-                          {getStatusBadge(appeal.transaction_data.ResponseCode)}
-                        </div>
-                      </CardHeader>
-
-                      <CardContent className="pb-2">
-                        <div className="grid grid-cols-2 gap-2 text-sm text-gray-500">
-                          <div className="flex items-center">
-                            <Calendar className="h-4 w-4 mr-1 text-gray-400" />
-                            <span>
-                              {language === "en" ? "Submitted:" : "הוגש:"}{" "}
-                              {new Date(appeal.created_at).toLocaleDateString()}
-                            </span>
-                          </div>
-
-                          {appeal.ticket_amount && (
+                        <CardContent className="pb-2">
+                          <div className="grid grid-cols-2 gap-2 text-sm text-gray-500">
                             <div className="flex items-center">
+                              <Calendar className="h-4 w-4 mr-1 text-gray-400" />
                               <span>
-                                {language === "en" ? "Amount:" : "סכום: ₪"}
-                                {appeal.ticket_amount}
+                                {language === "en" ? "Submitted:" : "הוגש:"}{" "}
+                                {new Date(
+                                  appeal.created_at
+                                ).toLocaleDateString()}
                               </span>
                             </div>
-                          )}
-                        </div>
-                      </CardContent>
 
-                      <CardFooter className="pt-2">
-                        <div className="flex justify-between w-full">
-                          <Link
-                            to={`${createPageUrl("Appeal")}?id=${appeal.id}`}
-                            className="text-blue-600 hover:text-blue-800 font-medium text-sm"
-                          >
-                            {language === "en"
-                              ? "View details"
-                              : "צפייה בפרטים"}
-                          </Link>
+                            {appeal.ticket_amount && (
+                              <div className="flex items-center">
+                                <span>
+                                  {language === "en" ? "Amount:" : "סכום: ₪"}
+                                  {appeal.ticket_amount}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </CardContent>
 
-                          {(appeal.appeal_status === "approved" ||
-                            appeal.appeal_status === "rejected") && (
+                        <CardFooter className="pt-2">
+                          <div className="flex justify-between w-full">
                             <Link
-                              to={`${createPageUrl("AppealFeedback")}?id=${
-                                appeal.id
-                              }`}
-                              className="flex items-center text-sm text-gray-600 hover:text-gray-900"
+                              to={`${createPageUrl("Appeal")}?id=${appeal.id}`}
+                              className="text-blue-600 hover:text-blue-800 font-medium text-sm"
                             >
-                              <Star className="h-4 w-4 mr-1" />
                               {language === "en"
-                                ? "Rate the experience"
-                                : "דרג את החוויה"}
+                                ? "View details"
+                                : "צפייה בפרטים"}
                             </Link>
-                          )}
-                        </div>
-                      </CardFooter>
-                    </Card>
+
+                            {(appeal.appeal_status === "approved" ||
+                              appeal.appeal_status === "rejected") && (
+                              <Link
+                                to={`${createPageUrl("AppealFeedback")}?id=${
+                                  appeal.id
+                                }`}
+                                className="flex items-center text-sm text-gray-600 hover:text-gray-900"
+                              >
+                                <Star className="h-4 w-4 mr-1" />
+                                {language === "en"
+                                  ? "Rate the experience"
+                                  : "דרג את החוויה"}
+                              </Link>
+                            )}
+                          </div>
+                        </CardFooter>
+                      </Card>
+                    </motion.div>
                   ))}
                 </div>
               )}
@@ -490,57 +507,82 @@ export default function UserDashboard() {
               </div>
 
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">
-                      {language === "en" ? "Success percentage" : "אחוזי הצלחה"}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-4xl font-bold text-blue-600">92%</div>
-                    <p className="text-gray-500">
-                      {language === "en"
-                        ? "Some of our appeals lead to full or partial cancellation"
-                        : "מהערעורים שלנו מובילים לביטול מלא או חלקי"}
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">
-                      {language === "en"
-                        ? "Average treatment time"
-                        : "זמן טיפול ממוצע"}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-4xl font-bold text-blue-600">14</div>
-                    <p className="text-gray-500">
-                      {language === "en"
-                        ? "Days to receive a response to an appeal"
-                        : "ימים לקבלת תשובה על ערעור"}
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">
-                      {language === "en"
-                        ? "Successful appeals today"
-                        : "ערעורים מוצלחים היום"}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-4xl font-bold text-blue-600">127</div>
-                    <p className="text-gray-500">
-                      {language === "en"
-                        ? "Appeals received today only"
-                        : "ערעורים שהתקבלו היום בלבד"}
-                    </p>
-                  </CardContent>
-                </Card>
+                <motion.div
+                  className="h-full"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                >
+                  <Card className="h-full">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-lg">
+                        {language === "en"
+                          ? "Success percentage"
+                          : "אחוזי הצלחה"}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-4xl font-bold text-blue-600">
+                        92%
+                      </div>
+                      <p className="text-gray-500">
+                        {language === "en"
+                          ? "Some of our appeals lead to full or partial cancellation"
+                          : "מהערעורים שלנו מובילים לביטול מלא או חלקי"}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+                <motion.div
+                  className="h-full"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                >
+                  <Card className="h-full">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-lg">
+                        {language === "en"
+                          ? "Average treatment time"
+                          : "זמן טיפול ממוצע"}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-4xl font-bold text-blue-600">14</div>
+                      <p className="text-gray-500">
+                        {language === "en"
+                          ? "Days to receive a response to an appeal"
+                          : "ימים לקבלת תשובה על ערעור"}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+                <motion.div
+                  className="h-full"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                >
+                  <Card className="h-full">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-lg">
+                        {language === "en"
+                          ? "Successful appeals today"
+                          : "ערעורים מוצלחים היום"}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-4xl font-bold text-blue-600">
+                        127
+                      </div>
+                      <p className="text-gray-500">
+                        {language === "en"
+                          ? "Appeals received today only"
+                          : "ערעורים שהתקבלו היום בלבד"}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               </div>
             </TabsContent>
           </Tabs>

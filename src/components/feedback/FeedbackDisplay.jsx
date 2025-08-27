@@ -114,17 +114,24 @@ export default function FeedbackDisplay() {
 
   if (feedbacks.length === 0) {
     return (
-      <div className="text-center p-6 bg-gray-50 rounded-lg">
-        <MessageSquare className="w-12 h-12 mx-auto text-gray-400 mb-3" />
-        <h3 className="text-lg font-medium mb-1">
-          {language === "en" ? "No feedback yet" : "אין משובים עדיין"}
-        </h3>
-        <p className="text-gray-500">
-          {language === "en"
-            ? "Our users' feedback and ratings will appear here soon"
-            : "המשובים והדירוגים של המשתמשים שלנו יופיעו כאן בקרוב"}
-        </p>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="bg-white rounded-2xl overflow-hidden border border-gray-100"
+      >
+        <div className="text-center p-6 bg-gray-50 rounded-lg">
+          <MessageSquare className="w-12 h-12 mx-auto text-gray-400 mb-3" />
+          <h3 className="text-lg font-medium mb-1">
+            {language === "en" ? "No feedback yet" : "אין משובים עדיין"}
+          </h3>
+          <p className="text-gray-500">
+            {language === "en"
+              ? "Our users' feedback and ratings will appear here soon"
+              : "המשובים והדירוגים של המשתמשים שלנו יופיעו כאן בקרוב"}
+          </p>
+        </div>
+      </motion.div>
     );
   }
 

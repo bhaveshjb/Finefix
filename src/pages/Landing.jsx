@@ -60,6 +60,7 @@ export default function Landing() {
     subject: "",
     message: "",
   });
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -461,10 +462,20 @@ export default function Landing() {
       ...prev,
       [id]: value,
     }));
+    validateField(id, value);
   };
 
   const handleContactFormSubmit = async (e) => {
     e.preventDefault();
+    const { isValid } = validateForm();
+    if (!isValid) return;
+
+    // No errors -> continue with submit
+    setContactFormLoading(true);
+
+    setTimeout(() => {
+      setContactFormLoading(false);
+    }, 3000);
     // setContactFormLoading(true);
 
     // try {
@@ -500,6 +511,76 @@ export default function Landing() {
     // } finally {
     //   setContactFormLoading(false);
     // }
+  };
+
+  const validateForm = () => {
+    let newErrors = {};
+    let isValid = true;
+
+    Object.keys(contactForm).forEach((field) => {
+      const ok = validateField(field, contactForm[field]);
+      if (!ok) {
+        isValid = false;
+        newErrors[field] = errors[field];
+      }
+    });
+
+    return { isValid, newErrors };
+  };
+
+  const validateField = (name, value) => {
+    let errorMessage = "";
+
+    if (!value || value.trim() === "") {
+      errorMessage = language === "en" ? "This field is required" : "שדה חובה";
+    } else {
+      switch (name) {
+        case "email":
+          if (!/\S+@\S+\.\S+/.test(value)) {
+            errorMessage =
+              language === "en" ? "Invalid email address" : "אימייל לא תקין";
+          }
+          break;
+        case "phone":
+          const phoneRegex = /^(0\d{9}|\+972\d{9})$/;
+          if (value.length !== 10) {
+            errorMessage =
+              language === "en"
+                ? "Phone number must be exactly 10 digits long"
+                : "מספר הטלפון חייב להיות באורך של 10 ספרות";
+          }
+          // if (!phoneRegex.test(value)) {
+          //   errorMessage =
+          //     language === "en" ? "Invalid phone number" : "מספר טלפון לא תקין";
+          // }
+          break;
+        case "subject":
+          if (value.length < 3) {
+            errorMessage =
+              language === "en"
+                ? "Subject must be at least 3 characters"
+                : "הנושא חייב להיות לפחות 3 תווים";
+          }
+          break;
+        case "message":
+          if (value.length < 10) {
+            errorMessage =
+              language === "en"
+                ? "Message must be at least 10 characters"
+                : "ההודעה חייבת להיות לפחות 10 תווים";
+          }
+          break;
+        default:
+          break;
+      }
+    }
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: errorMessage,
+    }));
+
+    return errorMessage === "";
   };
 
   return (
@@ -1223,7 +1304,7 @@ export default function Landing() {
                 }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 py-6"
+                className="pl-10 py-[18px]"
               />
             </div>
 
@@ -1395,8 +1476,12 @@ export default function Landing() {
                           placeholder={
                             language === "en" ? "Your name" : "השם שלך"
                           }
-                          required
                         />
+                        {errors.name && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {errors.name}
+                          </p>
+                        )}
                       </div>
                       <div>
                         <Label htmlFor="phone">
@@ -1412,6 +1497,11 @@ export default function Landing() {
                               : "מספר הטלפון שלך"
                           }
                         />
+                        {errors.phone && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {errors.phone}
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -1429,8 +1519,12 @@ export default function Landing() {
                             ? "Your email address"
                             : "כתובת האימייל שלך"
                         }
-                        required
                       />
+                      {errors.email && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.email}
+                        </p>
+                      )}
                     </div>
 
                     <div>
@@ -1444,8 +1538,12 @@ export default function Landing() {
                         placeholder={
                           language === "en" ? "Message subject" : "נושא ההודעה"
                         }
-                        required
                       />
+                      {errors.subject && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.subject}
+                        </p>
+                      )}
                     </div>
 
                     <div>
@@ -1462,8 +1560,12 @@ export default function Landing() {
                             : "ההודעה שלך..."
                         }
                         className="h-32"
-                        required
                       />
+                      {errors.message && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.message}
+                        </p>
+                      )}
                     </div>
 
                     <Button
