@@ -2,8 +2,10 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Star, Award, DollarSign, ThumbsUp } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 export default function FeedbackSummary({ feedbacks = [] }) {
+  const [language] = useLocalStorage("languagePreference", "he");
   // Calculate statistics
   const calculateStats = () => {
     if (!feedbacks || feedbacks.length === 0) {
@@ -113,7 +115,7 @@ export default function FeedbackSummary({ feedbacks = [] }) {
         {/* Average rating */}
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">דירוג ממוצע</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-500">{language === "en" ? "Average rating" : "דירוג ממוצע"}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center">
@@ -121,7 +123,7 @@ export default function FeedbackSummary({ feedbacks = [] }) {
               {renderStars(stats.averageRating)}
             </div>
             <div className="text-sm text-gray-500 mt-1">
-              מתוך {feedbacks.length} משובים
+              {language === "en" ? `From ${feedbacks.length} feedbacks` : `מתוך ${feedbacks.length} משובים`}
             </div>
           </CardContent>
         </Card>
@@ -129,7 +131,7 @@ export default function FeedbackSummary({ feedbacks = [] }) {
         {/* Success rate */}
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">אחוזי הצלחה</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-500">{language === "en" ? "Success percentage" : "אחוזי הצלחה"}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center">
@@ -140,7 +142,7 @@ export default function FeedbackSummary({ feedbacks = [] }) {
               </div>
             </div>
             <div className="text-sm text-gray-500 mt-1">
-              {stats.resultBreakdown["בוטל לחלוטין"]} ביטולים מלאים, {stats.resultBreakdown["הופחת"]} הפחתות
+              {stats.resultBreakdown["בוטל לחלוטין"]} {language === "en" ? `Full cancellations, ${stats.resultBreakdown["Reduced"]} reductions` : `ביטולים מלאים, ${stats.resultBreakdown["הופחת"]} הפחתות`}
             </div>
           </CardContent>
         </Card>
@@ -148,7 +150,7 @@ export default function FeedbackSummary({ feedbacks = [] }) {
         {/* Total saved */}
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">סה״כ כסף שנחסך</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-500">{language === "en" ? "Total money saved" : "סה״כ כסף שנחסך"}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center">
@@ -156,7 +158,7 @@ export default function FeedbackSummary({ feedbacks = [] }) {
               <div className="text-3xl font-bold">₪{stats.totalSaved.toLocaleString()}</div>
             </div>
             <div className="text-sm text-gray-500 mt-1">
-              חיסכון ממוצע של ₪{Math.round(stats.totalSaved / feedbacks.length || 0).toLocaleString()} לערעור
+              {language === "en" ?`Average savings of ${Math.round(stats.totalSaved / feedbacks.length || 0).toLocaleString()} per appeal` : `חיסכון ממוצע של ₪${Math.round(stats.totalSaved / feedbacks.length || 0).toLocaleString()} לערעור`}
             </div>
           </CardContent>
         </Card>
@@ -164,7 +166,7 @@ export default function FeedbackSummary({ feedbacks = [] }) {
         {/* Would recommend */}
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">ימליצו לחברים</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-500">{language === "en" ? "Will recommend to friends" : "ימליצו לחברים"}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center">
@@ -172,7 +174,7 @@ export default function FeedbackSummary({ feedbacks = [] }) {
               <div className="text-3xl font-bold">{Math.round(stats.recommendPercentage)}%</div>
             </div>
             <div className="text-sm text-gray-500 mt-1">
-              מהמשתמשים ימליצו על השירות שלנו
+              {language === "en" ? "Of the users would recommend our service" : "מהמשתמשים ימליצו על השירות שלנו"}
             </div>
           </CardContent>
         </Card>
@@ -182,7 +184,7 @@ export default function FeedbackSummary({ feedbacks = [] }) {
         {/* Star breakdown */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">התפלגות דירוגים</CardTitle>
+            <CardTitle className="text-lg">{language === "en" ? "Rating distribution" : "התפלגות דירוגים"}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {stats.ratingCounts.map((count, index) => {
@@ -191,7 +193,7 @@ export default function FeedbackSummary({ feedbacks = [] }) {
               
               return (
                 <div key={starNumber} className="flex items-center">
-                  <div className="w-12 text-sm font-medium">{starNumber} כוכבים</div>
+                  <div className="w-12 text-sm font-medium">{starNumber}{anguage === "en" ? "Stars" :"כוכבים"}</div>
                   <Progress value={percentage} className="h-2 mx-2 flex-grow" />
                   <div className="w-12 text-sm text-right">{percentage.toFixed(0)}%</div>
                 </div>
@@ -203,7 +205,7 @@ export default function FeedbackSummary({ feedbacks = [] }) {
         {/* Result breakdown */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">תוצאות ערעורים</CardTitle>
+            <CardTitle className="text-lg">{language === "en" ? "Appeal Results" : "תוצאות ערעורים"}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
@@ -233,7 +235,7 @@ export default function FeedbackSummary({ feedbacks = [] }) {
                   <div key={result} className={`${bgColor} rounded-lg p-4`}>
                     <div className={`text-2xl font-bold ${textColor}`}>{percentage.toFixed(0)}%</div>
                     <div className="text-sm text-gray-700">{result}</div>
-                    <div className="text-xs text-gray-500 mt-1">{count} ערעורים</div>
+                    <div className="text-xs text-gray-500 mt-1">{count} {"ערעורים"}</div>
                   </div>
                 );
               })}
@@ -241,7 +243,7 @@ export default function FeedbackSummary({ feedbacks = [] }) {
             
             {stats.resultBreakdown["ממתין להחלטה"] > 0 && (
               <div className="mt-4 text-sm text-gray-500 text-center">
-                {stats.resultBreakdown["ממתין להחלטה"]} ערעורים עדיין ממתינים להחלטה
+                {stats.resultBreakdown["ממתין להחלטה"]}{language === "en" ?"Appeals are still pending." : "ערעורים עדיין ממתינים להחלטה"}
               </div>
             )}
           </CardContent>
