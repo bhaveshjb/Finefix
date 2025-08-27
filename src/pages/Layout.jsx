@@ -1,8 +1,8 @@
-
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { User, FileText, Home, LogOut, Menu } from "lucide-react";
 import { useState, useEffect } from "react";
+import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -82,7 +82,7 @@ export default function Layout({ children }) {
     <div
       dir={language === "he" ? "rtl" : "ltr"}
       lang={language}
-      className="min-h-screen"
+      className="flex flex-col min-h-screen"
     >
       <style>{`
         :root {
@@ -278,7 +278,7 @@ export default function Layout({ children }) {
                     </div>
 
                     {user && (
-                      <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+                      <div className="mb-6 p-2 bg-gray-50 rounded-lg">
                         <div className="flex items-center gap-3">
                           <Avatar className="h-10 w-10">
                             <AvatarFallback className="bg-blue-100 text-blue-600">
@@ -299,55 +299,61 @@ export default function Layout({ children }) {
                     )}
 
                     <nav className="flex-1 space-y-2">
-                      <Link
-                        to="/"
-                        className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      >
-                        <Home
-                          className={`h-5 w-5 ${
-                            language === "he" ? "ml-2" : "mr-2"
-                          }`}
-                        />
-                        {labels.home}
-                      </Link>
-
-                      <Link
-                        to={createPageUrl("Appeal")}
-                        className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
-                      >
-                        <FileText
-                          className={`h-5 w-5 ${
-                            language === "he" ? "ml-2" : "mr-2"
-                          }`}
-                        />
-                        {labels.appeal}
-                      </Link>
+                      <SheetPrimitive.Close asChild>
+                        <Link
+                          to="/"
+                          className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+                        >
+                          <Home
+                            className={`h-5 w-5 ${
+                              language === "he" ? "ml-2" : "mr-2"
+                            }`}
+                          />
+                          {labels.home}
+                        </Link>
+                      </SheetPrimitive.Close>
+                      <SheetPrimitive.Close asChild>
+                        <Link
+                          to={createPageUrl("Appeal")}
+                          className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+                        >
+                          <FileText
+                            className={`h-5 w-5 ${
+                              language === "he" ? "ml-2" : "mr-2"
+                            }`}
+                          />
+                          {labels.appeal}
+                        </Link>
+                      </SheetPrimitive.Close>
 
                       {user && (
                         <>
-                          <Link
-                            to={createPageUrl("UserDashboard")}
-                            className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
-                          >
-                            <FileText
-                              className={`h-5 w-5 ${
-                                language === "he" ? "ml-2" : "mr-2"
-                              }`}
-                            />
-                            {labels.myAppeals}
-                          </Link>
-
-                          <Link
-                            to={createPageUrl("UserProfile")}
-                            className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
-                          >
-                            <User
-                              className={`h-5 w-5 ${
-                                language === "he" ? "ml-2" : "mr-2"
-                              }`}
-                            />
-                            {labels.profile}
-                          </Link>
+                          <SheetPrimitive.Close asChild>
+                            <Link
+                              to={createPageUrl("UserDashboard")}
+                              className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+                            >
+                              <FileText
+                                className={`h-5 w-5 ${
+                                  language === "he" ? "ml-2" : "mr-2"
+                                }`}
+                              />
+                              {labels.myAppeals}
+                            </Link>
+                          </SheetPrimitive.Close>
+                          <SheetPrimitive.Close asChild>
+                            <Link
+                              to={createPageUrl("UserProfile")}
+                              className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+                            >
+                              <User
+                                className={`h-5 w-5 ${
+                                  language === "he" ? "ml-2" : "mr-2"
+                                }`}
+                              />
+                              {labels.profile}
+                            </Link>
+                          </SheetPrimitive.Close>
                         </>
                       )}
                     </nav>
@@ -383,7 +389,7 @@ export default function Layout({ children }) {
         </nav>
       </header>
 
-      <main>{children}</main>
+      <main className="flex-grow">{children}</main>
 
       <footer className="bg-gray-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

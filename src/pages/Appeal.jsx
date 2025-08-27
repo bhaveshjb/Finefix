@@ -6,10 +6,15 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import { useEffect } from "react";
 
 export default function AppealPage() {
   const [language] = useLocalStorage("languagePreference", "he"); // Default to Hebrew
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
 
   const handleFormSubmit = async (formData) => {
     const formDataStr = JSON.stringify(formData);
