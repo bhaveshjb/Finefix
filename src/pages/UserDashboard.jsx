@@ -125,7 +125,7 @@ export default function UserDashboard() {
             <span>בטיפול</span>
           </Badge>
         );
-      case 0:
+      case "approved":
         return (
           <Badge className="bg-green-100 text-green-800 flex items-center gap-1">
             <CheckCircle2 className="h-3 w-3" />
@@ -415,7 +415,7 @@ export default function UserDashboard() {
                             </div>
 
                             {getStatusBadge(
-                              appeal.transaction_data.ResponseCode
+                              appeal.form_data.appeal_status
                             )}
                           </div>
                         </CardHeader>
