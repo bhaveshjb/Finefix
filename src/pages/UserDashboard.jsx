@@ -115,28 +115,28 @@ export default function UserDashboard() {
         return (
           <Badge variant="outline" className="flex items-center gap-1">
             <AlertTriangle className="h-3 w-3" />
-            <span>טיוטה</span>
+            <span>{language === "en" ? "draft" : "טיוטה"}</span>
           </Badge>
         );
       case "submitted":
         return (
           <Badge className="bg-blue-100 text-blue-800 flex items-center gap-1">
             <Clock className="h-3 w-3" />
-            <span>בטיפול</span>
+            <span>{language === "en" ? "Submitted" : "בטיפול"}</span>
           </Badge>
         );
-      case 0:
+      case "approved":
         return (
           <Badge className="bg-green-100 text-green-800 flex items-center gap-1">
             <CheckCircle2 className="h-3 w-3" />
-            <span>אושר</span>
+            <span>{language === "en" ? "Approved" : "אושר"}</span>
           </Badge>
         );
       case "rejected":
         return (
           <Badge className="bg-red-100 text-red-800 flex items-center gap-1">
             <X className="h-3 w-3" />
-            <span>נדחה</span>
+            <span>{language === "en" ? "Rejected" : "נדחה"}</span>
           </Badge>
         );
       default:
@@ -219,7 +219,9 @@ export default function UserDashboard() {
         </div>
 
         <div className="md:hidden flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold">המרכז האישי</h1>
+          <h1 className="text-2xl font-bold">
+            {language === "en" ? "The Personal Center" : "המרכז האישי"}
+          </h1>
           <Button
             variant="outline"
             size="icon"
@@ -390,6 +392,7 @@ export default function UserDashboard() {
                     >
                       <Card
                         key={appeal.id}
+                        dir={language === "he" ? "rtl" : "ltr"}
                         className="hover:border-blue-300 transition-colors"
                       >
                         <CardHeader className="pb-2">
@@ -399,14 +402,14 @@ export default function UserDashboard() {
                                 <CarFront className="h-5 w-5 text-blue-600" />
                               </div>
                               <div>
-                                <CardTitle className="text-lg">
+                                <CardTitle className="text-lg font-semibold">
                                   {language === "en" ? "Report" : "דוח"}{" "}
                                   {violationTypes[
                                     appeal.form_data.violationType
                                   ] || "חניה"}
                                 </CardTitle>
-                                <CardDescription>
-                                  {language === "en" ? "Vehicle No" : "רכב מס׳"}
+                                <CardDescription className="text-start">
+                                  {language === "en" ? "Vehicle No" : "רכב מס׳"}{" "}
                                   {appeal.form_data.carNumber || "-"},{" "}
                                   {language === "en" ? "Report No." : "דוח מס׳"}{" "}
                                   {appeal.form_data.ticketNumber || "-"}
@@ -414,9 +417,7 @@ export default function UserDashboard() {
                               </div>
                             </div>
 
-                            {getStatusBadge(
-                              appeal.transaction_data.ResponseCode
-                            )}
+                            {getStatusBadge(appeal.form_data.appeal_status)}
                           </div>
                         </CardHeader>
 

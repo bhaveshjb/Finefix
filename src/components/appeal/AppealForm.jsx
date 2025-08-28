@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import {
   Car,
@@ -157,6 +157,7 @@ export default function AppealForm({ onSubmit }) {
             "Please enter a valid vehicle license plate number",
           invalidTicketNumberError: "Please enter a valid ticket number",
           futureTimeError: "Future time is not allowed.",
+          ticketAmountError: "The amount must be greater than zero.",
           documents: "Documents",
         },
         appealReasons: [
@@ -273,6 +274,7 @@ export default function AppealForm({ onSubmit }) {
             "עליך לקבל את תנאי השימוש ומדיניות הפרטיות לפני שתמשיך.",
           invalidTicketNumberError: "אנא הזן מספר דו״ח תקין",
           futureTimeError: "זמן עתידי אינו מותר.",
+          ticketAmountError: "הסכום חייב להיות גדול מאפס.",
           documents: "מסמכים",
         },
         appealReasons: [
@@ -380,9 +382,14 @@ export default function AppealForm({ onSubmit }) {
             }
           }
           break;
+        case "ticketAmount":
+          const amount = Number(formData.ticketAmount);
+          if (!formData.ticketAmount || isNaN(amount) || amount <= 0) {
+            errorMessage = t.labels.ticketAmountError;
+          }
+          break;
       }
     }
-
     setErrors((prev) => ({
       ...prev,
       [name]: errorMessage,
@@ -416,7 +423,7 @@ export default function AppealForm({ onSubmit }) {
         }
       }
     } else if (step === 2) {
-      ["violationDate", "violationTime", "violationLocation"].forEach(
+      ["violationDate", "violationTime", "violationLocation","ticketAmount"].forEach(
         (field) => {
           const fieldValid = validateField(field, formData[field]);
           isValid = isValid && fieldValid;
@@ -556,7 +563,7 @@ export default function AppealForm({ onSubmit }) {
           ...prev,
           documents: [
             ...prev.documents,
-            { name: file.name, url: result.file_url, size: file.size }
+            { name: file.name, url: result.file_url, size: file.size },
           ],
         }));
       }
@@ -904,6 +911,9 @@ export default function AppealForm({ onSubmit }) {
                   value={formData.ticketAmount}
                   onChange={handleChange}
                 />
+                {errors.ticketAmount && (
+                  <p className="text-red-500 text-sm">{errors.ticketAmount}</p>
+                )}
               </div>
             </div>
           )}
@@ -1389,19 +1399,23 @@ export default function AppealForm({ onSubmit }) {
                     className="text-sm text-gray-700 leading-snug cursor-pointer"
                   >
                     I have read and agree to the{" "}
-                    <Link
-                      to="/TermsOfUses"
+                    <a
+                      href="/TermsOfUses"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="underline hover:text-blue-800 hover:underline"
                     >
                       Terms of Use
-                    </Link>{" "}
+                    </a>{" "}
                     and{" "}
-                    <Link
-                      to="/PrivacyPolicy"
+                    <a
+                      href="/PrivacyPolicy"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="underline hover:text-blue-800 hover:underline"
                     >
                       Privacy Policy
-                    </Link>
+                    </a>
                   </label>
                 </div>
                 {errors.consentError && (
