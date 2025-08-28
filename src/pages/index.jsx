@@ -21,6 +21,7 @@ import BlogDetails from "./BlogDetails.jsx";
 import TermsOfUse from "./TermsOfUses.jsx";
 import PrivacyPolicy from "./PrivacyPolicy.jsx";
 import Fail from "./Fail.jsx";
+import AppealDetails from "./AppealDetails.jsx";
 
 const PAGES = {
   Landing: Landing,
@@ -70,6 +71,7 @@ function PagesContent() {
           <Route path="/Appeal" element={<Appeal />} />
           <Route path="/Appeal/Success" element={<Success />} />
           <Route path="/Appeal/Failed" element={<Fail />} />
+          <Route path="/Appeal/:id" element={<AppealDetails />} />
           <Route path="/Blog" element={<Blog />} />
           <Route path="/Blog/:slug" element={<BlogDetails />} />
           <Route path="/AppealFeedback" element={<AppealFeedback />} />
