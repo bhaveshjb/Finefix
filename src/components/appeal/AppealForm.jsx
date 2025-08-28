@@ -37,7 +37,7 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import supabase from "@/integrations/supabase";
-import { toast } from "sonner";
+import { useToast } from "@/components/ui/use-toast";
 import { Checkbox } from "../ui/checkbox";
 
 export default function AppealForm({ onSubmit }) {
@@ -68,6 +68,7 @@ export default function AppealForm({ onSubmit }) {
   const [fileErrors, setFileErrors] = useState("");
   const [consent, setConsent] = useState(false);
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const allowedTypes = [
     "application/pdf",
@@ -383,9 +384,12 @@ export default function AppealForm({ onSubmit }) {
           }
           break;
         case "ticketAmount":
-          const amount = Number(formData.ticketAmount);
-          if (!formData.ticketAmount || isNaN(amount) || amount <= 0) {
-            errorMessage = t.labels.ticketAmountError;
+          if (!value || isNaN(value)) {
+            errorMessage = t.labels.requiredError;
+          } else if (Number(value) <= 0) {
+            errorMessage =
+              t.labels.amountGreaterThanZeroError ||
+              "Amount must be greater than 0.";
           }
           break;
       }
@@ -423,15 +427,18 @@ export default function AppealForm({ onSubmit }) {
         }
       }
     } else if (step === 2) {
-      ["violationDate", "violationTime", "violationLocation","ticketAmount"].forEach(
-        (field) => {
-          const fieldValid = validateField(field, formData[field]);
-          isValid = isValid && fieldValid;
-          if (!fieldValid) {
-            newErrors[field] = t.labels.requiredError;
-          }
+      [
+        "violationDate",
+        "violationTime",
+        "violationLocation",
+        "ticketAmount",
+      ].forEach((field) => {
+        const fieldValid = validateField(field, formData[field]);
+        isValid = isValid && fieldValid;
+        if (!fieldValid) {
+          newErrors[field] = t.labels.requiredError;
         }
-      );
+      });
     } else if (step === 3) {
       const fieldValid = validateField("appealReason", formData.appealReason);
       isValid = isValid && fieldValid;
@@ -501,9 +508,11 @@ export default function AppealForm({ onSubmit }) {
       });
 
     if (error) {
-      toast.error(
-        language === "en" ? "Error uploading file" : "שגיאה בהעלאת הקובץ"
-      );
+      toast({
+        title: "Upload failed",
+        description: error.message,
+        variant: "destructive",
+      });
       return;
     }
 
@@ -585,9 +594,15 @@ export default function AppealForm({ onSubmit }) {
       ]);
 
     if (error) {
-      toast.error("Error while removing file.");
+      toast({
+        title: "Remove failed",
+        description:
+          language === "en"
+            ? "Error while removing file"
+            : "שגיאה בעת הסרת הקובץ",
+        variant: "destructive",
+      });
     } else {
-      console.log("File deleted:", data);
       setFormData((prev) => ({
         ...prev,
         documents: prev.documents.filter((_, i) => i !== index),
