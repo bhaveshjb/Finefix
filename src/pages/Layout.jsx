@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { User, FileText, Home, LogOut, Menu } from "lucide-react";
 import { useState, useEffect } from "react";
-import * as SheetPrimitive from "@radix-ui/react-dialog"
+import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -59,6 +59,7 @@ export default function Layout({ children }) {
         logout: "Logout",
         startNow: "Start Now",
         contactUs: "Contact Us",
+        blog: "Blog",
       };
     }
 
@@ -156,6 +157,12 @@ export default function Layout({ children }) {
                 className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
               >
                 {labels.appeal}
+              </Link>
+              <Link
+                to={createPageUrl("Blog")}
+                className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                {labels.blog}
               </Link>
               {user && (
                 <Link

@@ -115,7 +115,7 @@ export default function Blog() {
       {/* Hero section with featured post */}
       <section className="bg-white border-b">
         <div className="container mx-auto px-4 py-12">
-          <div className="text-center mb-8">
+          <div className="text-center mb-3">
             <h1 className="text-4xl font-bold mb-4">
               {language === "en" ? "Our Blog" : "הבלוג שלנו"}
             </h1>
@@ -125,88 +125,19 @@ export default function Blog() {
                 : "טיפים, מדריכים ומידע שימושי על ערעורי דוחות חניה והמערכת המשפטית בישראל"}
             </p>
           </div>
-
-          {featuredPost && (
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div className="h-64 md:h-auto md:rounded-lg overflow-hidden relative">
-                <img
-                  src={featuredPost.image}
-                  alt={featuredPost.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <Badge className="absolute top-4 right-4 bg-blue-600">
-                  {featuredPost.category}
-                </Badge>
-              </div>
-
-              <div>
-                <div className="flex items-center text-sm text-gray-500 mb-3 space-x-2 space-x-reverse rtl:space-x-reverse">
-                  <div className="flex items-center">
-                    <Calendar className="h-3.5 w-3.5 ml-1" />
-                    <span>{featuredPost.publishDate}</span>
-                  </div>
-                  <div className="mx-2">•</div>
-                  <div className="flex items-center">
-                    <Clock className="h-3.5 w-3.5 ml-1" />
-                    <span>{featuredPost.readTime}</span>
-                  </div>
-                </div>
-
-                <h2 className="text-3xl font-bold mb-4">
-                  {featuredPost.title}
-                </h2>
-                <p className="text-gray-600 mb-6">{featuredPost.summary}</p>
-
-                <div className="flex items-center mb-6">
-                  <img
-                    src={featuredPost.authorImage}
-                    alt={featuredPost.author}
-                    className="h-10 w-10 rounded-full object-cover ml-3"
-                  />
-                  <div>
-                    <p className="font-medium">{featuredPost.author}</p>
-                    <p className="text-sm text-gray-500">
-                      {language === "en" ? "Expert writer" : "כותב/ת מומחה/ית"}
-                    </p>
-                  </div>
-                </div>
-
-                <Button
-                  className="bg-blue-600 hover:bg-blue-700"
-                  onClick={() =>
-                    alert(
-                      language === "en"
-                        ? "The full article will be available soon!"
-                        : "המאמר המלא יהיה זמין בקרוב!"
-                    )
-                  }
-                >
-                  {language === "en"
-                    ? "Read the full article"
-                    : "קראו את המאמר המלא"}
-                  {language === "en" ? (
-                    <ChevronRight className="ml-2 h-5 w-5" />
-                  ) : (
-                    <ChevronLeft className="mr-2 h-5 w-5" />
-                  )}
-                </Button>
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
       {/* Blog listing section */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap items-center justify-between mb-8">
-            <div className="w-full md:w-auto mb-4 md:mb-0">
+          <div className="flex flex-col md:flex-row items-center justify-between mb-8">
+            <div className="w-full bg-white md:w-auto mb-4 md:mb-0">
               <Tabs
                 defaultValue={activeCategory}
                 onValueChange={setActiveCategory}
               >
-                <TabsList className="bg-white">
+                <TabsList className="bg-white flex flex-wrap gap-2 w-full justify-center md:justify-start">
                   {categories.map((category) => (
                     <TabsTrigger key={category.id} value={category.id}>
                       {language === "en" ? category.en : category.he}
@@ -216,9 +147,9 @@ export default function Blog() {
               </Tabs>
             </div>
 
-            <div className="w-full md:w-64">
+            <div className="w-full md:w-64 mt-16 md:mt-0">
               <div className="relative">
-                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Search className="absolute right-3 top-3/4 md:top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <Input
                   type="search"
                   placeholder={
@@ -280,7 +211,7 @@ export default function Blog() {
                             alt={post.author}
                             className="h-8 w-8 rounded-full object-cover ml-2"
                           />
-                          <span className="text-sm font-medium">
+                          <span className="text-sm font-medium ml-2">
                             {post.author}
                           </span>
                         </div>

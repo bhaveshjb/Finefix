@@ -42,7 +42,7 @@ export default function AppealPage() {
         TerminalNumber: cardcomTerminalNumber,
         ApiName: cardcomApiName,
         ApiPassword: cardcomApiPassword,
-        Amount: 20,
+        Amount: formData.ticketAmount,
         WebHookUrl: `${supabaseUrl}/functions/v1/payment-webhook?language=${language}`,
         SuccessRedirectUrl: `${window.location.href}/success`,
         FailedRedirectUrl: `${window.location.href}/failed`,
