@@ -127,14 +127,6 @@ Deno.serve(async (req: Request) => {
     });
   const { ReturnValue, ...lowProfileResult } = await response.json();
 
-  // Check if the webhook is valid in accordance with Cardcom service
-  if (lowProfileResult.ResponseCode !== 0) {
-    console.error("Error fetching low profile result:", lowProfileResult);
-    return new Response(
-      JSON.stringify({ error: "Failed to fetch low profile result" }),
-      { status: 500 },
-    );
-  }
 
   const { searchParams } = new URL(req.url);
   const formData = JSON.parse(atob(ReturnValue)) as FormData;
@@ -213,7 +205,7 @@ Deno.serve(async (req: Request) => {
   המכתב צריך להיות רשמי, מנומס ומשכנע. הוא צריך לכלול את פרטי הדוח, להסביר מדוע יש לבטל את הדוח בהתבסס על הסיבה שניתנה, ולבקש שהקנס יבוטל. פרמט אותו כמכתב ערעור נאות עם חלקים מתאימים וחתימה.`;
 
   const openaiApiKey = Deno.env.get("OPENAI_API_KEY");
-  const appealResponse = await fetch(
+  const appealResponse = lowProfileResult.ResponseCode === 0 ? await fetch(
     "https://api.openai.com/v1/chat/completions",
     {
       method: "POST",
@@ -237,10 +229,13 @@ Deno.serve(async (req: Request) => {
         ]
       }),
     }
-  );
+  ) : null 
+  console.log("appealResponse:", appealResponse)
 
-  const appealResult = await appealResponse.json();
-  const appealText = appealResult.choices[0].message.content;
+  const appealResult = lowProfileResult.ResponseCode === 0 ? await appealResponse.json() : null;
+  console.log("appealResult:", appealResult)
+  const appealText = lowProfileResult.ResponseCode === 0 ? appealResult.choices[0].message.content : "";
+  console.log("appealText:", appealText)
 
   const { data, error } = await supabase.from('appeals').insert({
     user_email: lowProfileResult.TranzactionInfo.CardOwnerEmail,
@@ -263,6 +258,15 @@ Deno.serve(async (req: Request) => {
       { status: 500 },
     );
   }
+
+    // Check if the webhook is valid in accordance with Cardcom service
+    if (lowProfileResult.ResponseCode !== 0) {
+      console.error("Error fetching low profile result:", lowProfileResult);
+      return new Response(
+        JSON.stringify({ error: "Failed to fetch low profile result" }),
+        { status: 500 },
+      );
+    }
 
   console.log("Successfully inserted appeal data into Supabase:", data);
   return new Response(

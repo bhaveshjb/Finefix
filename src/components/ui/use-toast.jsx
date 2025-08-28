@@ -104,10 +104,35 @@ const listeners = [];
 let memoryState = { toasts: [] };
 
 function dispatch(action) {
-  memoryState = reducer(memoryState, action);
-  listeners.forEach((listener) => {
-    listener(memoryState);
-  });
+  switch (action.type) {
+    case actionTypes.ADD_TOAST:
+      memoryState = {
+        ...memoryState,
+        toasts: [...memoryState.toasts, action.toast],
+      };
+      break;
+
+    case actionTypes.UPDATE_TOAST:
+      memoryState = {
+        ...memoryState,
+        toasts: memoryState.toasts.map((t) =>
+          t.id === action.toast.id ? { ...t, ...action.toast } : t
+        ),
+      };
+      break;
+
+    case actionTypes.DISMISS_TOAST:
+      memoryState = {
+        ...memoryState,
+        toasts: memoryState.toasts.filter((t) => t.id !== action.toastId),
+      };
+      break;
+
+    default:
+      break;
+  }
+
+  listeners.forEach((listener) => listener(memoryState));
 }
 
 function toast({ ...props }) {
@@ -157,8 +182,9 @@ function useToast() {
   return {
     ...state,
     toast,
-    dismiss: (toastId) => dispatch({ type: actionTypes.DISMISS_TOAST, toastId }),
+    dismiss: (toastId) =>
+      dispatch({ type: actionTypes.DISMISS_TOAST, toastId }),
   };
 }
 
-export { useToast, toast }; 
+export { useToast, toast };

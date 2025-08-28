@@ -4,13 +4,14 @@ import { motion } from "framer-motion";
 import AppealForm from "../components/appeal/AppealForm";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { toast } from "sonner";
+import { useToast } from "@/components/ui/use-toast";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { useEffect } from "react";
 
 export default function AppealPage() {
   const [language] = useLocalStorage("languagePreference", "he"); // Default to Hebrew
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -62,23 +63,23 @@ export default function AppealPage() {
       const data = await response.json();
 
       if (data.ResponseCode !== 0) {
-        console.error("Error from Cardcom:", data);
-        toast.error(
-          language === "en"
-            ? "Error submitting appeal, contact support."
-            : "שגיאה בהגשת הערעור, פנה לתמיכה."
-        );
-        throw new Error(`Cardcom error: ${data.ResponseMessage}`);
-      }
-
-      window.location.href = data.Url;
+        toast({
+          title: "Error while initating payment",
+          description: data.Description,
+          variant: "destructive",
+        });
+        throw new Error(`Cardcom error: ${data.Description}`);
+      } else window.location.href = data.Url;
     } catch (error) {
       console.error(error);
-      toast.error(
-        language === "en"
-          ? "Error submitting appeal, contact support."
-          : "שגיאה בהגשת הערעור, פנה לתמיכה."
-      );
+      toast({
+        title: "Error while initating payment",
+        description:
+          language === "en"
+            ? "Error submitting appeal, contact support."
+            : "שגיאה בהגשת הערעור, פנה לתמיכה.",
+        variant: "destructive",
+      });
     }
   };
 
